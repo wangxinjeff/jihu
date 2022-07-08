@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    >
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/member_avatar"
+        android:layout_width="@dimen/member_item_avatar_size"
+        android:layout_height="@dimen/member_item_avatar_size"
+        android:src="@drawable/icon_group_invite"
+        />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/member_nick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_time_color"
+        android:textSize="@dimen/em_size_small"
+        />
+
+</LinearLayout>

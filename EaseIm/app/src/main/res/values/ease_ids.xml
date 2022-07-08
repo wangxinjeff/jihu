@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--删除联系人-->
+    <item name="action_friend_delete" type="id"/>
+    <!--添加备注-->
+    <item name="action_add_note" type="id"/>
+
+    <!-- 聊天长按菜单项id -->
+    <!--复制-->
+    <item name="action_chat_copy" type="id"/>
+    <!--删除-->
+    <item name="action_chat_delete" type="id"/>
+    <!--撤回-->
+    <item name="action_chat_recall" type="id"/>
+    <!--翻译-->
+    <item name="action_chat_translate" type="id"/>
+    <!--重译-->
+    <item name="action_chat_reTranslate" type="id"/>
+    <!--隐藏-->
+    <item name="action_chat_hide" type="id"/>
+    <!--长按事件-->
+    <item name="action_chat_long_click" type="id"/>
+    <!--标记-->
+    <item name="action_chat_label" type="id"/>
+
+    <!-- 会话列表长按菜单项id -->
+    <!-- 会话列表条目置为已读 -->
+    <item name="action_con_make_read" type="id"/>
+    <!-- 会话列表条目置顶 -->
+    <item name="action_con_make_top" type="id"/>
+    <!-- 会话列表条目取消置顶 -->
+    <item name="action_con_cancel_top" type="id"/>
+    <!-- 会话列表条目删除 -->
+    <item name="action_con_delete" type="id"/>
+
+    <!-- 聊天菜单扩展条目id -->
+    <!-- 相册 -->
+    <item name="extend_item_picture" type="id"/>
+    <!-- 拍照 -->
+    <item name="extend_item_take_picture" type="id"/>
+    <!-- 位置 -->
+    <item name="extend_item_location" type="id"/>
+    <!-- 视频 -->
+    <item name="extend_item_video" type="id"/>
+    <!-- 音视频 -->
+    <item name="extend_item_call" type="id"/>
+    <!-- 文件 -->
+    <item name="extend_item_file" type="id"/>
+    <!-- 订单 -->
+    <item name="extend_item_order" type="id"/>
+
+    <item name="action_friend_block" type="id"/>
+    <item name="action_chat_forward" type="id"/>
+
+    <!-- app层菜单扩展功能id -->
+    <!-- 视频通话 -->
+    <item name="extend_item_video_call" type="id"/>
+
+    <!-- 视频会议 -->
+    <item name="extend_item_conference_call" type="id"/>
+
+    <!-- 回执 -->
+    <item name="extend_item_delivery" type="id"/>
+
+    <!-- app层联系人头布局条目id -->
+    <!-- 添加好友 -->
+    <item name="contact_header_item_new_chat" type="id"/>
+    <!-- 群聊 -->
+    <item name="contact_header_item_group_list" type="id"/>
+    <!-- 聊天室 -->
+    <item name="contact_header_item_chat_room_list" type="id"/>
+    <!-- 名片 -->
+    <item name="extend_item_user_card" type="id"/>
+
+    <item name="btnPlayPause" type="id"/>
+</resources>

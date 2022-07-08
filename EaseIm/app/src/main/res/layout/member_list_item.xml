@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/member_item_height"
+    android:gravity="center_vertical"
+    android:paddingStart="@dimen/member_item_start_padding">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/member_item_avatar"
+        android:layout_width="@dimen/member_item_avatar_size"
+        android:layout_height="@dimen/member_item_avatar_size"
+        android:src="@drawable/ease_group_icon"
+        />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/member_item_nick"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/name_title_color"
+        android:textSize="@dimen/em_size_normal"
+        android:text="name"
+        android:layout_marginStart="5dp"
+        />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/member_item_owner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/icon_member_owner"
+        android:layout_marginStart="5dp"
+        />
+
+</LinearLayout>
