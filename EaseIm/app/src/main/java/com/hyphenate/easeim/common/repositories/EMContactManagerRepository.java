@@ -528,23 +528,13 @@ public class EMContactManagerRepository extends BaseEMRepository{
         }.asLiveData();
     }
 
-    public LiveData<Resource<List<EaseUser>>> getSearchContacts(String keyword) {
-        return new NetworkOnlyResource<List<EaseUser>>() {
+    public LiveData<Resource<List<String>>> getSearchContacts(String keyword) {
+        return new NetworkOnlyResource<List<String>>() {
             @Override
-            protected void createCall(@NonNull ResultCallBack<LiveData<List<EaseUser>>> callBack) {
+            protected void createCall(@NonNull ResultCallBack<LiveData<List<String>>> callBack) {
                 EaseThreadManager.getInstance().runOnIOThread(()-> {
-                    List<EaseUser> easeUsers = null;
-                    if(getUserDao() != null) {
-                        easeUsers = getUserDao().loadContacts();
-                    }
-                    List<EaseUser> list = new ArrayList<>();
-                    if(easeUsers != null && !easeUsers.isEmpty()) {
-                        for (EaseUser user : easeUsers) {
-                            if(user.getUsername().contains(keyword) || (!TextUtils.isEmpty(user.getNickname()) && user.getNickname().contains(keyword))) {
-                                list.add(user);
-                            }
-                        }
-                    }
+                    List<String> list = new ArrayList<>();
+                    list.add(keyword);
                     callBack.onSuccess(createLiveData(list));
                 });
 

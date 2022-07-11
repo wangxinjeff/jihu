@@ -42,7 +42,7 @@ public class GroupMemberDelegate extends EaseAdapterDelegate<EaseUser, GroupMemb
         holder.nickView.setText(nickname);
     }
 
-    class ViewHolder extends EaseBaseRecyclerViewAdapter.ViewHolder<EaseUser>{
+    static class ViewHolder extends EaseBaseRecyclerViewAdapter.ViewHolder<EaseUser>{
         public Context mContext;
         public AppCompatImageView avatarView;
         public AppCompatImageView ownerView;

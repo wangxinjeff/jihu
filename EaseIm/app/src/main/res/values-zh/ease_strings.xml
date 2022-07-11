@@ -351,7 +351,7 @@
     <string name="em_chat_group_save">保存</string>
     <string name="em_chat_group_shared_files_upload">上传</string>
     <string name="em_chat_group_invite_group_member">邀请成员</string>
-    <string name="em_chat_group_select_contact">选择联系人</string>
+    <string name="em_chat_group_select_contact">选择用户</string>
     <string name="em_chat_group_select_contact_save">保存</string>
     <string name="em_chat_group_delivery_ack">群组回执</string>
     <string name="em_chat_group_read_ack">阅读回执</string>
@@ -808,5 +808,11 @@
     <string name="add_member">添加</string>
     <string name="choose_reminder">选择提醒人</string>
     <string name="shwo_more_member">查看更多群成员</string>
+    <string name="selected_user">已选用户</string>
+    <string name="search_result">搜索结果</string>
+    <string name="service_personnel">选为服务人员</string>
+    <string name="customer">选为客户</string>
+    <string name="invite_user_toast">群主同意后，您邀请的成员将会自动加入本群聊</string>
+    <string name="can_not_select_again">不能重复选择</string>
 
 </resources>

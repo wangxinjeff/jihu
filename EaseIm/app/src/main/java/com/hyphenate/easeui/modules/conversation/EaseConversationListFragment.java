@@ -30,7 +30,7 @@ public class EaseConversationListFragment extends EaseBaseFragment implements On
     public LinearLayout llRoot;
     public EaseConversationListLayout conversationListLayout;
     public SwipeRefreshLayout srlRefresh;
-    private int conversationsType = EaseConstant.CON_TYPE_EXCLUSIVE;
+    protected int conversationsType = EaseConstant.CON_TYPE_EXCLUSIVE;
 
     public EaseConversationListFragment(int conversationsType) {
         this.conversationsType = conversationsType;

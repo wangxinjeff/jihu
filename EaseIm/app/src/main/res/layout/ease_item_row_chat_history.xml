@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/list_itease_layout"
     android:foreground="@drawable/ease_ripple_click_gray"
-    android:background="@color/theme_color"
+    android:background="?attr/themeBgColor"
     android:longClickable="true">
 
     <com.hyphenate.easeui.widget.EaseImageView

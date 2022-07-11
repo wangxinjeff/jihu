@@ -1,12 +1,18 @@
 package com.hyphenate.easeim.section.conversation;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.AppCompatEditText;
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.hyphenate.chat.EMClient;
@@ -26,6 +32,7 @@ import com.hyphenate.easeim.section.dialog.DemoDialogFragment;
 import com.hyphenate.easeim.section.dialog.SimpleDialogFragment;
 import com.hyphenate.easeim.section.message.SystemMsgsActivity;
 import com.hyphenate.easeim.section.search.SearchConversationActivity;
+import com.hyphenate.easeui.constants.EaseConstant;
 import com.hyphenate.easeui.manager.EaseSystemMsgManager;
 import com.hyphenate.easeui.model.EaseEvent;
 import com.hyphenate.easeui.modules.conversation.EaseConversationListFragment;
@@ -36,8 +43,12 @@ import com.hyphenate.easeui.widget.EaseSearchTextView;
 import java.util.List;
 
 
-public class ConversationListFragment extends EaseConversationListFragment implements View.OnClickListener {
-    private EaseSearchTextView tvSearch;
+public class ConversationListFragment extends EaseConversationListFragment implements View.OnClickListener{
+    private AppCompatEditText searchView;
+    private AppCompatImageView searchEmpty;
+    private AppCompatTextView searchClose;
+    private AppCompatTextView searchTextView;
+    private LinearLayout searchIconView;
 
     private ConversationListViewModel mViewModel;
 
@@ -48,10 +59,17 @@ public class ConversationListFragment extends EaseConversationListFragment imple
     @Override
     public void initView(Bundle savedInstanceState) {
         super.initView(savedInstanceState);
-        //添加搜索会话布局
-        View view = LayoutInflater.from(mContext).inflate(R.layout.demo_layout_search, null);
-        llRoot.addView(view, 0);
-        tvSearch = view.findViewById(R.id.tv_search);
+        if(conversationsType != EaseConstant.CON_TYPE_EXCLUSIVE){
+            //添加搜索会话布局
+            View view = LayoutInflater.from(mContext).inflate(R.layout.demo_layout_search, null);
+            llRoot.addView(view, 0);
+            searchView = view.findViewById(R.id.search_et_view);
+            searchEmpty = view.findViewById(R.id.search_empty);
+            searchClose = view.findViewById(R.id.search_close);
+            searchTextView = view.findViewById(R.id.search_tv_view);
+            searchIconView = view.findViewById(R.id.search_icon_view);
+        }
+
         conversationListLayout.getListAdapter().setEmptyLayoutId(R.layout.ease_layout_no_exclusive_service);
 
         initViewModel();
@@ -95,7 +113,26 @@ public class ConversationListFragment extends EaseConversationListFragment imple
     @Override
     public void initListener() {
         super.initListener();
-        tvSearch.setOnClickListener(this);
+        searchEmpty.setOnClickListener(this);
+        searchClose.setOnClickListener(this);
+        searchTextView.setOnClickListener(this);
+        searchIconView.setOnClickListener(this);
+        searchView.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                conversationListLayout.getListAdapter().getFilter().filter(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     @Override
@@ -200,8 +237,20 @@ public class ConversationListFragment extends EaseConversationListFragment imple
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tv_search :
-                SearchConversationActivity.actionStart(mContext);
+            case R.id.search_tv_view :
+            case R.id.search_icon_view :
+                searchTextView.setVisibility(View.GONE);
+                searchIconView.setVisibility(View.GONE);
+                EaseCommonUtils.showSoftKeyBoard(searchView);
+                break;
+            case R.id.search_empty:
+                searchView.setText("");
+                break;
+            case R.id.search_close:
+                searchView.setText("");
+                searchTextView.setVisibility(View.VISIBLE);
+                searchIconView.setVisibility(View.VISIBLE);
+                EaseCommonUtils.hideSoftKeyBoard(searchView);
                 break;
         }
     }

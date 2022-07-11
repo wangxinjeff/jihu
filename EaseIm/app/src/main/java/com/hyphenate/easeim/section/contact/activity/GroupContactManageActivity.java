@@ -95,7 +95,6 @@ public class GroupContactManageActivity extends BaseInitActivity implements Ease
 
     @Override
     public void onRightClick(View view) {
-        createNewGroup();
     }
 
     @Override

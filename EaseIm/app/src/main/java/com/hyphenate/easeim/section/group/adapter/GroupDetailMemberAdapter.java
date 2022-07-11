@@ -1,6 +1,7 @@
 package com.hyphenate.easeim.section.group.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,17 +33,17 @@ public class GroupDetailMemberAdapter extends RecyclerView.Adapter<GroupDetailMe
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        if(position != 0){
-            EaseUser user = userData.get(position);
-            Glide.with(holder.mContext).load(user.getAvatar()).apply(RequestOptions.bitmapTransform(new CircleCrop())).error(R.drawable.ease_default_avatar).into(holder.memberAvatar);
-            holder.memberNick.setText(user.getNickname());
-        } else {
+        EaseUser user = userData.get(position);
+        if(TextUtils.equals(user.getUsername(), "addUser")){
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     memberClickListener.onAddClick();
                 }
             });
+        } else {
+            Glide.with(holder.mContext).load(user.getAvatar()).apply(RequestOptions.bitmapTransform(new CircleCrop())).error(R.drawable.ease_default_avatar).into(holder.memberAvatar);
+            holder.memberNick.setText(user.getNickname());
         }
     }
 
@@ -53,7 +54,7 @@ public class GroupDetailMemberAdapter extends RecyclerView.Adapter<GroupDetailMe
 
     public void setData(List<EaseUser> data){
         if(data != null){
-            data.add(0, new EaseUser());
+            data.add(0, new EaseUser("addUser"));
             if(data.size() > 12){
                 userData = data.subList(0, 11);
             } else {

@@ -38,7 +38,7 @@ public class LabelEditDialogFragment extends BaseDialogFragment {
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setStyle(STYLE_NO_TITLE, R.style.AppTheme);
+        setStyle(STYLE_NO_TITLE, R.style.NightTheme);
     }
 
     @Override

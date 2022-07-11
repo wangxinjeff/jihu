@@ -121,6 +121,7 @@ public class EaseIMHelper {
     private FetchUserRunnable fetchUserRunnable;
     private Thread fetchUserTread;
     private FetchUserInfoList fetchUserInfoList;
+    private boolean isAdmin = false;
 
 
     private EaseIMHelper() {}
@@ -136,7 +137,8 @@ public class EaseIMHelper {
         return mInstance;
     }
 
-    public void init(Context context) {
+    public void init(Context context, boolean isAdmin) {
+        this.isAdmin = isAdmin;
         demoModel = new DemoModel(context);
         //初始化IM SDK
         if(initSDK(context)) {
@@ -1067,6 +1069,10 @@ public class EaseIMHelper {
          * @param success true：data sync successful，false: failed to sync data
          */
         void onSyncComplete(boolean success);
+    }
+
+    public boolean isAdmin(){
+        return isAdmin;
     }
 
     //登录

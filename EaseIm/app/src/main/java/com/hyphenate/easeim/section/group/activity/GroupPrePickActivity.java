@@ -15,13 +15,13 @@ public class GroupPrePickActivity extends GroupPickContactsActivity {
 
     @Override
     public void onRightClick(View view) {
-        List<String> selectedMembers = adapter.getSelectedMembers();
-        String[] newMembers = null;
-        if(selectedMembers != null && !selectedMembers.isEmpty()) {
-            newMembers = selectedMembers.toArray(new String[0]);
-        }
-        NewGroupActivity.actionStart(mContext, newMembers);
-        finish();
+//        List<String> selectedMembers = adapter.getSelectedMembers();
+//        String[] newMembers = null;
+//        if(selectedMembers != null && !selectedMembers.isEmpty()) {
+//            newMembers = selectedMembers.toArray(new String[0]);
+//        }
+//        NewGroupActivity.actionStart(mContext, newMembers);
+//        finish();
     }
 }
 

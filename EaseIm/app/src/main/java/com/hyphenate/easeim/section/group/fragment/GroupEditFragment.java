@@ -49,7 +49,7 @@ public class GroupEditFragment extends BaseDialogFragment implements EaseTitleBa
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setStyle(STYLE_NO_TITLE, R.style.AppTheme);
+        setStyle(STYLE_NO_TITLE, R.style.NightTheme);
         StatusBarCompat.setLightStatusBar(mContext, true);
     }
 

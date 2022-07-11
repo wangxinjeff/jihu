@@ -1,0 +1,77 @@
+package com.hyphenate.easeim.section.group.delegate;
+
+import android.content.Context;
+import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.appcompat.widget.AppCompatTextView;
+
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
+import com.bumptech.glide.request.RequestOptions;
+import com.hyphenate.easeim.R;
+import com.hyphenate.easeim.common.model.SelectedUser;
+import com.hyphenate.easeui.adapter.EaseAdapterDelegate;
+import com.hyphenate.easeui.adapter.EaseBaseRecyclerViewAdapter;
+import com.hyphenate.easeui.domain.EaseUser;
+
+public class PickContactDelegate extends EaseAdapterDelegate<SelectedUser, PickContactDelegate.ViewHolder>{
+
+    private onCloseClickListener listener;
+
+    @Override
+    public ViewHolder onCreateViewHolder(ViewGroup parent, String tag) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.selected_user_item, parent, false);
+        return new ViewHolder(view);
+    }
+
+    @Override
+    public void onBindViewHolder(ViewHolder holder, int position, SelectedUser item) {
+        super.onBindViewHolder(holder, position, item);
+        holder.nickView.setText(item.getName());
+        holder.closeView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(listener != null){
+                    listener.onMemberRemove(item);
+                }
+            }
+        });
+    }
+
+    public interface onCloseClickListener{
+        void onMemberRemove(SelectedUser name);
+    }
+
+    public void setCloseClickListener(onCloseClickListener listener){
+        this.listener = listener;
+    }
+
+    static class ViewHolder extends EaseBaseRecyclerViewAdapter.ViewHolder<SelectedUser>{
+        public Context mContext;
+        public AppCompatImageView closeView;
+        public AppCompatTextView nickView;
+
+        public ViewHolder(@NonNull View itemView) {
+            super(itemView);
+            mContext = itemView.getContext();
+            closeView = itemView.findViewById(R.id.iv_close);
+            nickView = itemView.findViewById(R.id.tv_name);
+        }
+
+        @Override
+        public void initView(View itemView) {
+
+        }
+
+        @Override
+        public void setData(SelectedUser name, int position) {
+
+        }
+    }
+}
+

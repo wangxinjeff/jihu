@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="@dimen/height_small"
+    android:gravity="center_vertical"
+    android:background="@drawable/selected_user_item_bg"
+    android:paddingStart="@dimen/margin_start_normal"
+    android:paddingEnd="@dimen/margin_start_normal"
+    android:layout_margin="@dimen/margin_small"
+    >
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/em_size_small"
+        android:textColor="?attr/inputTextColor"
+        android:text="henry"
+        />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/iv_close"
+        android:layout_width="@dimen/icon_size_small"
+        android:layout_height="@dimen/icon_size_small"
+        android:src="@drawable/icon_search_close"
+        android:layout_marginStart="@dimen/margin_start_normal"
+        />
+
+</LinearLayout>

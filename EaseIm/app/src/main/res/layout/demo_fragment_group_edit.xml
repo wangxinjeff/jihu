@@ -5,7 +5,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/theme_color">
+    android:background="?attr/themeBgColor">
 
     <com.hyphenate.easeui.widget.EaseTitleBar
         android:id="@+id/title_bar"
@@ -28,6 +28,6 @@
         tools:hint="请输入群公告"
         android:gravity="left|top"
         android:textColor="@color/text_time_color"
-        android:background="@color/theme_color"/>
+        android:background="?attr/themeBgColor"/>
 
 </LinearLayout>

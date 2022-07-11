@@ -224,4 +224,8 @@
     <dimen name="member_item_start_padding">16dp</dimen>
     <dimen name="icon_normal_size">24dp</dimen>
     <dimen name="normal_height">48dp</dimen>
+    <dimen name="margin_start_normal">8dp</dimen>
+    <dimen name="height_small">24dp</dimen>
+    <dimen name="icon_size_small">13dp</dimen>
+    <dimen name="margin_small">5dp</dimen>
 </resources>

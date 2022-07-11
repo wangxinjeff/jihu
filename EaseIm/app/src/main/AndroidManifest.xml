@@ -95,7 +95,7 @@
         android:requestLegacyExternalStorage="false"
         android:usesCleartextTraffic="true"
         android:name=".DemoApplication"
-        android:theme="@style/AppTheme">
+        android:theme="@style/NightTheme">
 
         <!--android 9.0要求-->
         <!--<uses-library android:name="org.apache.http.legacy" android:required="false"/>-->

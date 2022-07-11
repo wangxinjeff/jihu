@@ -49,7 +49,7 @@ public class DemoApplication extends Application implements Thread.UncaughtExcep
         // init hx sdk
         if(EaseIMHelper.getInstance().getAutoLogin()) {
             EMLog.i("DemoApplication", "application initHx");
-            EaseIMHelper.getInstance().init(this);
+            EaseIMHelper.getInstance().init(this, false);
         }
 
     }

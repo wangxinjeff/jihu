@@ -273,4 +273,18 @@
         <attr name="easy_loop" format="boolean" />
     </declare-styleable>
 
+    <attr name="themeBgColor" format="color"/>
+    <attr name="timeTextColor" format="color"/>
+    <attr name="titleNameColor" format="color"/>
+    <attr name="inputViewTextColor" format="color"/>
+    <attr name="inputViewBgColor" format="color"/>
+    <attr name="inputTextColor" format="color"/>
+    <attr name="msgBubbleBg" format="color"/>
+    <attr name="msgTextColor" format="color"/>
+    <attr name="detailBg" format="color"/>
+    <attr name="searchViewBg" format="color"/>
+    <attr name="searchHintColor" format="color"/>
+    <attr name="searchCloseColor" format="color"/>
+    <attr name="letterColor" format="color"/>
+
 </resources>

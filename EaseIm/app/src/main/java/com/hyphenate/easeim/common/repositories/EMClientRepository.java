@@ -83,7 +83,7 @@ public class EMClientRepository extends BaseEMRepository{
             protected void createCall(@NonNull ResultCallBack<LiveData<String>> callBack) {
                 //注册之前先判断SDK是否已经初始化，如果没有先进行SDK的初始化
                 if(!EaseIMHelper.getInstance().isSDKInit) {
-                    EaseIMHelper.getInstance().init(DemoApplication.getInstance());
+                    EaseIMHelper.getInstance().init(DemoApplication.getInstance(), false);
                     EaseIMHelper.getInstance().getModel().setCurrentUserName(userName);
                 }
                 runOnIOThread(() -> {
@@ -112,7 +112,7 @@ public class EMClientRepository extends BaseEMRepository{
 
             @Override
             protected void createCall(@NonNull ResultCallBack<LiveData<EaseUser>> callBack) {
-                EaseIMHelper.getInstance().init(DemoApplication.getInstance());
+                EaseIMHelper.getInstance().init(DemoApplication.getInstance(), false);
                 EaseIMHelper.getInstance().getModel().setCurrentUserName(userName);
                 EaseIMHelper.getInstance().getModel().setCurrentUserPwd(pwd);
                 if(isTokenFlag) {

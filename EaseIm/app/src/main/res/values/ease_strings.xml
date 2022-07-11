@@ -351,7 +351,7 @@
     <string name="em_chat_group_save">Save</string>
     <string name="em_chat_group_shared_files_upload">Upload</string>
     <string name="em_chat_group_invite_group_member">Invite member</string>
-    <string name="em_chat_group_select_contact">Select contact</string>
+    <string name="em_chat_group_select_contact">Select user</string>
     <string name="em_chat_group_select_contact_save">Save</string>
     <string name="em_chat_group_delivery_ack">Group receipt</string>
     <string name="em_chat_group_read_ack">Read receipt</string>
@@ -810,5 +810,11 @@
     <string name="add_member">Add</string>
     <string name="choose_reminder">Choose reminder</string>
     <string name="shwo_more_member">Show more group members</string>
+    <string name="selected_user">The selected user</string>
+    <string name="search_result">The search results</string>
+    <string name="service_personnel">The serivce personnel</string>
+    <string name="customer">The customer</string>
+    <string name="invite_user_toast">After the group leader agrees, the members you invite will automatically join the group chat</string>
+    <string name="can_not_select_again">You can\'t double select</string>
 
 </resources>

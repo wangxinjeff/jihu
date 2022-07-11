@@ -86,9 +86,6 @@ public class ConversationListActivity extends BaseInitActivity implements EaseTi
         switch (item.getItemId()) {
             case R.id.action_video :
                 break;
-            case R.id.action_group :
-                GroupPrePickActivity.actionStart(mContext);
-                break;
             case R.id.action_friend :
             case R.id.action_search_friend :
                 AddContactActivity.startAction(mContext, SearchType.CHAT);
@@ -220,7 +217,7 @@ public class ConversationListActivity extends BaseInitActivity implements EaseTi
 
     private void switchToHome() {
         if(mConversationListFragment == null) {
-            mConversationListFragment = new ConversationListFragment(EaseConstant.CON_TYPE_EXCLUSIVE);
+            mConversationListFragment = new ConversationListFragment(conversationsType);
         }
         getSupportFragmentManager().beginTransaction().replace(R.id.fl_main_fragment, mConversationListFragment, "conversation").commit();
     }
