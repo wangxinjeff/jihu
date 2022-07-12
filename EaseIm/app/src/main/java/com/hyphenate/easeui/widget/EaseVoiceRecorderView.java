@@ -4,6 +4,8 @@ import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.os.PowerManager;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -16,11 +18,19 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.core.content.ContextCompat;
+
 import com.hyphenate.EMError;
 import com.hyphenate.easeim.R;
+import com.hyphenate.easeim.common.utils.ToastUtils;
+import com.hyphenate.easeui.manager.EaseThreadManager;
 import com.hyphenate.easeui.manager.EaseVoiceRecorder;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.easeui.widget.chatrow.EaseChatRowVoicePlayer;
+import com.hyphenate.util.EMLog;
+
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Voice recorder view
@@ -36,16 +46,28 @@ public class EaseVoiceRecorderView extends RelativeLayout {
     protected ImageView ivIcon;
     protected ImageView micImage;
     protected TextView recordingHint;
+    private TextView countdownHint;
 
-    protected Handler micImageHandler = new Handler() {
+    private Timer timer;
+    private TimerTask timerTask;
+    private int totalTime = 21;
+    private EaseVoiceRecorderCallback recorderCallback;
+    private View view;
+    private int ENABLE_VIEW = 10001;
+
+    protected Handler micImageHandler = new Handler(Looper.getMainLooper()) {
         @Override
         public void handleMessage(android.os.Message msg) {
             // change image
             int index = msg.what;
-            if (index < 0 || index > micImages.length - 1) {
-                return;
+            if(index == ENABLE_VIEW){
+                view.setEnabled(true);
+            } else {
+                if (index < 0 || index > micImages.length - 1) {
+                    return;
+                }
+                micImage.setImageDrawable(micImages[index]);
             }
-            micImage.setImageDrawable(micImages[index]);
         }
     };
 
@@ -71,20 +93,32 @@ public class EaseVoiceRecorderView extends RelativeLayout {
         ivIcon = findViewById(R.id.iv_icon);
         micImage = (ImageView) findViewById(R.id.mic_image);
         recordingHint = (TextView) findViewById(R.id.recording_hint);
+        countdownHint = findViewById(R.id.countdown_hint);
 
         voiceRecorder = new EaseVoiceRecorder(micImageHandler);
 
         // animation resources, used for recording
-        micImages = new Drawable[] { getResources().getDrawable(R.drawable.ease_record_animate_01),
-                getResources().getDrawable(R.drawable.ease_record_animate_02),
-                getResources().getDrawable(R.drawable.ease_record_animate_03),
-                getResources().getDrawable(R.drawable.ease_record_animate_04),
-                getResources().getDrawable(R.drawable.ease_record_animate_05),
-                getResources().getDrawable(R.drawable.ease_record_animate_06),
-                getResources().getDrawable(R.drawable.ease_record_animate_07)};
+        micImages = new Drawable[] {ContextCompat.getDrawable(context, R.drawable.ease_record_animate_01),
+                ContextCompat.getDrawable(context, R.drawable.ease_record_animate_02),
+                ContextCompat.getDrawable(context, R.drawable.ease_record_animate_03),
+                ContextCompat.getDrawable(context, R.drawable.ease_record_animate_04),
+                ContextCompat.getDrawable(context, R.drawable.ease_record_animate_05),
+                ContextCompat.getDrawable(context, R.drawable.ease_record_animate_06),
+                ContextCompat.getDrawable(context, R.drawable.ease_record_animate_07)};
 
         wakeLock = ((PowerManager) context.getSystemService(Context.POWER_SERVICE)).newWakeLock(
                 PowerManager.SCREEN_DIM_WAKE_LOCK, "demo");
+    }
+
+    private void countdownHint(){
+//        ToastUtils.showCenterToast("", "还有" + totalTime + " s 自动发送", 0, Toast.LENGTH_SHORT);
+        EaseThreadManager.getInstance().runOnMainThread(new Runnable() {
+            @Override
+            public void run() {
+                countdownHint.setVisibility(VISIBLE);
+                countdownHint.setText(String.format(context.getString(R.string.countdown_send), totalTime + ""));
+            }
+        });
     }
 
     /**
@@ -94,6 +128,8 @@ public class EaseVoiceRecorderView extends RelativeLayout {
      * @param event
      */
     public boolean onPressToSpeakBtnTouch(View v, MotionEvent event, EaseVoiceRecorderCallback recorderCallback) {
+        this.recorderCallback = recorderCallback;
+        view = v;
         switch (event.getAction()) {
         case MotionEvent.ACTION_DOWN:
             try {
@@ -124,26 +160,37 @@ public class EaseVoiceRecorderView extends RelativeLayout {
                 discardRecording();
             } else {
                 // stop recording and send voice file
-                try {
-                    int length = stopRecoding();
-                    if (length > 0) {
-                        if (recorderCallback != null) {
-                            recorderCallback.onVoiceRecordComplete(getVoiceFilePath(), length);
-                        }
-                    } else if (length == EMError.FILE_INVALID) {
-                        Toast.makeText(context, R.string.Recording_without_permission, Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(context, R.string.The_recording_time_is_too_short, Toast.LENGTH_SHORT).show();
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    Toast.makeText(context, R.string.send_failure_please, Toast.LENGTH_SHORT).show();
-                }
+                endRecording();
             }
             return true;
         default:
             discardRecording();
             return false;
+        }
+    }
+
+    private void endRecording(){
+        // stop recording and send voice file
+        view.setPressed(false);
+        setTextContent(view, false);
+        view.setEnabled(false);
+        micImageHandler.sendEmptyMessageDelayed(ENABLE_VIEW, 1000);
+        resetTimerTask();
+        try {
+            int length = stopRecoding();
+            if (length > 0) {
+                if (recorderCallback != null) {
+                    recorderCallback.onVoiceRecordComplete(getVoiceFilePath(), length);
+                }
+            } else if (length == EMError.FILE_INVALID) {
+                Toast.makeText(context, R.string.Recording_without_permission, Toast.LENGTH_SHORT).show();
+            }
+//            else {
+//                Toast.makeText(context, R.string.The_recording_time_is_too_short, Toast.LENGTH_SHORT).show();
+//            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            Toast.makeText(context, R.string.send_failure_please, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -173,7 +220,9 @@ public class EaseVoiceRecorderView extends RelativeLayout {
             Toast.makeText(context, R.string.Send_voice_need_sdcard_support, Toast.LENGTH_SHORT).show();
             return;
         }
+
         try {
+            createTimerTask();
             wakeLock.acquire();
             this.setVisibility(View.VISIBLE);
             recordingHint.setText(context.getString(R.string.move_up_to_cancel));
@@ -182,6 +231,7 @@ public class EaseVoiceRecorderView extends RelativeLayout {
             micImage.setVisibility(VISIBLE);
             voiceRecorder.startRecording(context);
         } catch (Exception e) {
+            resetTimerTask();
             e.printStackTrace();
             if (wakeLock.isHeld())
                 wakeLock.release();
@@ -208,6 +258,7 @@ public class EaseVoiceRecorderView extends RelativeLayout {
     }
 
     public void discardRecording() {
+        resetTimerTask();
         if (wakeLock.isHeld())
             wakeLock.release();
         try {
@@ -247,5 +298,30 @@ public class EaseVoiceRecorderView extends RelativeLayout {
      */
     public static float dip2px(Context context, float value) {
         return TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, value, context.getResources().getDisplayMetrics());
+    }
+
+    private void resetTimerTask(){
+        timer.cancel();
+        totalTime = 21;
+        countdownHint.setVisibility(INVISIBLE);
+    }
+
+    private void createTimerTask(){
+        timer = new Timer();
+        timerTask = new TimerTask() {
+            @Override
+            public void run() {
+                totalTime --;
+                EMLog.e("time:", totalTime + "");
+                if(totalTime < 10){
+                    if(totalTime == 0 ){
+                        endRecording();
+                    } else {
+                        countdownHint();
+                    }
+                }
+            }
+        };
+        timer.schedule(timerTask, 0, 1000);
     }
 }

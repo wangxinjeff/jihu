@@ -2,13 +2,20 @@ package com.hyphenate.easeim.section.chat.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.hyphenate.chat.EMGroup;
 import com.hyphenate.easeim.EaseIMHelper;
 import com.hyphenate.easeim.R;
 import com.hyphenate.easeim.common.interfaceOrImplement.OnResourceParseCallback;
+import com.hyphenate.easeim.common.widget.SearchBar;
 import com.hyphenate.easeim.section.chat.adapter.PickAllUserAdapter;
 import com.hyphenate.easeim.section.base.BaseInitActivity;
 import com.hyphenate.easeim.section.chat.adapter.PickUserAdapter;
@@ -23,12 +30,15 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import androidx.appcompat.widget.AppCompatEditText;
+import androidx.appcompat.widget.AppCompatImageView;
+import androidx.appcompat.widget.AppCompatTextView;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ConcatAdapter;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-public class PickAtUserActivity extends BaseInitActivity implements OnItemClickListener, EaseTitleBar.OnBackPressListener {
+public class PickAtUserActivity extends BaseInitActivity implements OnItemClickListener, EaseTitleBar.OnBackPressListener{
     private EaseTitleBar mTitleBarPick;
     private EaseRecyclerView mRvPickUserList;
     private String mGroupId;
@@ -36,6 +46,8 @@ public class PickAtUserActivity extends BaseInitActivity implements OnItemClickL
     protected PickUserAdapter mAdapter;
     private ConcatAdapter baseAdapter;
     private PickAllUserAdapter headerAdapter;
+
+    private SearchBar searchBar;
 
     public static void actionStartForResult(Fragment fragment, String groupId, int requestCode) {
         Intent starter = new Intent(fragment.getContext(), PickAtUserActivity.class);
@@ -65,6 +77,9 @@ public class PickAtUserActivity extends BaseInitActivity implements OnItemClickL
         mAdapter = new PickUserAdapter();
         baseAdapter.addAdapter(mAdapter);
         mRvPickUserList.setAdapter(baseAdapter);
+
+        searchBar = findViewById(R.id.search_bar);
+        searchBar.init(false);
     }
 
     @Override
@@ -72,6 +87,15 @@ public class PickAtUserActivity extends BaseInitActivity implements OnItemClickL
         super.initListener();
         mAdapter.setOnItemClickListener(this);
         mTitleBarPick.setOnBackPressListener(this);
+
+        searchBar.setOnSearchBarListener(new SearchBar.OnSearchBarListener() {
+            @Override
+            public void onSearchContent(String text) {
+                mAdapter.getFilter().filter(text);
+            }
+        });
+
+//
     }
 
     @Override

@@ -1,10 +1,15 @@
 package com.hyphenate.easeui.widget.chatrow;
 
 import android.content.Context;
+import android.text.Layout;
+import android.text.Selection;
 import android.text.Spannable;
 import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
 import android.text.style.URLSpan;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,14 +20,20 @@ import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMTextMessageBody;
 import com.hyphenate.chat.EMTranslationResult;
 import com.hyphenate.easeim.R;
+import com.hyphenate.easeim.section.base.WebViewActivity;
 import com.hyphenate.easeui.manager.EaseDingMessageHelper;
 import com.hyphenate.easeui.utils.EaseSmileUtils;
+import com.hyphenate.util.EMLog;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class EaseChatRowText extends EaseChatRow {
 	private TextView contentView;
     private TextView translationContentView;
     private ImageView translationStatusView;
     private View translationContainer;
+    private boolean triggerLongClick = false;
 
     public EaseChatRowText(Context context, boolean isSender) {
 		super(context, isSender);
@@ -56,6 +67,7 @@ public class EaseChatRowText extends EaseChatRow {
             contentView.setOnLongClickListener(new OnLongClickListener() {
                 @Override
                 public boolean onLongClick(View v) {
+                    triggerLongClick = true;
                     contentView.setTag(R.id.action_chat_long_click,true);
                     if (itemClickListener != null) {
                         return itemClickListener.onBubbleLongClick(v, message);
@@ -64,6 +76,13 @@ public class EaseChatRowText extends EaseChatRow {
                 }
             });
             replaceSpan();
+            contentView.setMovementMethod(new LinkMovementMethodEx(new LinkClickListener() {
+                @Override
+                public boolean onLinkClick(String mURL) {
+                    WebViewActivity.actionStart(context, mURL);
+                    return true;
+                }
+            }));
             EMTranslationResult result = EMClient.getInstance().translationManager().getTranslationResult(message.getMsgId());
             if(result != null){
                 if(result.showTranslation()) {
@@ -176,5 +195,56 @@ public class EaseChatRowText extends EaseChatRow {
                 ackedView.setText(String.format(getContext().getString(R.string.group_ack_read_count), count));
             }
         });
+    }
+
+    public interface LinkClickListener {
+        boolean onLinkClick(String mURL);
+    }
+
+    public class LinkMovementMethodEx extends LinkMovementMethod {
+        private LinkClickListener listener;
+
+        public LinkMovementMethodEx(LinkClickListener listener) {
+            this.listener = listener;
+        }
+
+        @Override
+        public boolean onTouchEvent(TextView widget, Spannable buffer, MotionEvent event) {
+            int action = event.getAction();
+            if (action == MotionEvent.ACTION_UP || action == MotionEvent.ACTION_DOWN) {
+                int x = (int) event.getX();
+                int y = (int) event.getY();
+                x -= widget.getTotalPaddingLeft();
+                y -= widget.getTotalPaddingTop();
+                x += widget.getScrollX();
+                y += widget.getScrollY();
+                Layout layout = widget.getLayout();
+                int line = layout.getLineForVertical(y);
+                int off = layout.getOffsetForHorizontal(line, x);
+                ClickableSpan[] links = buffer.getSpans(off, off, ClickableSpan.class);
+                if (links.length != 0) {
+                    if (action == MotionEvent.ACTION_UP) {
+                        if (links[0] instanceof URLSpan) {
+                            URLSpan url = (URLSpan) links[0];
+                            if (!triggerLongClick && listener != null)
+                            {
+                                listener.onLinkClick(url.getURL());
+                                return true;
+                            } else {
+                                triggerLongClick = false;
+                            }
+                        }
+                    } else if (action == MotionEvent.ACTION_DOWN) {
+                        Selection.setSelection(buffer,
+                                buffer.getSpanStart(links[0]),
+                                buffer.getSpanEnd(links[0]));
+                    }
+                    return true;
+                } else {
+                    Selection.removeSelection(buffer);
+                }
+            }
+            return false;
+        }
     }
 }

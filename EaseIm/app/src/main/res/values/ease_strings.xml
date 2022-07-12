@@ -816,5 +816,7 @@
     <string name="customer">The customer</string>
     <string name="invite_user_toast">After the group leader agrees, the members you invite will automatically join the group chat</string>
     <string name="can_not_select_again">You can\'t double select</string>
+    <string name="search_no_result">No search results</string>
+    <string name="countdown_send">A voice message will be sent directly after %s second</string>
 
 </resources>

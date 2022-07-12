@@ -545,6 +545,10 @@
         <activity android:name=".MainActivity"
             android:launchMode="singleTask"
             />
+
+        <activity android:name=".section.chat.activity.OrderListActivity"
+            android:launchMode="singleTask"
+            />
     </application>
 
 </manifest>

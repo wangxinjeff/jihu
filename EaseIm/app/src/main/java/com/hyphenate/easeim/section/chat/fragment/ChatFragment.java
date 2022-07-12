@@ -31,6 +31,7 @@ import com.hyphenate.easeim.common.livedatas.LiveDataBus;
 import com.hyphenate.easeim.section.av.VideoCallActivity;
 import com.hyphenate.easeim.section.base.BaseActivity;
 import com.hyphenate.easeim.section.chat.activity.ForwardMessageActivity;
+import com.hyphenate.easeim.section.chat.activity.OrderListActivity;
 import com.hyphenate.easeim.section.chat.activity.PickAtUserActivity;
 import com.hyphenate.easeim.section.chat.viewmodel.MessageViewModel;
 import com.hyphenate.easeim.section.conference.ConferenceInviteActivity;
@@ -132,48 +133,12 @@ public class ChatFragment extends EaseChatFragment implements OnRecallMessageRes
             }
         });
 
-        LiveDataBus.get().with(DemoConstant.CONVERSATION_DELETE, EaseEvent.class).observe(getViewLifecycleOwner(), event -> {
-            if(event == null) {
-                return;
-            }
-            if(event.isMessageChange()) {
-                chatLayout.getChatMessageListLayout().refreshMessages();
-            }
-        });
-
         LiveDataBus.get().with(DemoConstant.MESSAGE_CHANGE_CHANGE, EaseEvent.class).observe(getViewLifecycleOwner(), event -> {
             if(event == null) {
                 return;
             }
             if(event.isMessageChange()) {
                 chatLayout.getChatMessageListLayout().refreshToLatest();
-            }
-        });
-        LiveDataBus.get().with(DemoConstant.CONVERSATION_READ, EaseEvent.class).observe(getViewLifecycleOwner(), event -> {
-            if(event == null) {
-                return;
-            }
-            if(event.isMessageChange()) {
-                chatLayout.getChatMessageListLayout().refreshMessages();
-            }
-        });
-
-        //更新用户属性刷新列表
-        LiveDataBus.get().with(DemoConstant.CONTACT_ADD, EaseEvent.class).observe(getViewLifecycleOwner(), event -> {
-            if(event == null) {
-                return;
-            }
-            if(event != null) {
-                chatLayout.getChatMessageListLayout().refreshMessages();
-            }
-        });
-
-        LiveDataBus.get().with(DemoConstant.CONTACT_UPDATE, EaseEvent.class).observe(getViewLifecycleOwner(), event -> {
-            if(event == null) {
-                return;
-            }
-            if(event != null) {
-                chatLayout.getChatMessageListLayout().refreshMessages();
             }
         });
     }
@@ -270,6 +235,9 @@ public class ChatFragment extends EaseChatFragment implements OnRecallMessageRes
                 intent.putExtra(DemoConstant.EXTRA_CONFERENCE_GROUP_ID, conversationId);
                  getContext().startActivity(intent);
                  break;
+            case R.id.extend_item_order:
+                OrderListActivity.actionStart(getContext());
+                break;
         }
     }
 

@@ -116,7 +116,7 @@
 
     <style name="NightTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/em_base_color_primary</item>
+        <item name="colorPrimary">@color/theme_color</item>
         <item name="colorPrimaryDark">@color/em_base_color_primary_dark</item>
         <item name="colorAccent">@color/search_close_color</item>
         <!-- Customize EditText text color -->
@@ -125,7 +125,7 @@
         <item name="android:textCursorDrawable">@drawable/demo_text_cursor_drawable</item>
         <!-- Customize text color hint -->
         <item name="android:textColorHint">@color/em_base_color_text_hint</item>
-        <item name="android:windowBackground">@color/em_base_color_window_bg</item>
+        <item name="android:windowBackground">@color/theme_color</item>
         <item name="android:divider">@drawable/demo_default_divider_list</item>
         <!-- remove button default shadow effect -->
         <item name="android:buttonStyle">@style/Button.BorderLess</item>

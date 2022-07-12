@@ -814,5 +814,7 @@
     <string name="customer">选为客户</string>
     <string name="invite_user_toast">群主同意后，您邀请的成员将会自动加入本群聊</string>
     <string name="can_not_select_again">不能重复选择</string>
+    <string name="search_no_result">搜索无结果</string>
+    <string name="countdown_send">%s 秒后语音将直接发送</string>
 
 </resources>

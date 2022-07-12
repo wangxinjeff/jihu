@@ -17,9 +17,10 @@
         app:titleBarLeftImage="@drawable/icon_back"
         />
 
-    <include
+    <com.hyphenate.easeim.common.widget.SearchBar
         android:id="@+id/search_bar"
-        layout="@layout/demo_layout_search"/>
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/search_view_height" />
 
     <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/selected_title"

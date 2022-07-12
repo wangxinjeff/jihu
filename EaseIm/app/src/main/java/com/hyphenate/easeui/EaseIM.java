@@ -276,19 +276,4 @@ public class EaseIM {
         };
     }
 
-    public boolean isExclusiveGroup(EMConversation conversation){
-        String ext = conversation.getExtField();
-        if(!ext.isEmpty() && conversation.getType() == EMConversation.EMConversationType.GroupChat){
-            try {
-                JSONObject extJson = new JSONObject(ext);
-                int isExclusive = extJson.optInt(EaseConstant.IS_EXCLUSIVE);
-                if(isExclusive == 1){
-                    return true;
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-        return false;
-    }
 }

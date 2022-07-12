@@ -7,7 +7,7 @@
 
     <com.hyphenate.easeui.widget.EaseTitleBar
         android:id="@+id/title_bar_pick"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="@dimen/em_common_title_bar_height"
         app:titleBarTitle="@string/em_chat_pick_user_title"
         app:titleBarLeftImage="@drawable/icon_back"
@@ -15,13 +15,23 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
 
+    <com.hyphenate.easeim.common.widget.SearchBar
+        android:id="@+id/search_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/search_view_height"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_bar_pick"
+
+        />
+
         <com.hyphenate.easeui.widget.EaseRecyclerView
             android:id="@+id/rv_pick_user_list"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/title_bar_pick"
+            app:layout_constraintTop_toBottomOf="@id/search_bar"
             app:layout_constraintBottom_toBottomOf="parent"
             />
 

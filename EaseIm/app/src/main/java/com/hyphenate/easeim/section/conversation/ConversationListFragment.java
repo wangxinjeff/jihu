@@ -24,6 +24,7 @@ import com.hyphenate.easeim.common.interfaceOrImplement.OnResourceParseCallback;
 import com.hyphenate.easeim.common.livedatas.LiveDataBus;
 import com.hyphenate.easeim.common.net.Resource;
 import com.hyphenate.easeim.common.utils.ToastUtils;
+import com.hyphenate.easeim.common.widget.SearchBar;
 import com.hyphenate.easeim.section.base.BaseActivity;
 import com.hyphenate.easeim.section.chat.activity.ChatActivity;
 import com.hyphenate.easeim.section.chat.viewmodel.MessageViewModel;
@@ -31,24 +32,17 @@ import com.hyphenate.easeim.section.conversation.viewmodel.ConversationListViewM
 import com.hyphenate.easeim.section.dialog.DemoDialogFragment;
 import com.hyphenate.easeim.section.dialog.SimpleDialogFragment;
 import com.hyphenate.easeim.section.message.SystemMsgsActivity;
-import com.hyphenate.easeim.section.search.SearchConversationActivity;
 import com.hyphenate.easeui.constants.EaseConstant;
 import com.hyphenate.easeui.manager.EaseSystemMsgManager;
 import com.hyphenate.easeui.model.EaseEvent;
 import com.hyphenate.easeui.modules.conversation.EaseConversationListFragment;
 import com.hyphenate.easeui.modules.conversation.model.EaseConversationInfo;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
-import com.hyphenate.easeui.widget.EaseSearchTextView;
 
 import java.util.List;
 
 
-public class ConversationListFragment extends EaseConversationListFragment implements View.OnClickListener{
-    private AppCompatEditText searchView;
-    private AppCompatImageView searchEmpty;
-    private AppCompatTextView searchClose;
-    private AppCompatTextView searchTextView;
-    private LinearLayout searchIconView;
+public class ConversationListFragment extends EaseConversationListFragment{
 
     private ConversationListViewModel mViewModel;
 
@@ -61,13 +55,15 @@ public class ConversationListFragment extends EaseConversationListFragment imple
         super.initView(savedInstanceState);
         if(conversationsType != EaseConstant.CON_TYPE_EXCLUSIVE){
             //添加搜索会话布局
-            View view = LayoutInflater.from(mContext).inflate(R.layout.demo_layout_search, null);
-            llRoot.addView(view, 0);
-            searchView = view.findViewById(R.id.search_et_view);
-            searchEmpty = view.findViewById(R.id.search_empty);
-            searchClose = view.findViewById(R.id.search_close);
-            searchTextView = view.findViewById(R.id.search_tv_view);
-            searchIconView = view.findViewById(R.id.search_icon_view);
+            SearchBar searchBar = new SearchBar(getContext());
+            searchBar.init(false);
+            searchBar.setOnSearchBarListener(new SearchBar.OnSearchBarListener() {
+                @Override
+                public void onSearchContent(String text) {
+                    conversationListLayout.getListAdapter().getFilter().filter(text);
+                }
+            });
+            llRoot.addView(searchBar, 0);
         }
 
         conversationListLayout.getListAdapter().setEmptyLayoutId(R.layout.ease_layout_no_exclusive_service);
@@ -113,26 +109,6 @@ public class ConversationListFragment extends EaseConversationListFragment imple
     @Override
     public void initListener() {
         super.initListener();
-        searchEmpty.setOnClickListener(this);
-        searchClose.setOnClickListener(this);
-        searchTextView.setOnClickListener(this);
-        searchIconView.setOnClickListener(this);
-        searchView.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                conversationListLayout.getListAdapter().getFilter().filter(s.toString());
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
     }
 
     @Override
@@ -232,27 +208,6 @@ public class ConversationListFragment extends EaseConversationListFragment imple
      */
     public void showToast(String message) {
         ToastUtils.showToast(message);
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.search_tv_view :
-            case R.id.search_icon_view :
-                searchTextView.setVisibility(View.GONE);
-                searchIconView.setVisibility(View.GONE);
-                EaseCommonUtils.showSoftKeyBoard(searchView);
-                break;
-            case R.id.search_empty:
-                searchView.setText("");
-                break;
-            case R.id.search_close:
-                searchView.setText("");
-                searchTextView.setVisibility(View.VISIBLE);
-                searchIconView.setVisibility(View.VISIBLE);
-                EaseCommonUtils.hideSoftKeyBoard(searchView);
-                break;
-        }
     }
 
     @Override

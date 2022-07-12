@@ -37,7 +37,7 @@ public class EaseConversationListAdapter extends EaseBaseDelegateAdapter<EaseCon
             if(userProvider != null) {
                 EaseUser user = userProvider.getUser(conversation.conversationId());
                 if(user != null) {
-                    if(TextUtils.equals(filter, user.getNickname())){
+                    if(user.getNickname().contains(filter)){
                         return true;
                     }
                 }

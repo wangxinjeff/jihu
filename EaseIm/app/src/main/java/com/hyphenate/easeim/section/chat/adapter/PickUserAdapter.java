@@ -18,6 +18,12 @@ import com.hyphenate.easeui.widget.EaseImageView;
 import androidx.annotation.NonNull;
 
 public class PickUserAdapter extends EaseBaseRecyclerViewAdapter<EaseUser> {
+
+    @Override
+    public int getEmptyLayoutId() {
+        return R.layout.ease_layout_default_no_search_result;
+    }
+
     @Override
     public ViewHolder getViewHolder(ViewGroup parent, int viewType) {
         return new PickUserViewHolder(LayoutInflater.from(mContext).inflate(R.layout.demo_widget_contact_item, parent, false));
@@ -58,5 +64,14 @@ public class PickUserAdapter extends EaseBaseRecyclerViewAdapter<EaseUser> {
             mName.setText(item.getNickname());
             EaseUserUtils.setUserAvatar(mContext, item.getUsername(), mAvatar);
         }
+    }
+
+
+    @Override
+    public boolean filterToCompare(String filter, EaseUser data) {
+        if(data.getNickname().contains(filter)){
+            return true;
+        }
+        return super.filterToCompare(filter, data);
     }
 }

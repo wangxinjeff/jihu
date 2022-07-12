@@ -21,7 +21,6 @@ public class WebViewActivity extends BaseInitActivity {
     private ProgressBar progressBar;
     private WebView webview;
     private String url;
-    private boolean showTitle;
 
     public static void actionStart(Context context, String url) {
         Intent intent = new Intent(context, WebViewActivity.class);
@@ -29,18 +28,10 @@ public class WebViewActivity extends BaseInitActivity {
         context.startActivity(intent);
     }
 
-    public static void actionStart(Context context, String url, boolean showTitle) {
-        Intent intent = new Intent(context, WebViewActivity.class);
-        intent.putExtra("url", url);
-        intent.putExtra("showTitle", showTitle);
-        context.startActivity(intent);
-    }
-
     @Override
     protected void initIntent(Intent intent) {
         super.initIntent(intent);
         url = intent.getStringExtra("url");
-        showTitle = intent.getBooleanExtra("showTitle", true);
     }
 
     @Override
@@ -55,9 +46,6 @@ public class WebViewActivity extends BaseInitActivity {
         webview = findViewById(R.id.webview);
         progressBar = findViewById(R.id.progress_bar);
 
-        if(!showTitle) {
-            titleBar.setVisibility(View.GONE);
-        }
     }
 
     @Override
@@ -72,6 +60,12 @@ public class WebViewActivity extends BaseInitActivity {
                 }else {
                     onBackPressed();
                 }
+            }
+        });
+        titleBar.setLeftLayoutClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
             }
         });
     }

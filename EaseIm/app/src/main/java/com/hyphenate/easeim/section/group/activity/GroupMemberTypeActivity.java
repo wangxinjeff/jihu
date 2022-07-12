@@ -6,14 +6,21 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.hyphenate.chat.EMGroup;
+import com.hyphenate.easeim.EaseIMHelper;
 import com.hyphenate.easeim.R;
 import com.hyphenate.easeim.common.constant.DemoConstant;
 import com.hyphenate.easeim.common.interfaceOrImplement.OnResourceParseCallback;
+import com.hyphenate.easeim.common.widget.SearchBar;
 import com.hyphenate.easeim.section.base.BaseInitActivity;
+import com.hyphenate.easeim.section.group.GroupHelper;
 import com.hyphenate.easeim.section.group.adapter.GroupMemberListAdapter;
 import com.hyphenate.easeim.section.group.delegate.GroupMemberDelegate;
 import com.hyphenate.easeim.section.group.viewmodels.GroupMemberAuthorityViewModel;
@@ -33,16 +40,13 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.ConcatAdapter;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-public class GroupMemberTypeActivity extends BaseInitActivity implements EaseTitleBar.OnBackPressListener, View.OnClickListener {
+public class GroupMemberTypeActivity extends BaseInitActivity implements EaseTitleBar.OnBackPressListener{
+    private static final int REQUEST_CODE_ADD_USER = 0;
     private EaseTitleBar titleBar;
     private String groupId;
     private EMGroup group;
     private boolean isOwner;
-    private AppCompatEditText searchView;
-    private AppCompatImageView searchEmpty;
-    private AppCompatTextView searchClose;
-    private AppCompatTextView searchTextView;
-    private LinearLayout searchIconView;
+    private SearchBar searchBar;
     private ConcatAdapter adapter;
     private GroupMemberListAdapter listAdapter;
     private EaseRecyclerView memberListView;
@@ -71,11 +75,9 @@ public class GroupMemberTypeActivity extends BaseInitActivity implements EaseTit
         super.initView(savedInstanceState);
 
         titleBar = findViewById(R.id.title_bar);
-        searchView = findViewById(R.id.search_et_view);
-        searchEmpty = findViewById(R.id.search_empty);
-        searchClose = findViewById(R.id.search_close);
-        searchTextView = findViewById(R.id.search_tv_view);
-        searchIconView = findViewById(R.id.search_icon_view);
+        searchBar = findViewById(R.id.search_bar);
+        searchBar.init(false);
+
         memberListView = findViewById(R.id.rv_member_list);
         memberListView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -95,31 +97,16 @@ public class GroupMemberTypeActivity extends BaseInitActivity implements EaseTit
     protected void initListener() {
         super.initListener();
         titleBar.setOnBackPressListener(this);
-        searchEmpty.setOnClickListener(this);
-        searchClose.setOnClickListener(this);
-        searchTextView.setOnClickListener(this);
-        searchIconView.setOnClickListener(this);
+        searchBar.setOnSearchBarListener(new SearchBar.OnSearchBarListener() {
+            @Override
+            public void onSearchContent(String text) {
+                listAdapter.getFilter().filter(text);
+            }
+        });
         titleBar.setRightLayoutClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-            }
-        });
-
-        searchView.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                listAdapter.getFilter().filter(s.toString());
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
+                GroupPickContactsActivity.actionStartForResult(mContext, groupId, GroupHelper.isOwner(group), REQUEST_CODE_ADD_USER);
             }
         });
     }
@@ -127,6 +114,7 @@ public class GroupMemberTypeActivity extends BaseInitActivity implements EaseTit
     @Override
     protected void initData() {
         super.initData();
+        group = EaseIMHelper.getInstance().getGroupManager().getGroup(groupId);
         GroupMemberAuthorityViewModel viewModel = new ViewModelProvider(this).get(GroupMemberAuthorityViewModel.class);
 
         viewModel.getGroupMember().observe(this, response -> {
@@ -164,26 +152,5 @@ public class GroupMemberTypeActivity extends BaseInitActivity implements EaseTit
     @Override
     public void onBackPress(View view) {
         onBackPressed();
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.search_tv_view :
-            case R.id.search_icon_view :
-                searchTextView.setVisibility(View.GONE);
-                searchIconView.setVisibility(View.GONE);
-                EaseCommonUtils.showSoftKeyBoard(searchView);
-                break;
-            case R.id.search_empty:
-                searchView.setText("");
-                break;
-            case R.id.search_close:
-                searchView.setText("");
-                searchTextView.setVisibility(View.VISIBLE);
-                searchIconView.setVisibility(View.VISIBLE);
-                EaseCommonUtils.hideSoftKeyBoard(searchView);
-                break;
-        }
     }
 }

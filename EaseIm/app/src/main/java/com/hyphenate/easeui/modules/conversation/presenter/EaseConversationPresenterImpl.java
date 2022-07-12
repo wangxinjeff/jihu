@@ -4,6 +4,7 @@ import android.text.TextUtils;
 
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
+import com.hyphenate.easeim.EaseIMHelper;
 import com.hyphenate.easeui.EaseIM;
 import com.hyphenate.easeui.constants.EaseConstant;
 import com.hyphenate.easeui.modules.conversation.model.EaseConversationInfo;
@@ -46,11 +47,11 @@ public class EaseConversationPresenterImpl extends EaseConversationPresenter {
                 for(EMConversation conversation : conversations.values()){
                     //todo:判断conversationsType去加载对应的会话列表
                     if(conversationsType == EaseConstant.CON_TYPE_EXCLUSIVE){
-                        if(EaseIM.getInstance().isExclusiveGroup(conversation)){
+                        if(EaseIMHelper.getInstance().isExclusiveGroup(conversation)){
                             conversationMap.put(conversation.conversationId(), conversation);
                         }
                     } else if(conversationsType == EaseConstant.CON_TYPE_MY_CHAT){
-                        if(!EaseIM.getInstance().isExclusiveGroup(conversation)){
+                        if(!EaseIMHelper.getInstance().isExclusiveGroup(conversation)){
                             conversationMap.put(conversation.conversationId(), conversation);
                         }
                     }
@@ -72,6 +73,23 @@ public class EaseConversationPresenterImpl extends EaseConversationPresenter {
                     info.setInfo(conversation);
                     String extField = conversation.getExtField();
                     long lastMsgTime=conversation.getLastMessage().getMsgTime();
+                    if(!TextUtils.isEmpty(extField) && EaseCommonUtils.isTimestamp(extField)) {
+                        info.setTop(true);
+                        long makeTopTime=Long.parseLong(extField);
+                        if(makeTopTime>lastMsgTime) {
+                            info.setTimestamp(makeTopTime);
+                        }else{
+                            info.setTimestamp(lastMsgTime);
+                        }
+                    }else{
+                        info.setTimestamp(lastMsgTime);
+                    }
+                    infos.add(info);
+                } else {
+                    info = new EaseConversationInfo();
+                    info.setInfo(conversation);
+                    String extField = conversation.getExtField();
+                    long lastMsgTime=0;
                     if(!TextUtils.isEmpty(extField) && EaseCommonUtils.isTimestamp(extField)) {
                         info.setTop(true);
                         long makeTopTime=Long.parseLong(extField);

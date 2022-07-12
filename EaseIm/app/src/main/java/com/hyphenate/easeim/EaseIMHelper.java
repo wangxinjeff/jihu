@@ -1082,7 +1082,7 @@ public class EaseIMHelper {
 //            public void onSuccess() {
         //todo:登录成功之后获取专属群列表，开启线程获取，还是获取到之后再返回成功
 
-        EMConversation conversation = EMClient.getInstance().chatManager().getConversation("186507176509441", EMConversation.EMConversationType.GroupChat, true);
+        EMConversation conversation = EMClient.getInstance().chatManager().getConversation("186245684723713", EMConversation.EMConversationType.GroupChat, true);
         String ext = conversation.getExtField();
 
         try {

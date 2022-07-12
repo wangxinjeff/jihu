@@ -1,19 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/rl_search_root"
-    android:background="?attr/themeBgColor"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-
-    >
-
-    <RelativeLayout
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="@dimen/search_view_height"
         android:paddingTop="@dimen/search_view_padding_v"
         android:paddingBottom="@dimen/search_view_padding_v"
         android:paddingStart="@dimen/search_view_padding_h"
         android:paddingEnd="@dimen/search_view_padding_h"
+        android:background="?attr/themeBgColor"
         >
 
         <LinearLayout
@@ -47,6 +40,8 @@
                     android:textSize="@dimen/em_size_normal"
                     android:lines="1"
                     android:background="@null"
+                    android:imeOptions="actionSearch|flagNoExtractUi"
+                    android:inputType="text"
                     />
 
                 <androidx.appcompat.widget.AppCompatImageView
@@ -119,5 +114,3 @@
         </LinearLayout>
 
     </RelativeLayout>
-
-</FrameLayout>

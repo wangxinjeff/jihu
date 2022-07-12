@@ -1,15 +1,10 @@
 package com.hyphenate.easeim.section.contact.fragment;
 
 import android.annotation.SuppressLint;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -93,7 +88,7 @@ public class ContactListFragment extends EaseContactListFragment implements View
 
     private void addSearchView() {
         //添加搜索会话布局
-        View view = LayoutInflater.from(mContext).inflate(R.layout.demo_layout_search, null);
+        View view = LayoutInflater.from(mContext).inflate(R.layout.ease_layout_search, null);
         llRoot.addView(view, 0);
         tvSearch = view.findViewById(R.id.tv_search);
         tvSearch.setHint(R.string.em_friend_list_search_hint);

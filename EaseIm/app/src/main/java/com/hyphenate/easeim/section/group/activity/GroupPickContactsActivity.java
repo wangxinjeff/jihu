@@ -6,12 +6,14 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
-import android.widget.FrameLayout;
+import android.view.inputmethod.EditorInfo;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.flexbox.AlignItems;
@@ -23,6 +25,7 @@ import com.hyphenate.easeim.R;
 import com.hyphenate.easeim.common.interfaceOrImplement.OnResourceParseCallback;
 import com.hyphenate.easeim.common.model.SelectedUser;
 import com.hyphenate.easeim.common.utils.ToastUtils;
+import com.hyphenate.easeim.common.widget.SearchBar;
 import com.hyphenate.easeim.section.group.delegate.PickContactDelegate;
 import com.hyphenate.easeim.section.base.BaseInitActivity;
 import com.hyphenate.easeim.section.group.adapter.GroupPickContactsAdapter;
@@ -40,7 +43,7 @@ import androidx.core.content.ContextCompat;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class GroupPickContactsActivity extends BaseInitActivity implements EaseTitleBar.OnRightClickListener, EaseTitleBar.OnBackPressListener, View.OnClickListener, PickContactDelegate.onCloseClickListener {
+public class GroupPickContactsActivity extends BaseInitActivity implements EaseTitleBar.OnRightClickListener, EaseTitleBar.OnBackPressListener, PickContactDelegate.onCloseClickListener {
     private EaseTitleBar titleBar;
     private RecyclerView rvList;
     protected GroupPickContactsAdapter adapter;
@@ -48,19 +51,13 @@ public class GroupPickContactsActivity extends BaseInitActivity implements EaseT
     private String groupId;
     private boolean isOwner;
     private String[] newmembers;
-    private FrameLayout searchBar;
     private AppCompatImageView userAvatar;
     private AppCompatTextView userName;
     private RelativeLayout resultView;
     private RadioGroup radioGroup;
     private String result = "";
 
-    private AppCompatEditText searchView;
-    private AppCompatImageView searchEmpty;
-    private AppCompatTextView searchClose;
-    private AppCompatTextView searchStart;
-    private AppCompatTextView searchTextView;
-    private LinearLayout searchIconView;
+    private SearchBar searchBar;
 
     private AppCompatTextView selectedTitle;
     private AppCompatTextView resultTitle;
@@ -96,7 +93,6 @@ public class GroupPickContactsActivity extends BaseInitActivity implements EaseT
     protected void initView(Bundle savedInstanceState) {
         super.initView(savedInstanceState);
         titleBar = findViewById(R.id.title_bar);
-        searchBar = findViewById(R.id.search_bar);
         rvList = findViewById(R.id.rl_user_list);
         userAvatar = findViewById(R.id.user_avatar);
         userName = findViewById(R.id.user_name);
@@ -105,16 +101,15 @@ public class GroupPickContactsActivity extends BaseInitActivity implements EaseT
 
         titleBar.getRightText().setTextColor(ContextCompat.getColor(mContext, R.color.em_color_brand));
 
-        searchView = searchBar.findViewById(R.id.search_et_view);
-        searchEmpty = searchBar.findViewById(R.id.search_empty);
-        searchClose = searchBar.findViewById(R.id.search_close);
-        searchStart = searchBar.findViewById(R.id.search_start);
-        searchTextView = searchBar.findViewById(R.id.search_tv_view);
-        searchIconView = searchBar.findViewById(R.id.search_icon_view);
+        searchBar = findViewById(R.id.search_bar);
+        searchBar.init(true);
 
         selectedTitle = findViewById(R.id.selected_title);
         resultTitle = findViewById(R.id.result_title);
 
+        /**
+         * FlexboxLayout参考：https://blog.csdn.net/weixin_39397471/article/details/90212231
+         */
         FlexboxLayoutManager manager = new FlexboxLayoutManager(this);
         manager.setFlexDirection(FlexDirection.ROW);
         manager.setFlexWrap(FlexWrap.WRAP);
@@ -158,32 +153,10 @@ public class GroupPickContactsActivity extends BaseInitActivity implements EaseT
             }
         });
 
-        searchEmpty.setOnClickListener(this);
-        searchClose.setOnClickListener(this);
-        searchStart.setOnClickListener(this);
-        searchTextView.setOnClickListener(this);
-        searchIconView.setOnClickListener(this);
-
-        searchView.addTextChangedListener(new TextWatcher() {
+        searchBar.setOnSearchBarListener(new SearchBar.OnSearchBarListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(TextUtils.isEmpty(s)){
-                    searchClose.setVisibility(View.VISIBLE);
-                    searchStart.setVisibility(View.GONE);
-                } else {
-                    searchClose.setVisibility(View.GONE);
-                    searchStart.setVisibility(View.VISIBLE);
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
+            public void onSearchContent(String text) {
+                viewModel.getSearchContacts(text);
             }
         });
     }
@@ -227,37 +200,12 @@ public class GroupPickContactsActivity extends BaseInitActivity implements EaseT
     @Override
     public void onRightClick(View view) {
         ToastUtils.showCenterToast("", getString(R.string.invite_user_toast), 0, Toast.LENGTH_SHORT);
+        onBackPressed();
     }
 
     @Override
     public void onBackPress(View view) {
         onBackPressed();
-    }
-
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.search_tv_view :
-            case R.id.search_icon_view :
-                searchTextView.setVisibility(View.GONE);
-                searchIconView.setVisibility(View.GONE);
-                EaseCommonUtils.showSoftKeyBoard(searchView);
-                break;
-            case R.id.search_empty:
-                searchView.setText("");
-                break;
-            case R.id.search_start:
-                viewModel.getSearchContacts(searchView.getText().toString());
-                break;
-            case R.id.search_close:
-                searchView.setText("");
-                searchTextView.setVisibility(View.VISIBLE);
-                searchIconView.setVisibility(View.VISIBLE);
-                EaseCommonUtils.hideSoftKeyBoard(searchView);
-                searchClose.setVisibility(View.VISIBLE);
-                searchStart.setVisibility(View.GONE);
-                break;
-        }
     }
 
     @Override

@@ -152,7 +152,6 @@ public abstract class EaseDefaultConversationDelegate extends EaseBaseConversati
                 @Override
                 public void onSelect(boolean isSelected) {
                     if(isSelected) {
-                        itemView.setBackgroundResource(R.drawable.ease_conversation_item_selected);
                     }else {
                         if(item.isTop()) {
                             itemView.setBackgroundResource(R.drawable.ease_conversation_top_bg);
