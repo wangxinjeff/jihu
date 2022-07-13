@@ -8,6 +8,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -35,12 +36,19 @@ import com.hyphenate.easeui.ui.base.EaseBaseFragment;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.easeui.utils.EaseCompat;
 import com.hyphenate.easeui.utils.EaseFileUtils;
+import com.hyphenate.easeui.utils.Glide4Engine;
 import com.hyphenate.util.EMLog;
 import com.hyphenate.util.PathUtil;
 import com.hyphenate.util.VersionUtils;
+import com.zhihu.matisse.Matisse;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
+
+import com.hyphenate.mediapicker.SmartMediaPicker;
+import com.hyphenate.mediapicker.config.Constant;
+import com.hyphenate.mediapicker.config.MediaPickerEnum;
 
 public class EaseChatFragment extends EaseBaseFragment implements OnChatLayoutListener, OnMenuChangeListener, OnAddMsgAttrsBeforeSendEvent, OnChatRecordTouchListener, OnTranslateMessageListener {
     protected static final int REQUEST_CODE_MAP = 1;
@@ -214,6 +222,17 @@ public class EaseChatFragment extends EaseBaseFragment implements OnChatLayoutLi
                 onActivityResultForLocalFiles(data);
             }else if(requestCode == REQUEST_CODE_SELECT_VIDEO) {
                 onActivityResultForLocalVideos(data);
+            } else if(requestCode == Constant.REQUEST_CODE_CHOOSE){
+                chatLayout.sendImageMessage(Matisse.obtainResult(data).get(0));
+            } else if(requestCode == Constant.CAMERA_RESULT_CODE){
+                List<String> resultData = SmartMediaPicker.getResultData(getContext(), requestCode, resultCode, data);
+                if (resultData != null && resultData.size() > 0) {
+                    if(resultData.get(0).contains(".jpg")){
+                        chatLayout.sendImageMessage(Uri.parse(resultData.get(0)));
+                    } else if(resultData.get(0).contains(".mp4")){
+                        chatLayout.sendVideoMessage(Uri.parse(resultData.get(0)), SmartMediaPicker.getVideoDuration(getContext(), EaseCompat.getUriForFile(getContext(), new File(resultData.get(0)))));
+                    }
+                }
             }
         }
     }
@@ -241,20 +260,70 @@ public class EaseChatFragment extends EaseBaseFragment implements OnChatLayoutLi
         if(!checkSdCardExist()) {
             return;
         }
-        cameraFile = new File(PathUtil.getInstance().getImagePath(), EMClient.getInstance().getCurrentUser()
-                + System.currentTimeMillis() + ".jpg");
-        //noinspection ResultOfMethodCallIgnored
-        cameraFile.getParentFile().mkdirs();
-        startActivityForResult(
-                new Intent(MediaStore.ACTION_IMAGE_CAPTURE).putExtra(MediaStore.EXTRA_OUTPUT, EaseCompat.getUriForFile(getContext(), cameraFile)),
-                REQUEST_CODE_CAMERA);
+//        cameraFile = new File(PathUtil.getInstance().getImagePath(), EMClient.getInstance().getCurrentUser()
+//                + System.currentTimeMillis() + ".jpg");
+//        //noinspection ResultOfMethodCallIgnored
+//        cameraFile.getParentFile().mkdirs();
+//        startActivityForResult(
+//                new Intent(MediaStore.ACTION_IMAGE_CAPTURE).putExtra(MediaStore.EXTRA_OUTPUT, EaseCompat.getUriForFile(getContext(), cameraFile)),
+//                REQUEST_CODE_CAMERA);
+
+        SmartMediaPicker.builder(this)
+                //最大图片选择数目 如果不需要图片 将数目设置为0
+                .withMaxImageSelectable(1)
+                //最大视频选择数目 如果不需要视频 将数目设置为0
+                .withMaxVideoSelectable(1)
+                //图片选择器是否显示数字
+                .withCountable(false)
+                //最大视频长度
+                .withMaxVideoLength(15 * 1000)
+                //最大视频文件大小 单位MB
+                .withMaxVideoSize(10)
+                //最大图片高度 默认1920
+                .withMaxHeight(4032)
+                //最大图片宽度 默认1920
+                .withMaxWidth(4032)
+                //最大图片大小 单位MB
+                .withMaxImageSize(10)
+                //设置图片加载引擎
+                .withImageEngine(new Glide4Engine())
+                //前置摄像头拍摄是否镜像翻转图像
+                .withIsMirror(true)
+                //弹出类别，默认弹出底部选择栏，也可以选择单独跳转
+                .withMediaPickerType(MediaPickerEnum.CAMERA)
+                .build(getContext())
+                .show();
     }
 
     /**
      * select local image
      */
     protected void selectPicFromLocal() {
-        EaseCompat.openImage(this, REQUEST_CODE_LOCAL);
+        SmartMediaPicker.builder(this)
+                //最大图片选择数目 如果不需要图片 将数目设置为0
+                .withMaxImageSelectable(1)
+                //最大视频选择数目 如果不需要视频 将数目设置为0
+                .withMaxVideoSelectable(0)
+                //图片选择器是否显示数字
+                .withCountable(false)
+                //最大视频长度
+                .withMaxVideoLength(15 * 1000)
+                //最大视频文件大小 单位MB
+                .withMaxVideoSize(10)
+                //最大图片高度 默认1920
+                .withMaxHeight(4032)
+                //最大图片宽度 默认1920
+                .withMaxWidth(4032)
+                //最大图片大小 单位MB
+                .withMaxImageSize(10)
+                //设置图片加载引擎
+                .withImageEngine(new Glide4Engine())
+                //前置摄像头拍摄是否镜像翻转图像
+                .withIsMirror(true)
+                //弹出类别，默认弹出底部选择栏，也可以选择单独跳转
+                .withMediaPickerType(MediaPickerEnum.PHOTO_PICKER)
+                .build(getContext())
+                .show();
     }
 
     /**

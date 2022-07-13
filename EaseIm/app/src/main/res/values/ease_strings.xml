@@ -819,4 +819,10 @@
     <string name="search_no_result">No search results</string>
     <string name="countdown_send">A voice message will be sent directly after %s second</string>
 
+    <string name="permission_request_denied">Corresponding permissions are required</string>
+    <string name="error_gif">Not more than %1$dpx long, not more than %2$dpx wide, and not more than %3$sM in size.</string>
+    <string name="error_original">Size does not exceed %1$sM.</string>
+    <string name="error_video">Video length does not exceed %1$d seconds.</string>
+    <string name="error_size">File size should not exceed %1$dM.</string>
+
 </resources>

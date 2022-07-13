@@ -7,11 +7,17 @@ import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 
 import com.hyphenate.EMValueCallBack;
+import com.hyphenate.easeim.common.constant.DemoConstant;
+import com.hyphenate.easeim.common.livedatas.LiveDataBus;
+import com.hyphenate.easeim.common.permission.PermissionsManager;
+import com.hyphenate.easeim.common.permission.PermissionsResultAction;
 import com.hyphenate.easeim.section.base.BaseInitActivity;
 import com.hyphenate.easeui.EaseIM;
 import com.hyphenate.easeui.constants.EaseConstant;
+import com.hyphenate.easeui.model.EaseEvent;
 
 import java.util.Map;
+
 
 public class MainActivity extends BaseInitActivity implements View.OnClickListener {
     private AppCompatImageView groupIcon;
@@ -36,6 +42,20 @@ public class MainActivity extends BaseInitActivity implements View.OnClickListen
     @Override
     protected void initData() {
         super.initData();
+//        requestPermissions();
+        LiveDataBus.get().with(DemoConstant.MESSAGE_CHANGE_CHANGE, EaseEvent.class).observe(this, event -> {
+            if(event == null) {
+                return;
+            }
+            if(event.isMessageChange()) {
+                refreshUI();
+            }
+        });
+
+        refreshUI();
+    }
+
+    private void refreshUI(){
         EaseIMHelper.getInstance().getChatUnread(new EMValueCallBack<Map<String, Integer>>() {
             @Override
             public void onSuccess(Map<String, Integer> stringIntegerMap) {
@@ -72,5 +92,24 @@ public class MainActivity extends BaseInitActivity implements View.OnClickListen
                 EaseIMHelper.getInstance().startChat(MainActivity.this, EaseConstant.CON_TYPE_MY_CHAT);
                 break;
         }
+    }
+
+    /**
+     * 申请权限
+     */
+    // TODO: 2019/12/19 0019 有必要修改一下
+    private void requestPermissions() {
+        PermissionsManager.getInstance()
+                .requestAllManifestPermissionsIfNecessary(mContext, new PermissionsResultAction() {
+                    @Override
+                    public void onGranted() {
+
+                    }
+
+                    @Override
+                    public void onDenied(String permission) {
+
+                    }
+                });
     }
 }

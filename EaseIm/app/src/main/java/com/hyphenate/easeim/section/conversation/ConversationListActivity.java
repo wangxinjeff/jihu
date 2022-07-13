@@ -26,8 +26,6 @@ import com.hyphenate.easeim.R;
 import com.hyphenate.easeim.common.constant.DemoConstant;
 import com.hyphenate.easeim.common.enums.SearchType;
 import com.hyphenate.easeim.common.livedatas.LiveDataBus;
-import com.hyphenate.easeim.common.permission.PermissionsManager;
-import com.hyphenate.easeim.common.permission.PermissionsResultAction;
 import com.hyphenate.easeim.common.utils.PreferenceManager;
 import com.hyphenate.easeim.common.utils.PushUtils;
 import com.hyphenate.easeim.section.av.MultipleVideoActivity;
@@ -36,7 +34,6 @@ import com.hyphenate.easeim.section.base.BaseInitActivity;
 import com.hyphenate.easeim.section.chat.ChatPresenter;
 import com.hyphenate.easeim.section.contact.activity.GroupContactManageActivity;
 import com.hyphenate.easeim.section.contact.activity.AddContactActivity;
-import com.hyphenate.easeim.section.group.activity.GroupPrePickActivity;
 import com.hyphenate.easeui.constants.EaseConstant;
 import com.hyphenate.easeui.model.EaseEvent;
 import com.hyphenate.easeui.ui.base.EaseBaseFragment;
@@ -152,7 +149,6 @@ public class ConversationListActivity extends BaseInitActivity implements EaseTi
     protected void initData() {
         super.initData();
         initViewModel();
-        requestPermissions();
         ChatPresenter.getInstance().init();
         // 获取华为 HMS 推送 token
         HMSPushHelper.getInstance().getHMSToken(this);
@@ -194,25 +190,6 @@ public class ConversationListActivity extends BaseInitActivity implements EaseTi
 
     private void initViewModel() {
 
-    }
-
-    /**
-     * 申请权限
-     */
-    // TODO: 2019/12/19 0019 有必要修改一下
-    private void requestPermissions() {
-        PermissionsManager.getInstance()
-                .requestAllManifestPermissionsIfNecessary(mContext, new PermissionsResultAction() {
-                    @Override
-                    public void onGranted() {
-
-                    }
-
-                    @Override
-                    public void onDenied(String permission) {
-
-                    }
-                });
     }
 
     private void switchToHome() {

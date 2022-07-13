@@ -273,6 +273,21 @@
         <attr name="easy_loop" format="boolean" />
     </declare-styleable>
 
+    <attr name="iconSize" format="dimension"/>
+    <attr name="iconMargin" format="dimension"/>
+    <attr name="iconSrc" format="reference"/>
+    <attr name="iconLeft" format="reference"/>
+    <attr name="iconRight" format="reference"/>
+    <attr name="duration_max" format="integer"/>
+    <declare-styleable name="JCameraView">
+        <attr name="iconSize"/>
+        <attr name="iconMargin"/>
+        <attr name="iconSrc"/>
+        <attr name="iconLeft"/>
+        <attr name="iconRight"/>
+        <attr name="duration_max"/>
+    </declare-styleable>
+
     <attr name="themeBgColor" format="color"/>
     <attr name="timeTextColor" format="color"/>
     <attr name="titleNameColor" format="color"/>

@@ -549,6 +549,23 @@
         <activity android:name=".section.chat.activity.OrderListActivity"
             android:launchMode="singleTask"
             />
+
+        <!-- 拍照、拍摄短视频 -->
+        <activity
+            android:name="com.hyphenate.mediapicker.camera.CameraActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize|layoutDirection"
+            android:screenOrientation="portrait" />
+
+        <!--知乎图片选择器-->
+        <activity
+            android:name="com.zhihu.matisse.ui.MatisseActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.zhihu.matisse.internal.ui.AlbumPreviewActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.zhihu.matisse.internal.ui.SelectedPreviewActivity"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>
