@@ -30,15 +30,9 @@ public class EMConferenceManagerRepository extends BaseEMRepository {
             protected void createCall(@NonNull ResultCallBack<LiveData<List<KV<String, Integer>>>> callBack) {
                 EaseThreadManager.getInstance().runOnIOThread(() -> {
                     List<String> contactList = new ArrayList<>();
-                    if(TextUtils.isEmpty(groupId)) {
-                        //从本地加载好友联系人
-                        if(getUserDao() != null) {
-                            contactList.addAll(getUserDao().loadContactUsers());
-                        }
-                    }else {
-                        // 根据groupId获取群组中所有成员
-                        contactList = new EMGroupManagerRepository().getAllGroupMemberByServer(groupId);
-                    }
+                    // 根据groupId获取群组中所有成员
+                    contactList = new EMGroupManagerRepository().getAllGroupMemberByServer(groupId);
+
                     //获取管理员列表
                     try {
                         EMGroup group = EMClient.getInstance().groupManager().getGroupFromServer(groupId, true);

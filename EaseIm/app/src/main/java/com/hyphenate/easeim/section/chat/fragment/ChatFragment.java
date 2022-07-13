@@ -42,6 +42,7 @@ import com.hyphenate.easeim.section.dialog.FullEditDialogFragment;
 import com.hyphenate.easeim.section.dialog.LabelEditDialogFragment;
 import com.hyphenate.easeim.section.dialog.SimpleDialogFragment;
 import com.hyphenate.easeim.section.me.activity.UserDetailActivity;
+import com.hyphenate.easeui.constants.EaseConstant;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.model.EaseEvent;
 import com.hyphenate.easeui.modules.chat.EaseChatFragment;
@@ -100,11 +101,11 @@ public class ChatFragment extends EaseChatFragment implements OnRecallMessageRes
         chatExtendMenu.registerMenuItem(R.string.attach_picture, R.drawable.ease_chat_image_selector, R.id.extend_item_picture);
         chatExtendMenu.registerMenuItem(R.string.attach_location, R.drawable.ease_chat_location_selector, R.id.extend_item_location);
 
-//        if (chatType == EaseConstant.CHATTYPE_GROUP) { // 音视频
-        chatExtendMenu.registerMenuItem(R.string.attach_media_call, R.drawable.em_chat_video_call_selector, R.id.extend_item_call);
-        chatExtendMenu.registerMenuItem(R.string.attach_file, R.drawable.em_chat_file_selector, R.id.extend_item_file);
-        chatExtendMenu.registerMenuItem(R.string.attach_order, R.drawable.em_chat_order_selector, R.id.extend_item_order);
-//        }
+        if (chatType == EaseConstant.CHATTYPE_GROUP) { // 音视频
+            chatExtendMenu.registerMenuItem(R.string.attach_media_call, R.drawable.em_chat_video_call_selector, R.id.extend_item_call);
+            chatExtendMenu.registerMenuItem(R.string.attach_file, R.drawable.em_chat_file_selector, R.id.extend_item_file);
+            chatExtendMenu.registerMenuItem(R.string.attach_order, R.drawable.em_chat_order_selector, R.id.extend_item_order);
+        }
     }
 
     @Override
@@ -230,7 +231,7 @@ public class ChatFragment extends EaseChatFragment implements OnRecallMessageRes
 //            case R.id.extend_item_video_call:
 //                showSelectDialog();
 //                break;
-            case R.id.extend_item_conference_call:
+            case R.id.extend_item_call:
                 Intent intent = new Intent(getContext(), ConferenceInviteActivity.class).addFlags(FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra(DemoConstant.EXTRA_CONFERENCE_GROUP_ID, conversationId);
                  getContext().startActivity(intent);

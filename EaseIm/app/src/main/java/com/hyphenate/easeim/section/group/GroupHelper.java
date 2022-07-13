@@ -126,6 +126,14 @@ public class GroupHelper {
         return TextUtils.isEmpty(group.getGroupName()) ? groupId : group.getGroupName();
     }
 
+    public static String getGroupCount(String groupId) {
+        EMGroup group = EMClient.getInstance().groupManager().getGroup(groupId);
+        if(group == null) {
+            return String.valueOf(1);
+        }
+        return String.valueOf(group.getMemberCount());
+    }
+
     /**
      * 判断是否加入了群组
      * @param allJoinGroups 所有加入的群组

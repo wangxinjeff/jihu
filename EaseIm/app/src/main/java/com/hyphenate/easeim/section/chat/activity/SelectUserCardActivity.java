@@ -49,8 +49,6 @@ public class SelectUserCardActivity extends BaseInitActivity implements  EaseTit
     private List<KV<String, Integer>> contacts = new ArrayList<>();
     private SelectUserCardActivity.ContactsAdapter contactsAdapter;
     private EaseTitleBar mTitleBar;
-    private ListView mListView;
-    private TextView start_btn;
     private static String groupId;
     private String[] exist_member;
     private String toUser;
@@ -82,10 +80,6 @@ public class SelectUserCardActivity extends BaseInitActivity implements  EaseTit
             }
         });
 
-        mListView = findViewById(R.id.listView);
-        mListView.setAdapter(contactsAdapter);
-        start_btn= findViewById(R.id.btn_start);
-        start_btn.setVisibility(View.GONE);
 
         addHeader();
     }
@@ -183,7 +177,6 @@ public class SelectUserCardActivity extends BaseInitActivity implements  EaseTit
                 hideKeyboard();
             }
         });
-        mListView.addHeaderView(headerView);
     }
 
 
@@ -259,7 +252,6 @@ public class SelectUserCardActivity extends BaseInitActivity implements  EaseTit
         private List<KV<String, Integer>> contacts = new ArrayList<>();
 
         private SelectUserCardActivity.ContactsAdapter.ContactFilter mContactFilter;
-        public ConferenceInviteActivity.ICheckItemChangeCallback checkItemChangeCallback;
         private OnItemClickListener mOnItemClickListener;
 
 

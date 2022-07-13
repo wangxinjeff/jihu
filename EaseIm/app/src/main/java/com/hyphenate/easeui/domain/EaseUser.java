@@ -30,7 +30,17 @@ public class EaseUser implements Serializable {
     @NonNull
     private String username;
     private String nickname;
+
+    public boolean isChecked() {
+        return isChecked;
+    }
+
+    public void setChecked(boolean checked) {
+        isChecked = checked;
+    }
+
     private boolean isOwner = false;
+    private boolean isChecked = false;
 
     public boolean isOwner() {
         return isOwner;

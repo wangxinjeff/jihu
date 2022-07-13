@@ -161,7 +161,7 @@ public class ChatActivity extends BaseInitActivity implements EaseTitleBar.OnBac
     private void setDefaultTitle() {
         String title;
         if(chatType == DemoConstant.CHATTYPE_GROUP) {
-            title = GroupHelper.getGroupName(conversationId);
+            title = GroupHelper.getGroupName(conversationId) + "(" +GroupHelper.getGroupCount(conversationId) + ")";
         }else if(chatType == DemoConstant.CHATTYPE_CHATROOM) {
             EMChatRoom room = EMClient.getInstance().chatroomManager().getChatRoom(conversationId);
             if(room == null) {

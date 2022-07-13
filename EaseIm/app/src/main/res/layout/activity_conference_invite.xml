@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.hyphenate.easeui.widget.EaseTitleBar
@@ -9,30 +10,28 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/em_common_title_bar_height"
         app:titleBarDisplayHomeAsUpEnabled="true"
-        app:titleBarTitle="@string/Select_the_contact"/>
+        app:titleBarTitle="@string/Select_the_contact"
+        app:titleBarLeftImage="@drawable/icon_back"
+        app:titleBarRightTitle="@string/confirm"
+        />
 
-    <TextView
-        android:id="@+id/btn_start"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/selected_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:visibility="gone"
+        />
+
+    <com.hyphenate.easeim.common.widget.SearchBar
+        android:id="@+id/search_bar"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/adaptive_52dp"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/demo_btn_bg_conference_start"
-        android:clickable="true"
-        android:gravity="center"
-        android:onClick="onClick"
-        android:text="@string/button_start_video_conference"
-        android:textColor="#FFF"
-        android:textSize="@dimen/adaptive_18sp" />
+        android:layout_height="@dimen/search_view_height"/>
 
-    <ListView
-        android:id="@+id/listView"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/member_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/btn_start"
-        android:layout_below="@+id/title_bar"
-        android:background="@android:color/white"
-        android:cacheColorHint="#00000000"
-        android:descendantFocusability="afterDescendants"
-        android:fastScrollEnabled="true" />
+        />
 
-</RelativeLayout>
+</LinearLayout>
