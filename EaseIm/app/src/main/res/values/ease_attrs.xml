@@ -303,5 +303,7 @@
     <attr name="letterColor" format="color"/>
     <attr name="callFloatBg" format="color"/>
     <attr name="callFloatTimeBg" format="color"/>
+    <attr name="btnUnClick" format="color"/>
+    <attr name="btnClick" format="color"/>
 
 </resources>

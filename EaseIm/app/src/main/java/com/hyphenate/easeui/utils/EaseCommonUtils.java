@@ -364,4 +364,22 @@ public class EaseCommonUtils {
         inputMethodManager.hideSoftInputFromWindow(editText.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
+    public static boolean isNetConnection(Context mContext) {
+        if (mContext!=null){
+            ConnectivityManager connectivityManager = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+            if(networkInfo != null){
+                boolean connected = networkInfo.isConnected();
+                if (connected){
+                    if (networkInfo.getState()== NetworkInfo.State.CONNECTED){
+                        return true;
+                    }else{
+                        return false;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
 }

@@ -146,6 +146,8 @@
         <item name="letterColor">@color/letter_color</item>
         <item name="callFloatBg">@color/call_float_bg</item>
         <item name="callFloatTimeBg">@color/call_float_time_bg</item>
+        <item name="btnClick">@color/btn_clicked</item>
+        <item name="btnUnClick">@color/btn_un_clicked</item>
     </style>
 
     <style name="NoActionBar.Dark" parent="Theme.AppCompat.NoActionBar">

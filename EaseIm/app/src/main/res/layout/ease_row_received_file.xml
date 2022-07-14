@@ -46,10 +46,11 @@
             android:background="@drawable/ease_chat_bubble_receive_bg" >
 
             <ImageView
+                android:id="@+id/file_type"
                 android:layout_width="@dimen/ease_chat_file_icon_size"
                 android:layout_height="@dimen/ease_chat_file_icon_size"
                 android:layout_marginLeft="@dimen/ease_chat_file_icon_margin"
-                android:src="@drawable/ease_chat_item_file" />
+                android:src="@drawable/icon_file_other" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -99,7 +100,9 @@
                         tools:text="@string/not_download"
                         android:textColor="#ffb6b6b6"
                         android:paddingRight="8dp"
-                        android:textSize="12sp" />
+                        android:textSize="12sp"
+                        android:visibility="gone"
+                        />
 
                 </RelativeLayout>
 

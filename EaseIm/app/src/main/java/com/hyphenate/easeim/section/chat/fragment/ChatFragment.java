@@ -30,6 +30,7 @@ import com.hyphenate.easeim.common.constant.DemoConstant;
 import com.hyphenate.easeim.common.livedatas.LiveDataBus;
 import com.hyphenate.easeim.section.av.VideoCallActivity;
 import com.hyphenate.easeim.section.base.BaseActivity;
+import com.hyphenate.easeim.section.chat.activity.FileDetailsActivity;
 import com.hyphenate.easeim.section.chat.activity.ForwardMessageActivity;
 import com.hyphenate.easeim.section.chat.activity.OrderListActivity;
 import com.hyphenate.easeim.section.chat.activity.PickAtUserActivity;

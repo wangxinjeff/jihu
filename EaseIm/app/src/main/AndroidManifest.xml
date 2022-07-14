@@ -566,6 +566,9 @@
         <activity
             android:name="com.zhihu.matisse.internal.ui.SelectedPreviewActivity"
             android:screenOrientation="portrait" />
+
+        <activity android:name=".section.chat.activity.FileDetailsActivity"
+            />
     </application>
 
 </manifest>

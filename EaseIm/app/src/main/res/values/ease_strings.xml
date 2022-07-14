@@ -824,5 +824,8 @@
     <string name="error_original">Size does not exceed %1$sM.</string>
     <string name="error_video">Video length does not exceed %1$d seconds.</string>
     <string name="error_size">File size should not exceed %1$dM.</string>
-
+    <string name="file_details">File Details</string>
+    <string name="open_file">Open file</string>
+    <string name="start_download">Start download</string>
+    <string name="try_again_later">Network connection failed. Please try again later</string>
 </resources>

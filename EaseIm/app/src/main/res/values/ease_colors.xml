@@ -55,6 +55,8 @@
     <color name="letter_color">#7e7e7f</color>
     <color name="call_float_bg">#1c1c1c</color>
     <color name="call_float_time_bg">#252525</color>
+    <color name="btn_un_clicked">#4798cb</color>
+    <color name="btn_clicked">#4798cb</color>
 
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>

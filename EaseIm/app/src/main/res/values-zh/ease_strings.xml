@@ -823,4 +823,9 @@
     <string name="error_video">视频长度不超过%1$d秒。</string>
     <string name="error_size">文件大小不要超过%1$dM。</string>
 
+    <string name="file_details">文件详情</string>
+    <string name="open_file">打开文件</string>
+    <string name="start_download">开始下载</string>
+    <string name="try_again_later">网络连接失败，请稍后再试</string>
+
 </resources>

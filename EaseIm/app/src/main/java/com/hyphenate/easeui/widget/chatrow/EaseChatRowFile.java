@@ -5,8 +5,13 @@ import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.webkit.MimeTypeMap;
 import android.widget.BaseAdapter;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.core.content.ContextCompat;
 
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMMessage;
@@ -37,6 +42,7 @@ public class EaseChatRowFile extends EaseChatRow {
      */
     protected TextView fileStateView;
     private EMNormalFileMessageBody fileMessageBody;
+    private ImageView fileTypeImg;
 
     public EaseChatRowFile(Context context, boolean isSender) {
         super(context, isSender);
@@ -58,6 +64,7 @@ public class EaseChatRowFile extends EaseChatRow {
         fileSizeView = (TextView) findViewById(R.id.tv_file_size);
         fileStateView = (TextView) findViewById(R.id.tv_file_state);
         percentageView = (TextView) findViewById(R.id.percentage);
+        fileTypeImg = findViewById(R.id.file_type);
 	}
 
 	@Override
@@ -72,6 +79,27 @@ public class EaseChatRowFile extends EaseChatRow {
                         fileNameView.getWidth() - fileNameView.getPaddingLeft() - fileNameView.getPaddingRight());
             fileNameView.setText(content);
         });
+
+        if(fileMessageBody.getFileName().contains(".jpg") || fileMessageBody.getFileName().contains(".JPG")
+                || fileMessageBody.getFileName().contains(".png") || fileMessageBody.getFileName().contains(".PNG")
+                || fileMessageBody.getFileName().contains(".jpeg") || fileMessageBody.getFileName().contains(".JPEG")){
+            fileTypeImg.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.icon_file_img));
+        } else if (fileMessageBody.getFileName().contains(".doc")){
+            fileTypeImg.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.icon_file_doc));
+        } else if (fileMessageBody.getFileName().contains(".exel") || fileMessageBody.getFileName().contains(".xlsx")){
+            fileTypeImg.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.icon_file_exel));
+        } else if (fileMessageBody.getFileName().contains(".pdf")){
+            fileTypeImg.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.icon_file_pdf));
+        } else if (fileMessageBody.getFileName().contains(".txt")){
+            fileTypeImg.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.icon_file_text));
+        } else if (fileMessageBody.getFileName().contains(".docx")){
+            fileTypeImg.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.icon_file_docx));
+        } else if (fileMessageBody.getFileName().contains(".ppt")){
+            fileTypeImg.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.icon_file_ppt));
+        } else {
+            fileTypeImg.setImageDrawable(ContextCompat.getDrawable(context, R.drawable.icon_file_other));
+        }
+
         fileSizeView.setText(TextFormater.getDataSize(fileMessageBody.getFileSize()));
         if (message.direct() == EMMessage.Direct.SEND){
             if (EaseFileUtils.isFileExistByUri(context, filePath)
