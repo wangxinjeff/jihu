@@ -301,5 +301,7 @@
     <attr name="searchHintColor" format="color"/>
     <attr name="searchCloseColor" format="color"/>
     <attr name="letterColor" format="color"/>
+    <attr name="callFloatBg" format="color"/>
+    <attr name="callFloatTimeBg" format="color"/>
 
 </resources>

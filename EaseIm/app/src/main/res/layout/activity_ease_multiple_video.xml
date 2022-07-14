@@ -4,11 +4,13 @@
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
     android:clipToPadding="false"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    android:background="?attr/themeBgColor"
+    >
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="44dp"
-        android:background="#858585">
+        >
 
         <ImageView
             android:id="@+id/btn_float"
@@ -44,27 +46,18 @@
 
 
     <!--多人会议时显示成员画面控件容器-->
-    <RelativeLayout
-        android:id="@+id/viewGroupLayout"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="44dp"
-        android:layout_marginBottom="222dp"
-        android:background="#858585"
-        android:orientation="vertical">
         <com.hyphenate.easecallkit.base.EaseCallMemberViewGroup
             android:id="@+id/surface_view_group"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:animateLayoutChanges="true"
-            android:background="#858585" />
-    </RelativeLayout>
+            android:layout_marginTop="44dp"
+            android:layout_marginBottom="222dp"
+            android:animateLayoutChanges="true" />
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="222dp"
-        android:layout_alignParentBottom="true"
-        android:background="#858585">
+        android:layout_alignParentBottom="true">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_marginTop="10dp"

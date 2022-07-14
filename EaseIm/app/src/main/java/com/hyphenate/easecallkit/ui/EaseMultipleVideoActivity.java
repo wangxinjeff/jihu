@@ -111,7 +111,9 @@ public class EaseMultipleVideoActivity extends EaseBaseCallActivity implements V
 
     private static final String TAG = EaseMultipleVideoActivity.class.getSimpleName();
 
+    // 仲裁计时
     private TimeHandler timehandler;
+    //通话时长
     private TimeHandler timeUpdataTimer;
     private RtcEngine mRtcEngine;
 
@@ -135,7 +137,6 @@ public class EaseMultipleVideoActivity extends EaseBaseCallActivity implements V
     protected Ringtone ringtone;
     private String ringFile;
     private MediaPlayer mediaPlayer;
-    private RelativeLayout viewGroupLayout;
 
 
     volatile private boolean mConfirm_ring = false;
@@ -539,7 +540,6 @@ public class EaseMultipleVideoActivity extends EaseBaseCallActivity implements V
 
     public void initView(){
         incomingCallView = (EaseCommingCallView)findViewById(R.id.incoming_call_view);
-        viewGroupLayout = findViewById(R.id.viewGroupLayout);
         callConferenceViewGroup = (EaseCallMemberViewGroup)findViewById(R.id.surface_view_group);
         inviteBtn = (ImageView)findViewById(R.id.btn_invite);
         callTimeView = (TextView)findViewById(R.id.tv_call_time);

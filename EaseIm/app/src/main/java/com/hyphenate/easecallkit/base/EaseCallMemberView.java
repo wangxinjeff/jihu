@@ -4,7 +4,9 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.os.AsyncTask;
+import android.text.TextUtils;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.SurfaceView;
@@ -15,10 +17,16 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.FutureTarget;
+import com.bumptech.glide.request.RequestOptions;
 import com.hyphenate.easeim.R;
 
 import com.hyphenate.easecallkit.utils.EaseCallKitUtils;
+import com.hyphenate.easeui.EaseIM;
+import com.hyphenate.easeui.domain.EaseUser;
+import com.hyphenate.easeui.provider.EaseUserProfileProvider;
+
 import io.agora.rtc.models.UserInfo;
 
 
@@ -106,12 +114,17 @@ public class EaseCallMemberView extends RelativeLayout {
 
     public void updateUserInfo(){
         if(userInfo != null){
-            nameView.setText(EaseCallKitUtils.getUserNickName(userInfo.getUserName()));
-            headUrl = EaseCallKitUtils.getUserHeadImage(userInfo.getUserName());
-            if(headUrl != null){
-                loadHeadImage();
-            }else{
-                avatarView.setImageResource(R.drawable.call_memberview_background);
+            EaseUserProfileProvider userProvider = EaseIM.getInstance().getUserProvider();
+            if(userProvider != null) {
+                EaseUser user = userProvider.getUser(userInfo.getUserName());
+                if(user != null) {
+                    if(!TextUtils.isEmpty(user.getNickname())) {
+                        nameView.setText(user.getNickname());
+                    }
+                    if(!TextUtils.isEmpty(user.getAvatar())) {
+                        Glide.with(context).load(user.getAvatar()).apply(RequestOptions.bitmapTransform(new CircleCrop())).error(R.drawable.call_memberview_background).into(avatarView);
+                    }
+                }
             }
         }
     }

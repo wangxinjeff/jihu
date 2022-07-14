@@ -228,4 +228,5 @@
     <dimen name="height_small">24dp</dimen>
     <dimen name="icon_size_small">13dp</dimen>
     <dimen name="margin_small">5dp</dimen>
+    <dimen name="call_float_size">88dp</dimen>
 </resources>

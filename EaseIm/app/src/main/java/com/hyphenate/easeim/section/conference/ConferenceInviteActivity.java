@@ -27,7 +27,9 @@ import com.hyphenate.easeui.manager.EaseThreadManager;
 import com.hyphenate.easeui.widget.EaseTitleBar;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class ConferenceInviteActivity extends BaseInitActivity implements View.OnClickListener, EaseTitleBar.OnBackPressListener, ConferenceInviteAdapter.OnItemCheckedListener {
     private static final String TAG = "ConferenceInvite";
@@ -92,9 +94,27 @@ public class ConferenceInviteActivity extends BaseInitActivity implements View.O
         mTitleBar.setRightLayoutClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                String[] members = getSelectMembers();
+                if(members.length == 0) {
+                    showToast(R.string.tips_select_contacts_first);
+                    return;
+                }
+                //用户自定义扩展字段
+                Map<String, Object> params = new HashMap<>();
+                params.put("groupId", groupId);
+                //开始邀请人员
+                EaseCallKit.getInstance().startInviteMultipleCall(members,params);
+                finish();
             }
         });
+    }
+
+    private String[] getSelectMembers(){
+        String[] array = new String[selectedList.size()];
+        for(int i = 0; i < selectedList.size(); i++){
+            array[i] = selectedList.get(i).getUsername();
+        }
+        return array;
     }
 
     @Override

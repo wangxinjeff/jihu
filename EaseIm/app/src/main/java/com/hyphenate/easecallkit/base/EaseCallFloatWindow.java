@@ -17,6 +17,9 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
+
+import androidx.core.content.ContextCompat;
 
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeim.R;
@@ -62,6 +65,7 @@ public class EaseCallFloatWindow {
     private long costSeconds;
     private ConferenceInfo conferenceInfo;
     private SingleCallInfo singleCallInfo;
+    private TextView callTime;
 
     public EaseCallFloatWindow(Context context) {
         initFloatWindow(context);
@@ -141,9 +145,35 @@ public class EaseCallFloatWindow {
 
         floatView = LayoutInflater.from(context).inflate(R.layout.activity_float_window, null);
         floatView.setFocusableInTouchMode(true);
+        callTime = floatView.findViewById(R.id.call_time);
 
         if(floatView instanceof ViewGroup) {
             chronometer = new MyChronometer(context);
+            chronometer.setOnChronometerTickListener(new MyChronometer.OnChronometerTickListener() {
+                @Override
+                public void onChronometerTick(MyChronometer chronometer) {
+                    String secondsText = "";
+                    String minutesText = "";
+                    String hoursText = "";
+                    long callDuring = costSeconds + chronometer.getCostSeconds();
+                    long seconds = callDuring % 60;
+                    secondsText = String.valueOf(seconds);
+                    if(seconds < 10){
+                        secondsText = "0" + seconds;
+                    }
+                    long minutes = callDuring/60 %60;
+                    minutesText = String.valueOf(minutes);
+                    if(minutes < 10){
+                        minutesText = "0" + minutesText;
+                    }
+                    long hours =  callDuring/60/60;
+                    hoursText = String.valueOf(hours);
+                    if(hours < 10){
+                        hoursText = "0" + hoursText;
+                    }
+                    callTime.setText(hoursText + ":" + minutesText +":" + secondsText );
+                }
+            });
             ViewGroup.LayoutParams params = new ViewGroup.LayoutParams(0, 0);
             ((ViewGroup)floatView).addView(chronometer, params);
         }
@@ -287,18 +317,18 @@ public class EaseCallFloatWindow {
         }
         memberView = view;
         uId = memberView.getUserId();
-        if (memberView.isVideoOff()) { // 视频未开启
-            floatView.findViewById(R.id.layout_call_voice).setVisibility(View.VISIBLE);
-            floatView.findViewById(R.id.layout_call_video).setVisibility(View.GONE);
-        } else { // 视频已开启
-            floatView.findViewById(R.id.layout_call_voice).setVisibility(View.GONE);
-            floatView.findViewById(R.id.layout_call_video).setVisibility(View.VISIBLE);
-
-            String userAccount = memberView.getUserAccount();
-            int uId = memberView.getUserId();
-            boolean isSelf = TextUtils.equals(userAccount, EMClient.getInstance().getCurrentUser());
-            prepareSurfaceView(isSelf,uId);
-        }
+//        if (memberView.isVideoOff()) { // 视频未开启
+//            floatView.findViewById(R.id.layout_call_voice).setVisibility(View.VISIBLE);
+//            floatView.findViewById(R.id.layout_call_video).setVisibility(View.GONE);
+//        } else { // 视频已开启
+//            floatView.findViewById(R.id.layout_call_voice).setVisibility(View.GONE);
+//            floatView.findViewById(R.id.layout_call_video).setVisibility(View.VISIBLE);
+//
+//            String userAccount = memberView.getUserAccount();
+//            int uId = memberView.getUserId();
+//            boolean isSelf = TextUtils.equals(userAccount, EMClient.getInstance().getCurrentUser());
+//            prepareSurfaceView(isSelf,uId);
+//        }
     }
 
     /**

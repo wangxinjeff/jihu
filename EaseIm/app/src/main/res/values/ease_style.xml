@@ -112,6 +112,8 @@
         <item name="searchHintColor">@color/search_hint_color</item>
         <item name="searchCloseColor">@color/search_close_color</item>
         <item name="letterColor">@color/letter_color</item>
+        <item name="callFloatBg">@color/call_float_bg</item>
+        <item name="callFloatTimeBg">@color/call_float_time_bg</item>
     </style>
 
     <style name="NightTheme" parent="Theme.AppCompat.DayNight.NoActionBar">
@@ -142,6 +144,8 @@
         <item name="searchHintColor">@color/search_hint_color</item>
         <item name="searchCloseColor">@color/search_close_color</item>
         <item name="letterColor">@color/letter_color</item>
+        <item name="callFloatBg">@color/call_float_bg</item>
+        <item name="callFloatTimeBg">@color/call_float_time_bg</item>
     </style>
 
     <style name="NoActionBar.Dark" parent="Theme.AppCompat.NoActionBar">
