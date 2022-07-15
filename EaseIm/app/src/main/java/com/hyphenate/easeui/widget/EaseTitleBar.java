@@ -106,6 +106,8 @@ public class EaseTitleBar extends RelativeLayout implements View.OnClickListener
             Drawable leftDrawable = ta.getDrawable(R.styleable.EaseTitleBar_titleBarLeftImage);
             if (null != leftDrawable) {
                 leftImage.setImageDrawable(leftDrawable);
+            } else {
+                leftImage.setImageResource(R.drawable.icon_back);
             }
             Drawable rightDrawable = ta.getDrawable(R.styleable.EaseTitleBar_titleBarRightImage);
             if (null != rightDrawable) {

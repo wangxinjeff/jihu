@@ -63,6 +63,12 @@ public class ShowChatHistoryActivity extends BaseInitActivity implements EaseCha
         messageListLayout.setOnMessageTouchListener(this);
         messageListLayout.setMessageListItemClickListener(this);
         messageListLayout.setOnChatErrorListener(this);
+        titleBar.setOnBackPressListener(new EaseTitleBar.OnBackPressListener() {
+            @Override
+            public void onBackPress(View view) {
+                onBackPressed();
+            }
+        });
     }
 
     @Override

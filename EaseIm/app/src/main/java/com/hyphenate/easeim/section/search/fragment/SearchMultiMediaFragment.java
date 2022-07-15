@@ -14,7 +14,6 @@ import com.hyphenate.chat.EMImageMessageBody;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeim.R;
 import com.hyphenate.easeim.section.base.BaseInitFragment;
-import com.hyphenate.easeim.section.chat.activity.FileDetailsActivity;
 import com.hyphenate.easeim.section.search.adapter.MultiMediaListAdapter;
 import com.hyphenate.easeui.interfaces.OnItemClickListener;
 import com.hyphenate.easeui.ui.EaseShowBigImageActivity;
@@ -55,16 +54,7 @@ public class SearchMultiMediaFragment extends BaseInitFragment {
     @Override
     protected void initData() {
         super.initData();
-        if(conversation != null){
-            List<EMMessage> list =  conversation.searchMsgFromDB(System.currentTimeMillis(), 1000, EMConversation.EMSearchDirection.UP);
-            List<EMMessage> data = new ArrayList<>();
-            for(EMMessage message : list){
-                if(message.getType() == EMMessage.Type.IMAGE || message.getType() == EMMessage.Type.VIDEO){
-                    data.add(message);
-                }
-            }
-            adapter.setData(data);
-        }
+        refreshData();
     }
 
     @Override
@@ -101,4 +91,22 @@ public class SearchMultiMediaFragment extends BaseInitFragment {
         });
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        refreshData();
+    }
+
+    private void refreshData(){
+        if(conversation != null){
+            List<EMMessage> list =  conversation.searchMsgFromDB(System.currentTimeMillis(), 1000, EMConversation.EMSearchDirection.UP);
+            List<EMMessage> data = new ArrayList<>();
+            for(EMMessage message : list){
+                if(message.getType() == EMMessage.Type.IMAGE || message.getType() == EMMessage.Type.VIDEO){
+                    data.add(message);
+                }
+            }
+            adapter.setData(data);
+        }
+    }
 }

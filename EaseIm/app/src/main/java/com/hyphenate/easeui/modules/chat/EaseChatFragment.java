@@ -223,12 +223,12 @@ public class EaseChatFragment extends EaseBaseFragment implements OnChatLayoutLi
             }else if(requestCode == REQUEST_CODE_SELECT_VIDEO) {
                 onActivityResultForLocalVideos(data);
             } else if(requestCode == Constant.REQUEST_CODE_CHOOSE){
-                chatLayout.sendImageMessage(Matisse.obtainResult(data).get(0));
+                chatLayout.sendImageMessage(Matisse.obtainResult(data).get(0), true);
             } else if(requestCode == Constant.CAMERA_RESULT_CODE){
                 List<String> resultData = SmartMediaPicker.getResultData(getContext(), requestCode, resultCode, data);
                 if (resultData != null && resultData.size() > 0) {
                     if(resultData.get(0).contains(".jpg")){
-                        chatLayout.sendImageMessage(Uri.parse(resultData.get(0)));
+                        chatLayout.sendImageMessage(Uri.parse(resultData.get(0)), true);
                     } else if(resultData.get(0).contains(".mp4")){
                         chatLayout.sendVideoMessage(Uri.parse(resultData.get(0)), SmartMediaPicker.getVideoDuration(getContext(), EaseCompat.getUriForFile(getContext(), new File(resultData.get(0)))));
                     }

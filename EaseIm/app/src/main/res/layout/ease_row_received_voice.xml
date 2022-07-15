@@ -44,6 +44,7 @@
                 android:maxLines="1"
                 android:paddingStart="5dp"
                 android:paddingEnd="6dp"
+                android:layout_marginEnd="5dp"
                 android:layout_toEndOf="@+id/iv_voice"
                 android:textColor="@color/name_title_color"
                 tools:text="3&apos;&apos;"
