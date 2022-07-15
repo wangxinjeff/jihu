@@ -31,6 +31,7 @@ import com.hyphenate.easeim.section.group.adapter.GroupDetailMemberAdapter;
 import com.hyphenate.easeim.section.group.fragment.GroupEditFragment;
 import com.hyphenate.easeim.section.group.viewmodels.GroupDetailViewModel;
 import com.hyphenate.easeim.section.search.SearchHistoryChatActivity;
+import com.hyphenate.easeui.constants.EaseConstant;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.manager.EaseThreadManager;
 import com.hyphenate.easeui.model.EaseEvent;
@@ -278,7 +279,7 @@ public class GroupDetailActivity extends BaseInitActivity implements EaseTitleBa
                 showIntroductionDialog();
                 break;
             case R.id.item_group_history ://查找聊天记录
-                SearchHistoryChatActivity.actionStart(mContext, groupId);
+                SearchHistoryChatActivity.actionStart(mContext, groupId, EaseConstant.CHATTYPE_GROUP);
                 break;
             case R.id.item_group_clear_history://清空聊天记录
                 showClearConfirmDialog();

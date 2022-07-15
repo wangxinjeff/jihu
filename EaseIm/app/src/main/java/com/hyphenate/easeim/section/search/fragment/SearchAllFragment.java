@@ -12,7 +12,9 @@ import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeim.R;
 import com.hyphenate.easeim.common.widget.SearchBar;
 import com.hyphenate.easeim.section.base.BaseInitFragment;
+import com.hyphenate.easeim.section.search.ShowChatHistoryActivity;
 import com.hyphenate.easeim.section.search.adapter.SearchAllAdapter;
+import com.hyphenate.easeui.constants.EaseConstant;
 import com.hyphenate.easeui.interfaces.OnItemClickListener;
 
 import java.util.List;
@@ -24,9 +26,11 @@ public class SearchAllFragment extends BaseInitFragment {
     private SearchAllAdapter allAdapter;
     private EMConversation conversation;
     private String conversationId;
+    private int chatType;
 
-    public SearchAllFragment(String conversationId) {
+    public SearchAllFragment(String conversationId, int chatType) {
         this.conversationId = conversationId;
+        this.chatType = chatType;
         conversation = EMClient.getInstance().chatManager().getConversation(conversationId);
     }
 
@@ -64,7 +68,7 @@ public class SearchAllFragment extends BaseInitFragment {
         allAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-
+                ShowChatHistoryActivity.actionStart(getContext(), conversationId, chatType, allAdapter.getData().get(position).getMsgId());
             }
         });
     }

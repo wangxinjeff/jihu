@@ -85,6 +85,8 @@ public class EaseChatMessageListLayout extends RelativeLayout implements IChatMe
     private MessageListItemClickListener messageListItemClickListener;
     private EaseChatItemStyleHelper chatSetHelper;
 
+    private String historyMsgId = "";
+
     public EaseChatMessageListLayout(@NonNull Context context) {
         this(context, null);
     }
@@ -225,6 +227,7 @@ public class EaseChatMessageListLayout extends RelativeLayout implements IChatMe
     }
 
     public void loadData(String msgId) {
+        historyMsgId = msgId;
         loadData(pageSize, msgId);
     }
 
@@ -250,7 +253,7 @@ public class EaseChatMessageListLayout extends RelativeLayout implements IChatMe
         if(loadDataType == LoadDataType.ROAM) {
             presenter.loadServerMessages(pageSize);
         }else if(loadDataType == LoadDataType.HISTORY) {
-            presenter.loadMoreLocalHistoryMessages(msgId, pageSize, EMConversation.EMSearchDirection.DOWN);
+            presenter.loadMoreLocalHistoryMessages(msgId, pageSize, null);
         }else {
             presenter.loadLocalMessages(pageSize);
         }
@@ -536,9 +539,13 @@ public class EaseChatMessageListLayout extends RelativeLayout implements IChatMe
 
     @Override
     public void loadMoreLocalHistoryMsgSuccess(List<EMMessage> data, EMConversation.EMSearchDirection direction) {
-        if(direction == EMConversation.EMSearchDirection.UP) {
+        if(direction == null || direction == EMConversation.EMSearchDirection.UP) {
             finishRefresh();
             messageAdapter.addData(0, data);
+            loadMoreStatus = LoadMoreStatus.HAS_MORE;
+            if(direction == null){
+                rvList.smoothScrollToPosition(data.indexOf(EMClient.getInstance().chatManager().getMessage(historyMsgId)));
+            }
         }else {
             messageAdapter.addData(data);
             if(data.size() >= pageSize) {

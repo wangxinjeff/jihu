@@ -21,6 +21,7 @@ import com.hyphenate.easeim.section.chat.viewmodel.ChatViewModel;
 import com.hyphenate.easeim.section.contact.activity.ContactDetailActivity;
 import com.hyphenate.easeim.section.dialog.DemoDialogFragment;
 import com.hyphenate.easeim.section.dialog.SimpleDialogFragment;
+import com.hyphenate.easeim.section.search.SearchHistoryChatActivity;
 import com.hyphenate.easeim.section.search.SearchSingleChatActivity;
 import com.hyphenate.easeui.constants.EaseConstant;
 import com.hyphenate.easeui.domain.EaseUser;
@@ -74,7 +75,6 @@ public class SingleChatSetActivity extends BaseInitActivity implements EaseTitle
     protected void initListener() {
         super.initListener();
         titleBar.setOnBackPressListener(this);
-        itemUserInfo.setOnClickListener(this);
         itemSearchHistory.setOnClickListener(this);
         itemClearHistory.setOnClickListener(this);
         itemSwitchTop.setOnCheckedChangeListener(this);
@@ -144,7 +144,7 @@ public class SingleChatSetActivity extends BaseInitActivity implements EaseTitle
                 ContactDetailActivity.actionStart(mContext, user);
                 break;
             case R.id.item_search_history:
-                SearchSingleChatActivity.actionStart(mContext, toChatUsername);
+                SearchHistoryChatActivity.actionStart(mContext, toChatUsername, EaseConstant.CHATTYPE_SINGLE);
                 break;
             case R.id.item_clear_history:
                 clearHistory();

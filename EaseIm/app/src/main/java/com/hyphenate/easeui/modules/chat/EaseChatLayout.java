@@ -1048,22 +1048,9 @@ public class EaseChatLayout extends RelativeLayout implements IChatLayout, IHand
         }
         switch (type) {
             case TXT:
-                EMTranslationResult result = EMClient.getInstance().translationManager().getTranslationResult(message.getMsgId());
-                if(v.getId() == R.id.subBubble && result != null) {
-                    menuHelper.findItemVisible(R.id.action_chat_delete, false);
-
-                    if(result.translateCount() < 2)
-                        menuHelper.findItemVisible(R.id.action_chat_reTranslate, true);
-
-                    menuHelper.findItemVisible(R.id.action_chat_hide, true);
-                } else {
-                    menuHelper.findItemVisible(R.id.action_chat_copy, true);
-                    menuHelper.findItemVisible(R.id.action_chat_recall, true);
-                    menuHelper.findItemVisible(R.id.action_chat_delete, true);
-
-                    if (showTranslation(message))
-                        menuHelper.findItemVisible(R.id.action_chat_translate, true);
-                }
+                menuHelper.findItemVisible(R.id.action_chat_copy, true);
+                menuHelper.findItemVisible(R.id.action_chat_recall, true);
+                menuHelper.findItemVisible(R.id.action_chat_delete, true);
                 break;
             case LOCATION:
             case FILE:

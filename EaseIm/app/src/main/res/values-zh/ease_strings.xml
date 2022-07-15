@@ -828,4 +828,9 @@
     <string name="start_download">开始下载</string>
     <string name="try_again_later">网络连接失败，请稍后再试</string>
 
+    <string name="search_message">消息</string>
+    <string name="search_file">文件</string>
+    <string name="image_and_video">图片及视频</string>
+    <string name="show_chat_history">显示聊天记录</string>
+
 </resources>

@@ -9,6 +9,7 @@ import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMCursorResult;
 import com.hyphenate.chat.EMMessage;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class EaseChatMessagePresenterImpl extends EaseChatMessagePresenter {
@@ -96,14 +97,25 @@ public class EaseChatMessagePresenterImpl extends EaseChatMessagePresenter {
             throw new IllegalArgumentException("please check if set correct msg id");
         }
         EMMessage message = conversation.getMessage(msgId, true);
-        List<EMMessage> messages = conversation.searchMsgFromDB(message.getMsgTime() - 1,
-                                                                pageSize, direction);
+        List<EMMessage> messages = null;
+        if(direction == null){
+            messages = new ArrayList<>();
+            List<EMMessage> beforeMessage = conversation.searchMsgFromDB(message.getMsgTime() - 1,
+                    pageSize, EMConversation.EMSearchDirection.UP);
+            List<EMMessage> afterMessages = conversation.searchMsgFromDB(message.getMsgTime() - 1,
+                    pageSize, EMConversation.EMSearchDirection.DOWN);
+            messages.addAll(afterMessages);
+            messages.addAll(0, beforeMessage);
+        } else {
+            messages = conversation.searchMsgFromDB(message.getMsgTime() - 1, pageSize, direction);
+        }
         if(isActive()) {
+            List<EMMessage> finalMessages = messages;
             runOnUI(()-> {
-                if(messages == null || messages.isEmpty()) {
+                if(finalMessages == null || finalMessages.isEmpty()) {
                     mView.loadNoMoreLocalHistoryMsg();
                 }else {
-                    mView.loadMoreLocalHistoryMsgSuccess(messages, direction);
+                    mView.loadMoreLocalHistoryMsgSuccess(finalMessages, direction);
                 }
             });
 

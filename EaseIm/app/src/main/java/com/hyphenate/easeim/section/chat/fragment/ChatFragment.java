@@ -119,7 +119,7 @@ public class ChatFragment extends EaseChatFragment implements OnRecallMessageRes
     public void initData() {
         super.initData();
         resetChatExtendMenu();
-        addItemMenuAction();
+//        addItemMenuAction();
 
         chatLayout.getChatInputMenu().getPrimaryMenu().getEditText().setText(getUnSendMsg());
         chatLayout.turnOnTypingMonitor(EaseIMHelper.getInstance().getModel().isShowMsgTyping());
@@ -183,21 +183,7 @@ public class ChatFragment extends EaseChatFragment implements OnRecallMessageRes
 
     @Override
     public void onUserAvatarClick(String username) {
-        if(!TextUtils.equals(username, EaseIMHelper.getInstance().getCurrentUser())) {
-            EaseUser user = EaseIMHelper.getInstance().getUserInfo(username);
-            if(user == null){
-                    user = new EaseUser(username);
-                }
-                boolean isFriend =  EaseIMHelper.getInstance().getModel().isContact(username);
-                if(isFriend){
-                    user.setContact(0);
-                }else{
-                    user.setContact(3);
-                }
-                ContactDetailActivity.actionStart(mContext, user);
-        }else{
-            UserDetailActivity.actionStart(mContext,null,null);
-        }
+
     }
 
     @Override
@@ -392,17 +378,18 @@ public class ChatFragment extends EaseChatFragment implements OnRecallMessageRes
     }
 
     private void showDeleteDialog(EMMessage message) {
-        new SimpleDialogFragment.Builder((BaseActivity) mContext)
-                .setTitle(getString(R.string.em_chat_delete_title))
-                .setConfirmColor(R.color.red)
-                .setOnConfirmClickListener(getString(R.string.delete), new DemoDialogFragment.OnConfirmClickListener() {
-                    @Override
-                    public void onConfirmClick(View view) {
-                        chatLayout.deleteMessage(message);
-                    }
-                })
-                .showCancelButton(true)
-                .show();
+        chatLayout.deleteMessage(message);
+//        new SimpleDialogFragment.Builder((BaseActivity) mContext)
+//                .setTitle(getString(R.string.em_chat_delete_title))
+//                .setConfirmColor(R.color.red)
+//                .setOnConfirmClickListener(getString(R.string.delete), new DemoDialogFragment.OnConfirmClickListener() {
+//                    @Override
+//                    public void onConfirmClick(View view) {
+//                        chatLayout.deleteMessage(message);
+//                    }
+//                })
+//                .showCancelButton(true)
+//                .show();
     }
 
     private void showLabelDialog(EMMessage message){

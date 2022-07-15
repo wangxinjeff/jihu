@@ -37,10 +37,13 @@ public class SearchHistoryChatActivity extends BaseInitActivity {
     private TabLayout tabLayout;
     private ViewPager2 viewPager;
     private List<Fragment> fragmentList;
+    private EMConversation conversation;
+    private int chatType;
 
-    public static void actionStart(Context context, String toUsername) {
+    public static void actionStart(Context context, String toUsername, int chatType) {
         Intent intent = new Intent(context, SearchHistoryChatActivity.class);
-        intent.putExtra("toUsername", toUsername);
+        intent.putExtra(EaseConstant.EXTRA_CONVERSATION_ID, toUsername);
+        intent.putExtra(EaseConstant.EXTRA_CHAT_TYPE, chatType);
         context.startActivity(intent);
     }
 
@@ -52,7 +55,9 @@ public class SearchHistoryChatActivity extends BaseInitActivity {
     @Override
     protected void initIntent(Intent intent) {
         super.initIntent(intent);
-        toUsername = getIntent().getStringExtra("toUsername");
+        toUsername = intent.getStringExtra(EaseConstant.EXTRA_CONVERSATION_ID);
+        chatType = intent.getIntExtra(EaseConstant.EXTRA_CHAT_TYPE, EaseConstant.CHATTYPE_SINGLE);
+        conversation = EMClient.getInstance().chatManager().getConversation(toUsername);
     }
 
     @Override
@@ -63,14 +68,18 @@ public class SearchHistoryChatActivity extends BaseInitActivity {
         viewPager = findViewById(R.id.view_pager);
 
         fragmentList = new ArrayList<>();
-        fragmentList.add(new SearchAllFragment(toUsername));
-        fragmentList.add(new SearchFileFragment(toUsername));
+        fragmentList.add(new SearchAllFragment(toUsername, chatType));
+        if(conversation.getType() == EMConversation.EMConversationType.GroupChat){
+            fragmentList.add(new SearchFileFragment(toUsername));
+        }
         fragmentList.add(new SearchMultiMediaFragment(toUsername));
 
         List<String> titleList = new ArrayList<>();
-        titleList.add("消息");
-        titleList.add("文件");
-        titleList.add("图片及视频");
+        titleList.add(getString(R.string.search_message));
+        if(conversation.getType() == EMConversation.EMConversationType.GroupChat) {
+            titleList.add(getString(R.string.search_file));
+        }
+        titleList.add(getString(R.string.image_and_video));
 
         viewPager.setAdapter(new SectionPagerAdapter(this, fragmentList));
         new TabLayoutMediator(tabLayout, viewPager, new TabLayoutMediator.TabConfigurationStrategy(){

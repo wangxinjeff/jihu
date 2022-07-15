@@ -574,6 +574,11 @@
             android:screenOrientation="portrait"
             android:launchMode="singleTask"
             />
+
+        <activity android:name=".section.search.ShowChatHistoryActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"
+            />
     </application>
 
 </manifest>

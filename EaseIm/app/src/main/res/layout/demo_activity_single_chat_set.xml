@@ -27,6 +27,7 @@
         app:arrowItemAvatarWidth="50dp"
         app:arrowItemShowAvatar="true"
         app:arrowItemShowDivider="false"
+        app:arrowItemShowArrow="false"
         android:foreground="@drawable/demo_ripple_click_gray"/>
 
     <com.hyphenate.easeim.common.widget.ArrowItemView
