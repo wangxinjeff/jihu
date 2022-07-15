@@ -29,6 +29,7 @@ import android.widget.EditText;
 import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMConversation.EMConversationType;
 import com.hyphenate.chat.EMMessage;
+import com.hyphenate.chat.EMNormalFileMessageBody;
 import com.hyphenate.chat.EMTextMessageBody;
 import com.hyphenate.easeui.EaseIM;
 import com.hyphenate.easeim.R;
@@ -137,7 +138,8 @@ public class EaseCommonUtils {
             }
             break;
         case FILE:
-            digest = getString(context, R.string.file);
+            EMNormalFileMessageBody fileBody = (EMNormalFileMessageBody) message.getBody();
+            digest = "[" + fileBody.getFileName() + "]";
             break;
         default:
             EMLog.e(TAG, "error, unknow type");

@@ -2,6 +2,7 @@ package com.hyphenate.easeim.common.widget;
 
 import android.content.Context;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
@@ -108,8 +109,13 @@ public class SearchBar extends LinearLayout implements View.OnClickListener {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if(showSearchText){
-                    searchStart.setVisibility(VISIBLE);
-                    searchClose.setVisibility(GONE);
+                    if(TextUtils.isEmpty(s.toString())){
+                        searchStart.setVisibility(GONE);
+                        searchClose.setVisibility(VISIBLE);
+                    }else {
+                        searchStart.setVisibility(VISIBLE);
+                        searchClose.setVisibility(GONE);
+                    }
                 } else {
                     searchClose.setVisibility(VISIBLE);
                     searchStart.setVisibility(GONE);

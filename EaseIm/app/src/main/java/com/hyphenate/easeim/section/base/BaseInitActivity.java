@@ -12,6 +12,7 @@ import com.hyphenate.easeim.section.av.MultipleVideoActivity;
 import com.hyphenate.easeim.section.av.VideoCallActivity;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
@@ -19,7 +20,7 @@ public abstract class BaseInitActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTheme(R.style.NightTheme);
+//        setTheme(R.style.NightTheme);
         setContentView(getLayoutId());
         initSystemFit();
         initIntent(getIntent());

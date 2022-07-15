@@ -484,9 +484,6 @@
         <!--搜索联系人-->
         <activity android:name=".section.search.SearchFriendsActivity"
             android:screenOrientation="portrait"/>
-        <!--搜索群聊会话-->
-        <activity android:name=".section.search.SearchGroupChatActivity"
-            android:screenOrientation="portrait"/>
         <!--搜索单人会话-->
         <activity android:name=".section.search.SearchSingleChatActivity"
             android:screenOrientation="portrait"/>
@@ -568,6 +565,14 @@
             android:screenOrientation="portrait" />
 
         <activity android:name=".section.chat.activity.FileDetailsActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"
+            />
+
+        <activity android:name=".section.search.SearchHistoryChatActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"
             />
     </application>
 
