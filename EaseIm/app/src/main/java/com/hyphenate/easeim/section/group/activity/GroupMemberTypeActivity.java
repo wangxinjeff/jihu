@@ -18,6 +18,7 @@ import com.hyphenate.easeim.EaseIMHelper;
 import com.hyphenate.easeim.R;
 import com.hyphenate.easeim.common.constant.DemoConstant;
 import com.hyphenate.easeim.common.interfaceOrImplement.OnResourceParseCallback;
+import com.hyphenate.easeim.common.livedatas.LiveDataBus;
 import com.hyphenate.easeim.common.widget.SearchBar;
 import com.hyphenate.easeim.section.base.BaseInitActivity;
 import com.hyphenate.easeim.section.group.GroupHelper;
@@ -145,6 +146,17 @@ public class GroupMemberTypeActivity extends BaseInitActivity implements EaseTit
                 viewModel.getGroupMembers(groupId);
             }else if(event.isGroupLeave() && TextUtils.equals(groupId, event.message)) {
                 finish();
+            }
+        });
+
+        LiveDataBus.get().with(DemoConstant.CONTACT_UPDATE, EaseEvent.class).observe(this, event -> {
+            if(event == null) {
+                return;
+            }
+            if(event.isContactChange()) {
+                if(listAdapter != null){
+                    listAdapter.notifyDataSetChanged();
+                }
             }
         });
     }

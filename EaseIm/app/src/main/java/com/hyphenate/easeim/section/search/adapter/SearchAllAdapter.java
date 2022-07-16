@@ -85,7 +85,6 @@ public class SearchAllAdapter extends EaseBaseRecyclerViewAdapter<EMMessage> {
                     }else {
                         EaseUser user = profileProvider.getUser(item.getTo());
                         name.setText(user.getNickname());
-                        name.setText(item.getTo());
                     }
                 } else {
                     if(item.direct() == EMMessage.Direct.SEND) {

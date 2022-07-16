@@ -253,7 +253,19 @@ public class GroupDetailActivity extends BaseInitActivity implements EaseTitleBa
                 }
             });
         });
+
         loadGroup();
+
+        LiveDataBus.get().with(DemoConstant.CONTACT_UPDATE, EaseEvent.class).observe(this, event -> {
+            if(event == null) {
+                return;
+            }
+            if(event.isContactChange()) {
+                if(memberAdapter != null){
+                    memberAdapter.notifyDataSetChanged();
+                }
+            }
+        });
     }
 
     private void loadGroup() {

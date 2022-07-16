@@ -14,6 +14,7 @@ import com.hyphenate.easeui.domain.EaseAvatarOptions;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.provider.EaseUserProfileProvider;
 import com.hyphenate.easeui.widget.EaseImageView;
+import com.hyphenate.util.EMLog;
 
 public class EaseUserUtils {
 
@@ -58,6 +59,7 @@ public class EaseUserUtils {
     public static void setUserAvatar(Context context, String username, ImageView imageView){
     	EaseUser user = getUserInfo(username);
         if(user != null && user.getAvatar() != null){
+            EMLog.e("testapi:", user.getUsername() + "'s avatar = " + user.getAvatar());
             try {
                 int avatarResId = Integer.parseInt(user.getAvatar());
                 Glide.with(context).load(avatarResId).into(imageView);

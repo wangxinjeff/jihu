@@ -14,9 +14,11 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.hyphenate.easeim.R;
+import com.hyphenate.easeui.EaseIM;
 import com.hyphenate.easeui.adapter.EaseAdapterDelegate;
 import com.hyphenate.easeui.adapter.EaseBaseRecyclerViewAdapter;
 import com.hyphenate.easeui.domain.EaseUser;
+import com.hyphenate.easeui.provider.EaseUserProfileProvider;
 
 public class GroupMemberDelegate extends EaseAdapterDelegate<EaseUser, GroupMemberDelegate.ViewHolder>{
 
@@ -34,12 +36,16 @@ public class GroupMemberDelegate extends EaseAdapterDelegate<EaseUser, GroupMemb
         if(item.isOwner()){
             holder.ownerView.setVisibility(View.VISIBLE);
         }
-        String avatarUrl = item.getAvatar();
-        String nickname = item.getNickname();
-        if(!TextUtils.isEmpty(avatarUrl)){
-            Glide.with(holder.mContext).load(avatarUrl).apply(RequestOptions.bitmapTransform(new CircleCrop())).error(R.drawable.ease_group_icon).into(holder.avatarView);
+        EaseUserProfileProvider provider = EaseIM.getInstance().getUserProvider();
+        if(provider != null){
+            EaseUser easeUser = provider.getUser(item.getUsername());
+            if(easeUser != null){
+                item.setAvatar(easeUser.getAvatar());
+                item.setNickname(easeUser.getNickname());
+            }
         }
-        holder.nickView.setText(nickname);
+        Glide.with(holder.mContext).load(item.getAvatar()).apply(RequestOptions.bitmapTransform(new CircleCrop())).error(R.drawable.ease_default_avatar).into(holder.avatarView);
+        holder.nickView.setText(item.getNickname());
     }
 
     static class ViewHolder extends EaseBaseRecyclerViewAdapter.ViewHolder<EaseUser>{

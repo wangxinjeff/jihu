@@ -34,7 +34,9 @@ import com.hyphenate.chat.EMTextMessageBody;
 import com.hyphenate.easeim.section.chat.activity.ChatActivity;
 import com.hyphenate.easeui.EaseIM;
 import com.hyphenate.easeim.R;
+import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.provider.EaseSettingsProvider;
+import com.hyphenate.easeui.provider.EaseUserProfileProvider;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.util.EMLog;
 import com.hyphenate.util.EasyUtils;
@@ -217,7 +219,14 @@ public class EaseNotifier {
                 contentTitle = EMClient.getInstance().groupManager().getGroup(groupId).getGroupName();
                 //todo:根据成员id获取成员昵称
                 String nick = "";
-                notifyText = memberId+":";
+                EaseUserProfileProvider profileProvider = EaseIM.getInstance().getUserProvider();
+                if(profileProvider != null){
+                    EaseUser user = profileProvider.getUser(memberId);
+                    if(user != null){
+                        nick = user.getNickname();
+                    }
+                }
+                notifyText = nick+":";
                 switch (message.getType()){
                     case TXT:
                         notifyText += ((EMTextMessageBody)message.getBody()).getMessage();

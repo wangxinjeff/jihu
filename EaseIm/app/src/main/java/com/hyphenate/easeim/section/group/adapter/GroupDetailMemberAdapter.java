@@ -9,13 +9,16 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.hyphenate.easeim.R;
+import com.hyphenate.easeui.EaseIM;
 import com.hyphenate.easeui.domain.EaseUser;
+import com.hyphenate.easeui.provider.EaseUserProfileProvider;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,7 +44,17 @@ public class GroupDetailMemberAdapter extends RecyclerView.Adapter<GroupDetailMe
                     memberClickListener.onAddClick();
                 }
             });
+            holder.memberAvatar.setImageDrawable(ContextCompat.getDrawable(holder.mContext, R.drawable.ease_default_avatar));
+            holder.memberNick.setText("");
         } else {
+            EaseUserProfileProvider provider = EaseIM.getInstance().getUserProvider();
+            if(provider != null){
+                EaseUser easeUser = provider.getUser(user.getUsername());
+                if(easeUser != null){
+                    user.setAvatar(easeUser.getAvatar());
+                    user.setNickname(easeUser.getNickname());
+                }
+            }
             Glide.with(holder.mContext).load(user.getAvatar()).apply(RequestOptions.bitmapTransform(new CircleCrop())).error(R.drawable.ease_default_avatar).into(holder.memberAvatar);
             holder.memberNick.setText(user.getNickname());
         }

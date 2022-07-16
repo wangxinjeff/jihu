@@ -14,7 +14,9 @@ import android.widget.TextView;
 import com.hyphenate.chat.EMGroup;
 import com.hyphenate.easeim.EaseIMHelper;
 import com.hyphenate.easeim.R;
+import com.hyphenate.easeim.common.constant.DemoConstant;
 import com.hyphenate.easeim.common.interfaceOrImplement.OnResourceParseCallback;
+import com.hyphenate.easeim.common.livedatas.LiveDataBus;
 import com.hyphenate.easeim.common.widget.SearchBar;
 import com.hyphenate.easeim.section.chat.adapter.PickAllUserAdapter;
 import com.hyphenate.easeim.section.base.BaseInitActivity;
@@ -22,6 +24,7 @@ import com.hyphenate.easeim.section.chat.adapter.PickUserAdapter;
 import com.hyphenate.easeim.section.contact.viewmodels.GroupContactViewModel;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.interfaces.OnItemClickListener;
+import com.hyphenate.easeui.model.EaseEvent;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.easeui.widget.EaseRecyclerView;
 import com.hyphenate.easeui.widget.EaseTitleBar;
@@ -119,6 +122,17 @@ public class PickAtUserActivity extends BaseInitActivity implements OnItemClickL
         });
 
         mViewModel.getGroupMembers(mGroupId);
+
+        LiveDataBus.get().with(DemoConstant.CONTACT_UPDATE, EaseEvent.class).observe(this, event -> {
+            if(event == null) {
+                return;
+            }
+            if(event.isContactChange()) {
+                if(mAdapter != null){
+                    mAdapter.notifyDataSetChanged();
+                }
+            }
+        });
     }
 
     private void removeSelf(List<EaseUser> data) {

@@ -68,6 +68,6 @@ public class InviteSelectedAdapter extends EaseBaseRecyclerViewAdapter<EaseUser>
         if(data.getNickname().contains(filter)){
             return true;
         }
-        return super.filterToCompare(filter, data);
+        return false;
     }
 }

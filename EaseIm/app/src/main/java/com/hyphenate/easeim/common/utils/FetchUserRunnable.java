@@ -59,6 +59,9 @@ public class FetchUserRunnable implements Runnable{
                     public void onSuccess(Map<String, EMUserInfo> userInfos) {
                         EMLog.i(TAG, "fetchUserInfoByUserId userInfo:" + userInfos.keySet().toString());
                         if (userInfos != null && userInfos.size() > 0) {
+                            for(EMUserInfo info : userInfos.values()){
+                                EMLog.i(TAG, "username:" + info.getUserId() + ", avatar=" + info.getAvatarUrl() +", nick=" + info.getNickname());
+                            }
                             //更新本地数据库 同时刷新UI列表
                             warpEMUserInfo(userInfos);
                         } else {
@@ -124,11 +127,13 @@ public class FetchUserRunnable implements Runnable{
                         }
                         userEntity.setContact(user.getContact());
                     }else {
-                        userEntity.setContact(3);
+                        userEntity.setContact(0);
                     }
                 }else {
                     userEntity.setContact(3);
                 }
+                refreshContact = true;
+                userEntity.setContact(0);
                 userEntities.add(userEntity);
 
                 //通知callKit更新头像昵称

@@ -17,6 +17,7 @@ import com.hyphenate.easecallkit.EaseCallKit;
 import com.hyphenate.easeim.R;
 import com.hyphenate.easeim.common.constant.DemoConstant;
 import com.hyphenate.easeim.common.interfaceOrImplement.OnResourceParseCallback;
+import com.hyphenate.easeim.common.livedatas.LiveDataBus;
 import com.hyphenate.easeim.common.widget.SearchBar;
 import com.hyphenate.easeim.section.base.BaseInitActivity;
 import com.hyphenate.easeim.section.conference.adapter.ConferenceInviteAdapter;
@@ -24,6 +25,7 @@ import com.hyphenate.easeim.section.conference.adapter.InviteSelectedAdapter;
 import com.hyphenate.easeim.section.group.viewmodels.GroupDetailViewModel;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.manager.EaseThreadManager;
+import com.hyphenate.easeui.model.EaseEvent;
 import com.hyphenate.easeui.widget.EaseTitleBar;
 
 import java.util.ArrayList;
@@ -149,6 +151,20 @@ public class ConferenceInviteActivity extends BaseInitActivity implements View.O
         });
 
         viewModel.getGroupAllMember(groupId);
+
+        LiveDataBus.get().with(DemoConstant.CONTACT_UPDATE, EaseEvent.class).observe(this, event -> {
+            if(event == null) {
+                return;
+            }
+            if(event.isContactChange()) {
+                if(inviteAdapter != null){
+                    inviteAdapter.notifyDataSetChanged();
+                }
+                if(selectedAdapter != null){
+                    selectedAdapter.notifyDataSetChanged();
+                }
+            }
+        });
     }
 
     @Override
