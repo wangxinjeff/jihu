@@ -27,6 +27,7 @@ import com.hyphenate.easeui.utils.EaseDateUtils;
 import com.hyphenate.easeui.utils.EaseSmileUtils;
 
 import java.util.Date;
+import java.util.List;
 
 public class EaseConversationDelegate extends EaseDefaultConversationDelegate {
 
@@ -47,6 +48,10 @@ public class EaseConversationDelegate extends EaseDefaultConversationDelegate {
         holder.mentioned.setVisibility(View.GONE);
         int defaultAvatar = 0;
         String showName = null;
+        if(!setModel.isHideUnreadDot()) {
+            showUnreadNum(holder, item.getUnreadMsgCount());
+        }
+
         if(item.getType() == EMConversation.EMConversationType.GroupChat) {
             if(EaseAtMessageHelper.get().hasAtMeMsg(username)) {
                 holder.mentioned.setText(R.string.were_mentioned);
@@ -55,6 +60,15 @@ public class EaseConversationDelegate extends EaseDefaultConversationDelegate {
             defaultAvatar = R.drawable.ease_group_icon;
             EMGroup group = EMClient.getInstance().groupManager().getGroup(username);
             showName = group != null ? group.getGroupName() : username;
+            List<String> noPushGroups = EMClient.getInstance().pushManager().getNoPushGroups();
+            if(noPushGroups != null && noPushGroups.contains(username)){
+                holder.noPush.setVisibility(View.VISIBLE);
+                if(!setModel.isHideUnreadDot()) {
+                    showUnread(holder, item.getUnreadMsgCount());
+                }
+            } else {
+                holder.noPush.setVisibility(View.GONE);
+            }
         }else if(item.getType() == EMConversation.EMConversationType.ChatRoom) {
             defaultAvatar = R.drawable.ease_chat_room_icon;
             EMChatRoom chatRoom = EMClient.getInstance().chatroomManager().getChatRoom(username);
@@ -62,6 +76,15 @@ public class EaseConversationDelegate extends EaseDefaultConversationDelegate {
         }else {
             defaultAvatar = R.drawable.ease_default_avatar;
             showName = username;
+            List<String> noPushUsers = EMClient.getInstance().pushManager().getNoPushUsers();
+            if(noPushUsers != null && noPushUsers.contains(username)){
+                holder.noPush.setVisibility(View.VISIBLE);
+                if(!setModel.isHideUnreadDot()) {
+                    showUnread(holder, item.getUnreadMsgCount());
+                }
+            } else {
+                holder.noPush.setVisibility(View.GONE);
+            }
         }
         holder.avatar.setImageResource(defaultAvatar);
         holder.name.setText(showName);
@@ -90,10 +113,6 @@ public class EaseConversationDelegate extends EaseDefaultConversationDelegate {
                     }
                 }
             }
-        }
-
-        if(!setModel.isHideUnreadDot()) {
-            showUnreadNum(holder, item.getUnreadMsgCount());
         }
 
         if(item.getAllMsgCount() != 0) {

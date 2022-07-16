@@ -44,7 +44,7 @@ public class GroupDetailMemberAdapter extends RecyclerView.Adapter<GroupDetailMe
                     memberClickListener.onAddClick();
                 }
             });
-            holder.memberAvatar.setImageDrawable(ContextCompat.getDrawable(holder.mContext, R.drawable.ease_default_avatar));
+            holder.memberAvatar.setImageDrawable(ContextCompat.getDrawable(holder.mContext, R.drawable.icon_group_invite));
             holder.memberNick.setText("");
         } else {
             EaseUserProfileProvider provider = EaseIM.getInstance().getUserProvider();

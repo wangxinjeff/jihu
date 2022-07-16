@@ -24,6 +24,7 @@ import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.easeui.utils.EaseDateUtils;
 import com.hyphenate.easeui.utils.EaseEditTextUtils;
 import com.hyphenate.easeui.utils.EaseSmileUtils;
+import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.hyphenate.easeui.widget.EaseImageView;
 
 import java.util.Date;
@@ -80,11 +81,11 @@ public class SearchAllAdapter extends EaseBaseRecyclerViewAdapter<EMMessage> {
                 EaseUserProfileProvider profileProvider = EaseIM.getInstance().getUserProvider();
                 if(profileProvider != null){
                     if(item.direct() == EMMessage.Direct.SEND) {
-                        EaseUser user = profileProvider.getUser(item.getFrom());
-                        name.setText(user.getNickname());
+                        EaseUserUtils.setUserNick(item.getFrom(), name);
+                        EaseUserUtils.setUserAvatar(mContext, item.getFrom(), avatar);
                     }else {
-                        EaseUser user = profileProvider.getUser(item.getTo());
-                        name.setText(user.getNickname());
+                        EaseUserUtils.setUserNick(item.getTo(), name);
+                        EaseUserUtils.setUserAvatar(mContext, item.getTo(), avatar);
                     }
                 } else {
                     if(item.direct() == EMMessage.Direct.SEND) {

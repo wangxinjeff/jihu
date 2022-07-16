@@ -53,6 +53,7 @@ public abstract class EaseDefaultConversationDelegate extends EaseBaseConversati
         public TextView message;
         public Context mContext;
         private final Drawable bgDrawable;
+        public ImageView noPush;
 
         public ViewHolder(@NonNull View itemView, EaseConversationSetStyle setModel) {
             super(itemView);
@@ -66,6 +67,7 @@ public abstract class EaseDefaultConversationDelegate extends EaseBaseConversati
             mMsgState = findViewById(R.id.msg_state);
             mentioned = findViewById(R.id.mentioned);
             message = findViewById(R.id.message);
+            noPush = findViewById(R.id.no_push);
             EaseUserUtils.setUserAvatarStyle(avatar);
             if(setModel != null) {
                 float titleTextSize = setModel.getTitleTextSize();
@@ -168,6 +170,17 @@ public abstract class EaseDefaultConversationDelegate extends EaseBaseConversati
         if(unreadMsgCount > 0) {
             holder.mUnreadMsgNumber.setText(handleBigNum(unreadMsgCount));
             holder.unreadMsgNumberRight.setText(handleBigNum(unreadMsgCount));
+            showUnreadRight(holder, setModel.getUnreadDotPosition() == EaseConversationSetStyle.UnreadDotPosition.RIGHT);
+        }else {
+            holder.mUnreadMsgNumber.setVisibility(View.GONE);
+            holder.unreadMsgNumberRight.setVisibility(View.GONE);
+        }
+    }
+
+    public void showUnread(ViewHolder holder, int unreadMsgCount) {
+        if(unreadMsgCount > 0) {
+            holder.mUnreadMsgNumber.setText("");
+            holder.unreadMsgNumberRight.setText("");
             showUnreadRight(holder, setModel.getUnreadDotPosition() == EaseConversationSetStyle.UnreadDotPosition.RIGHT);
         }else {
             holder.mUnreadMsgNumber.setVisibility(View.GONE);

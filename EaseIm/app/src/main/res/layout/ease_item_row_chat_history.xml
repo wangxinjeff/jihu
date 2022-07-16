@@ -53,6 +53,18 @@
         android:textSize="17sp"
         android:textColor="@color/name_title_color"
         tools:text="聊天室"/>
+    
+    <ImageView
+        android:id="@+id/no_push"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="@+id/name"
+        app:layout_constraintTop_toTopOf="@+id/name"
+        app:layout_constraintBottom_toBottomOf="@+id/name"
+        android:src="@drawable/icon_no_push"
+        android:layout_marginEnd="10dp"
+        android:visibility="gone"
+        />
 
     <TextView
         android:id="@+id/time"
@@ -69,8 +81,8 @@
 
     <ImageView
         android:id="@+id/msg_state"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="12dp"
+        android:layout_height="12dp"
         app:layout_constraintLeft_toRightOf="@id/avatar"
         app:layout_constraintTop_toTopOf="@id/message"
         app:layout_constraintBottom_toBottomOf="@id/message"

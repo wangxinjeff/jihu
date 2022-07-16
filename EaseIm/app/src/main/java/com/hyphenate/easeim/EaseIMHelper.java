@@ -122,6 +122,8 @@ public class EaseIMHelper {
     private Thread fetchUserTread;
     private FetchUserInfoList fetchUserInfoList;
     private boolean isAdmin = false;
+    private List<String> noPushGroups;
+    private List<String> noPushUsers;
 
 
     private EaseIMHelper() {}

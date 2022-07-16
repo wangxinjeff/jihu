@@ -23,6 +23,7 @@ import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMGroup;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMMucSharedFile;
+import com.hyphenate.chat.EMPushConfigs;
 import com.hyphenate.chat.EMTextMessageBody;
 import com.hyphenate.chat.EMUserInfo;
 import com.hyphenate.chat.adapter.EMAChatRoomManagerListener;
@@ -195,6 +196,10 @@ public class ChatPresenter extends EaseChatPresenter {
             // 如果设置群组离线消息免打扰，则不进行消息通知
             List<String> disabledIds = EaseIMHelper.getInstance().getPushManager().getNoPushGroups();
             if(disabledIds != null && disabledIds.contains(message.conversationId())) {
+                return;
+            }
+            List<String> noPushUserIds = EaseIMHelper.getInstance().getPushManager().getNoPushUsers();
+            if(noPushUserIds != null && noPushUserIds.contains(message.conversationId())) {
                 return;
             }
             // in background, do not refresh UI, notify it in notification bar

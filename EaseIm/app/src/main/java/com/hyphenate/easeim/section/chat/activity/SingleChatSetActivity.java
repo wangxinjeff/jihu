@@ -8,6 +8,9 @@ import android.view.View;
 
 import androidx.lifecycle.ViewModelProvider;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
 import com.hyphenate.easeim.R;
@@ -23,10 +26,13 @@ import com.hyphenate.easeim.section.dialog.DemoDialogFragment;
 import com.hyphenate.easeim.section.dialog.SimpleDialogFragment;
 import com.hyphenate.easeim.section.search.SearchHistoryChatActivity;
 import com.hyphenate.easeim.section.search.SearchSingleChatActivity;
+import com.hyphenate.easeui.EaseIM;
 import com.hyphenate.easeui.constants.EaseConstant;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.model.EaseEvent;
+import com.hyphenate.easeui.provider.EaseUserProfileProvider;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
+import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.hyphenate.easeui.widget.EaseTitleBar;
 
 import java.util.List;
@@ -84,11 +90,21 @@ public class SingleChatSetActivity extends BaseInitActivity implements EaseTitle
     @Override
     protected void initData() {
         super.initData();
-        conversation = EMClient.getInstance()
-                                                .chatManager()
-                                                .getConversation(toChatUsername, EaseCommonUtils.getConversationType(EaseConstant.CHATTYPE_SINGLE), true);
+        conversation = EMClient.getInstance().chatManager().getConversation(toChatUsername, EaseCommonUtils.getConversationType(EaseConstant.CHATTYPE_SINGLE), true);
         itemUserInfo.getAvatar().setShapeType(1);
         itemUserInfo.getTvTitle().setText(toChatUsername);
+
+        EaseUserProfileProvider provider = EaseIM.getInstance().getUserProvider();
+        if(provider != null){
+            EaseUser user = provider.getUser(toChatUsername);
+            if(user != null){
+                itemUserInfo.getTvTitle().setText(user.getNickname());
+                Glide.with(mContext).load(user.getAvatar())
+                        .apply(RequestOptions.placeholderOf(R.drawable.ease_default_avatar)
+                                .diskCacheStrategy(DiskCacheStrategy.ALL))
+                        .into(itemUserInfo.getAvatar());
+            }
+        }
         itemSwitchTop.getSwitch().setChecked(!TextUtils.isEmpty(conversation.getExtField()));
 
         viewModel = new ViewModelProvider(this).get(ChatViewModel.class);
