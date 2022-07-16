@@ -34,6 +34,7 @@ import com.hyphenate.chat.EMTextMessageBody;
 import com.hyphenate.easeim.section.chat.activity.ChatActivity;
 import com.hyphenate.easeui.EaseIM;
 import com.hyphenate.easeim.R;
+import com.hyphenate.easeui.constants.EaseConstant;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.provider.EaseSettingsProvider;
 import com.hyphenate.easeui.provider.EaseUserProfileProvider;
@@ -132,12 +133,12 @@ public class EaseNotifier {
         }
 
         // check if app running background
-        if (!EasyUtils.isAppRunningForeground(appContext)) {
+//        if (!EasyUtils.isAppRunningForeground(appContext)) {
             EMLog.d(TAG, "app is running in background");
-            notificationNum++;
+//            notificationNum++;
             fromUsers.add(message.getFrom());
             handleMessage(message);
-        }
+//        }
     }
 
     public synchronized void notify(List<EMMessage> messages) {
@@ -154,7 +155,7 @@ public class EaseNotifier {
         if (!EasyUtils.isAppRunningForeground(appContext)) {
             EMLog.d(TAG, "app is running in background");
             for (EMMessage message : messages) {
-                notificationNum++;
+//                notificationNum++;
                 fromUsers.add(message.getFrom());
             }
             handleMessage(messages.get(messages.size() - 1));
@@ -218,7 +219,7 @@ public class EaseNotifier {
                 String memberId = message.getFrom();
                 contentTitle = EMClient.getInstance().groupManager().getGroup(groupId).getGroupName();
                 //todo:根据成员id获取成员昵称
-                String nick = "";
+                String nick = memberId;
                 EaseUserProfileProvider profileProvider = EaseIM.getInstance().getUserProvider();
                 if(profileProvider != null){
                     EaseUser user = profileProvider.getUser(memberId);
@@ -247,6 +248,8 @@ public class EaseNotifier {
             builder.setContentTitle(contentTitle);
             builder.setTicker(notifyText);
             Intent i = new Intent(appContext, ChatActivity.class);
+            i.putExtra(EaseConstant.EXTRA_CONVERSATION_ID, message.getChatType() == EMMessage.ChatType.GroupChat ? message.getTo() : message.getFrom());
+            i.putExtra(EaseConstant.EXTRA_CHAT_TYPE, message.getChatType() == EMMessage.ChatType.GroupChat ? EaseConstant.CHATTYPE_GROUP : EaseConstant.CHATTYPE_SINGLE);
             PendingIntent pendingIntent = PendingIntent.getActivity(appContext, NOTIFY_ID, i, PendingIntent.FLAG_UPDATE_CURRENT);
             builder.setContentIntent(pendingIntent);
             builder.setContentText(notifyText);

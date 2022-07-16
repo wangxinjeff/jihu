@@ -202,10 +202,17 @@ public class ChatPresenter extends EaseChatPresenter {
             if(noPushUserIds != null && noPushUserIds.contains(message.conversationId())) {
                 return;
             }
-            // in background, do not refresh UI, notify it in notification bar
-            if(!DemoApplication.getInstance().getLifecycleCallbacks().isFront()){
-                getNotifier().notify(message);
+            if(DemoApplication.getInstance().getLifecycleCallbacks().isFront()) {
+                if (message.getChatType() == EMMessage.ChatType.GroupChat && !TextUtils.equals(message.getTo(), EaseIMHelper.getInstance().getChatPageConId())) {
+                    getNotifier().notify(message);
+                }
+            } else {
+                // in background, do not refresh UI, notify it in notification bar
+//                if (!DemoApplication.getInstance().getLifecycleCallbacks().isFront()) {
+                    getNotifier().notify(message);
+//                }
             }
+
             //notify new message
             getNotifier().vibrateAndPlayTone(message);
         }

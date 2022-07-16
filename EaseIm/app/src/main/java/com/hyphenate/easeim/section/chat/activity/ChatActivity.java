@@ -56,6 +56,7 @@ public class ChatActivity extends BaseInitActivity implements EaseTitleBar.OnBac
         conversationId = intent.getStringExtra(EaseConstant.EXTRA_CONVERSATION_ID);
         chatType = intent.getIntExtra(EaseConstant.EXTRA_CHAT_TYPE, EaseConstant.CHATTYPE_SINGLE);
         historyMsgId = intent.getStringExtra(DemoConstant.HISTORY_MSG_ID);
+        EaseIMHelper.getInstance().setChatPageConId(conversationId);
     }
 
     @Override
@@ -215,5 +216,11 @@ public class ChatActivity extends BaseInitActivity implements EaseTitleBar.OnBac
         }else if(TextUtils.equals(action, "TypingEnd")) {
             setDefaultTitle();
         }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EaseIMHelper.getInstance().setChatPageConId("");
     }
 }

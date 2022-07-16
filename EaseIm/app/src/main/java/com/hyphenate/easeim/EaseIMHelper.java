@@ -122,8 +122,7 @@ public class EaseIMHelper {
     private Thread fetchUserTread;
     private FetchUserInfoList fetchUserInfoList;
     private boolean isAdmin = false;
-    private List<String> noPushGroups;
-    private List<String> noPushUsers;
+    private String chatPageConId;
 
 
     private EaseIMHelper() {}
@@ -1059,6 +1058,14 @@ public class EaseIMHelper {
             userInfo.setHeadImage(user.getAvatar());
         }
         EaseCallKit.getInstance().getCallKitConfig().setUserInfo(userName,userInfo);
+    }
+
+    public String getChatPageConId() {
+        return chatPageConId;
+    }
+
+    public void setChatPageConId(String chatPageConId) {
+        this.chatPageConId = chatPageConId;
     }
 
 
