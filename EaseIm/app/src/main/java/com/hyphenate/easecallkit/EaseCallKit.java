@@ -428,7 +428,7 @@ public class EaseCallKit {
                             default:
                                 break;
                         }
-
+                        EMClient.getInstance().chatManager().getConversation(message.getFrom(), EMConversation.EMConversationType.Chat, true).removeMessage(message.getMsgId());
                     }
                 }
             }

@@ -27,6 +27,7 @@ import com.hyphenate.chat.EMPushConfigs;
 import com.hyphenate.chat.EMTextMessageBody;
 import com.hyphenate.chat.EMUserInfo;
 import com.hyphenate.chat.adapter.EMAChatRoomManagerListener;
+import com.hyphenate.easecallkit.utils.EaseMsgUtils;
 import com.hyphenate.easeim.DemoApplication;
 import com.hyphenate.easeim.EaseIMHelper;
 import com.hyphenate.easeim.section.conversation.ConversationListActivity;
@@ -188,6 +189,15 @@ public class ChatPresenter extends EaseChatPresenter {
     @Override
     public void onMessageReceived(List<EMMessage> messages) {
         super.onMessageReceived(messages);
+        // 通话邀请不处理
+        for(EMMessage message : messages){
+            String messageType = message.getStringAttribute(EaseMsgUtils.CALL_MSG_TYPE, "");
+            //有关通话控制信令
+            if(TextUtils.equals(messageType, EaseMsgUtils.CALL_MSG_INFO)){
+                return;
+            }
+        }
+
         EaseEvent event = EaseEvent.create(DemoConstant.MESSAGE_CHANGE_RECEIVE, EaseEvent.TYPE.MESSAGE);
         messageChangeLiveData.with(DemoConstant.MESSAGE_CHANGE_CHANGE).postValue(event);
         for (EMMessage message : messages) {

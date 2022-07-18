@@ -19,6 +19,10 @@ import androidx.annotation.Nullable;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.FutureTarget;
 import com.hyphenate.easeim.R;
+import com.hyphenate.easeui.EaseIM;
+import com.hyphenate.easeui.domain.EaseUser;
+import com.hyphenate.easeui.provider.EaseUserProfileProvider;
+import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.hyphenate.util.EMLog;
 
 import com.hyphenate.easecallkit.utils.EaseCallKitUtils;
@@ -41,6 +45,7 @@ public class EaseCommingCallView extends FrameLayout {
     private EaseImageView avatar_view;
     private Bitmap headBitMap;
     private String headUrl;
+    private String username;
 
     public EaseCommingCallView(@NonNull Context context) {
         this(context, null);
@@ -81,6 +86,7 @@ public class EaseCommingCallView extends FrameLayout {
     }
 
     public void setInviteInfo(String username){
+        this.username = username;
         mInviterName.setText(EaseCallKitUtils.getUserNickName(username));
         headUrl = EaseCallKitUtils.getUserHeadImage(username);
 
@@ -93,46 +99,10 @@ public class EaseCommingCallView extends FrameLayout {
      * @return
      */
     private void loadHeadImage() {
-        if(headUrl != null) {
-            if (headUrl.startsWith("http://") || headUrl.startsWith("https://")) {
-                new AsyncTask<String, Void, Bitmap>() {
-                    //该方法运行在后台线程中，因此不能在该线程中更新UI，UI线程为主线程
-                    @Override
-                    protected Bitmap doInBackground(String... params) {
-                        Bitmap bitmap = null;
-                        FutureTarget<Bitmap> futureTarget =
-                                Glide.with(getContext())
-                                        .asBitmap()
-                                        .load(headUrl)
-                                        .submit(500, 500);
-                        try {
-                            bitmap = futureTarget.get();
-                        }catch (Exception e){
-                            e.getStackTrace();
-                        }
-                        return  bitmap;
-                    }
-
-                    //在doInBackground 执行完成后，onPostExecute 方法将被UI 线程调用，
-                    // 后台的计算结果将通过该方法传递到UI线程，并且在界面上展示给用户.
-                    @Override
-                    protected void onPostExecute(Bitmap bitmap) {
-                        if (bitmap != null && !bitmap.isRecycled()) {
-                            avatar_view.setImageBitmap(bitmap);
-                        }
-                    }
-                }.execute(headUrl);
-            } else {
-                if(headBitMap == null){
-                    //该方法直接传文件路径的字符串，即可将指定路径的图片读取到Bitmap对象
-                    headBitMap = BitmapFactory.decodeFile(headUrl);
-                }
-                if(headBitMap != null && !headBitMap.isRecycled()){
-                    avatar_view.setImageBitmap(headBitMap);
-                }else{
-                    EMLog.d(TAG,"headBitMap is isRecycled");
-                }
-            }
+        EaseUserProfileProvider profileProvider = EaseIM.getInstance().getUserProvider();
+        if(profileProvider != null){
+            EaseUserUtils.setUserAvatar(getContext(), username, avatar_view);
+            EaseUserUtils.setUserNick(username, mInviterName);
         }
     }
 

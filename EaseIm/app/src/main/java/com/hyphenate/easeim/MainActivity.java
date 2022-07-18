@@ -3,10 +3,13 @@ package com.hyphenate.easeim;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 
 import com.hyphenate.EMValueCallBack;
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.chat.EMConversation;
 import com.hyphenate.easeim.common.constant.DemoConstant;
 import com.hyphenate.easeim.common.livedatas.LiveDataBus;
 import com.hyphenate.easeim.common.permission.PermissionsManager;
@@ -16,6 +19,9 @@ import com.hyphenate.easeui.EaseIM;
 import com.hyphenate.easeui.constants.EaseConstant;
 import com.hyphenate.easeui.model.EaseEvent;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Map;
 
 
@@ -24,6 +30,9 @@ public class MainActivity extends BaseInitActivity implements View.OnClickListen
     private AppCompatTextView groupUnread;
     private AppCompatTextView chatText;
     private AppCompatTextView chatUnread;
+    private AppCompatEditText groupId;
+    private AppCompatEditText chatId;
+
 
     @Override
     protected int getLayoutId() {
@@ -37,12 +46,14 @@ public class MainActivity extends BaseInitActivity implements View.OnClickListen
         groupUnread = findViewById(R.id.group_unread);
         chatText = findViewById(R.id.text);
         chatUnread = findViewById(R.id.chat_unread);
+        groupId = findViewById(R.id.group_id);
+        chatId = findViewById(R.id.chat_id);
     }
 
     @Override
     protected void initData() {
         super.initData();
-//        requestPermissions();
+        requestPermissions();
         LiveDataBus.get().with(DemoConstant.MESSAGE_CHANGE_CHANGE, EaseEvent.class).observe(this, event -> {
             if(event == null) {
                 return;
@@ -86,9 +97,30 @@ public class MainActivity extends BaseInitActivity implements View.OnClickListen
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.icon:
+                if(groupId.getText().toString().isEmpty()){
+                    return;
+                }
+                EMConversation conversation = EMClient.getInstance().chatManager().getConversation(groupId.getText().toString(), EMConversation.EMConversationType.GroupChat, true);
+                String ext = conversation.getExtField();
+                try {
+                    JSONObject extJson;
+                    if(!ext.isEmpty()){
+                        extJson = new JSONObject(ext);
+                    } else {
+                        extJson = new JSONObject();
+                    }
+                    extJson.put(EaseConstant.IS_EXCLUSIVE, 1);
+                    conversation.setExtField(extJson.toString());
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
                 EaseIMHelper.getInstance().startChat(MainActivity.this, EaseConstant.CON_TYPE_EXCLUSIVE);
                 break;
             case R.id.text:
+                if(chatId.getText().toString().isEmpty()){
+                    return;
+                }
+                EMClient.getInstance().chatManager().getConversation(chatId.getText().toString(), EMConversation.EMConversationType.Chat, true);
                 EaseIMHelper.getInstance().startChat(MainActivity.this, EaseConstant.CON_TYPE_MY_CHAT);
                 break;
         }

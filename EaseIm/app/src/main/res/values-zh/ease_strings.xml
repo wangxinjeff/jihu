@@ -794,7 +794,7 @@
     <!-- The representation of a time duration when negative. An example is -1:14. This can be used with a countdown timer for example.-->
     <string name="negative_duration">\u2212<xliff:g id="time" example="1:14">%1$s</xliff:g></string>
 
-    <string name="invited_to_join_video_call">邀请您加入视频通话</string>
+    <string name="invited_to_join_video_call">邀请您加入音视频通话</string>
     <string name="camera">摄像头</string>
     <string name="waiting_for_accept">正在等待对方接受邀请</string>
     <string name="make_sure_leave">确定要离开当前通话</string>
@@ -832,5 +832,6 @@
     <string name="search_file">文件</string>
     <string name="image_and_video">图片及视频</string>
     <string name="show_chat_history">显示聊天记录</string>
-
+    <string name="initiated_call">发起音视频通话</string>
+    <string name="call_over">音视频通话已经结束</string>
 </resources>

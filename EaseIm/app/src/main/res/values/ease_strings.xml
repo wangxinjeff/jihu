@@ -832,4 +832,6 @@
     <string name="search_file">File</string>
     <string name="image_and_video">Photos and videos</string>
     <string name="show_chat_history">Displaying chat History</string>
+    <string name="initiated_call">made an call</string>
+    <string name="call_over">Call over</string>
 </resources>

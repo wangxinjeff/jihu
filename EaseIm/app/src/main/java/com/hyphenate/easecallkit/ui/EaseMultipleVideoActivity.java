@@ -41,6 +41,7 @@ import com.hyphenate.chat.EMCmdMessageBody;
 import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeim.R;
+import com.hyphenate.easeui.constants.EaseConstant;
 import com.hyphenate.util.EMLog;
 
 import org.json.JSONException;
@@ -149,6 +150,7 @@ public class EaseMultipleVideoActivity extends EaseBaseCallActivity implements V
     private Map<String, Long> inViteUserMap = new HashMap<>(); //用户定时map存储
     private String invite_ext;
     private String agoraAppId = null;
+    private boolean isNewConference = false;
 
     private static final int PERMISSION_REQ_ID = 22;
     private static final String[] REQUESTED_PERMISSIONS = {
@@ -698,7 +700,7 @@ public class EaseMultipleVideoActivity extends EaseBaseCallActivity implements V
                 public void onGetTokenError(int error, String errorMsg) {
                     EMLog.e(TAG,"onGenerateToken error :" + EMClient.getInstance().getAccessToken());
                     //获取Token失败,退出呼叫
-                    exitChannel();
+                    exitChannel(false);
                 }
             });
         }
@@ -760,7 +762,7 @@ public class EaseMultipleVideoActivity extends EaseBaseCallActivity implements V
             if(listener != null){
                 listener.onEndCallWithReason(callType,channelName, EaseCallEndReason.EaseCallEndReasonHangup,timeUpdataTimer.timePassed*1000);
             }
-            exitChannel();
+            exitChannel(true);
         }else if(view.getId() == R.id.btn_float){
             showFloatWindow();
         }else if(view.getId() == R.id.btn_invite){
@@ -819,7 +821,7 @@ public class EaseMultipleVideoActivity extends EaseBaseCallActivity implements V
                             timehandler.stopTime();
                         }
                         //取消通话
-                        exitChannel();
+                        exitChannel(false);
                         break;
                     case CALL_ANSWER:
                         AnswerEvent answerEvent = (AnswerEvent)event;
@@ -887,7 +889,7 @@ public class EaseMultipleVideoActivity extends EaseBaseCallActivity implements V
 
                             }else if(TextUtils.equals(result, EaseMsgUtils.CALL_ANSWER_REFUSE)){
                                 //退出通话
-                                exitChannel();
+                                exitChannel(false);
                                 if(listener != null){
                                     listener.onEndCallWithReason(callType,channelName, EaseCallEndReason.EaseCallEndReasonRefuse,0);
                                 }
@@ -908,7 +910,7 @@ public class EaseMultipleVideoActivity extends EaseBaseCallActivity implements V
                                     }
                                     Toast.makeText(getApplicationContext(),info , Toast.LENGTH_SHORT).show();
                                     //退出通话
-                                    exitChannel();
+                                    exitChannel(false);
                                     if(listener != null){
                                         listener.onEndCallWithReason(callType,channelName, EaseCallEndReason.EaseCallEndReasonHandleOnOtherDevice,0);
                                     }
@@ -1101,7 +1103,7 @@ public class EaseMultipleVideoActivity extends EaseBaseCallActivity implements V
                         timehandler.stopTime();
 
                         //被叫等待仲裁消息超时
-                        exitChannel();
+                        exitChannel(false);
                         if(listener != null){
                             //对方回复超时
                             listener.onEndCallWithReason(callType,channelName, EaseCallEndReason.EaseCallEndReasonRemoteNoResponse,0);
@@ -1241,6 +1243,7 @@ public class EaseMultipleVideoActivity extends EaseBaseCallActivity implements V
                     @Override
                     public void onSuccess() {
                         EMLog.d(TAG, "Invite call success username:" + username);
+                        conversation.removeMessage(message.getMsgId());
                         if (listener != null) {
                             listener.onInViteCallMessageSent();
                         }
@@ -1264,7 +1267,15 @@ public class EaseMultipleVideoActivity extends EaseBaseCallActivity implements V
                 EMClient.getInstance().chatManager().sendMessage(message);
             }
         }
-
+        if(isNewConference){
+            // 发送通话创建消息
+            JSONObject json = EaseCallKit.getInstance().getInviteExt();
+            EMMessage message = EMMessage.createTextSendMessage("callState", json.optString("groupId"));
+            message.setChatType(EMMessage.ChatType.GroupChat);
+            message.setAttribute(EaseConstant.MESSAGE_ATTR_CALL_STATE, EaseConstant.CONFERENCE_STATE_CREATE);
+            message.setAttribute(EaseConstant.MESSAGE_ATTR_CALL_USER, EMClient.getInstance().getCurrentUser());
+            EMClient.getInstance().chatManager().sendMessage(message);
+        }
         //初始化邀请列表
         EaseCallKit.getInstance().InitInviteeUsers();
     }
@@ -1326,7 +1337,7 @@ public class EaseMultipleVideoActivity extends EaseBaseCallActivity implements V
                 }
                 if(event.callAction == EaseCallAction.CALL_CANCEL){
                     //退出频道
-                    exitChannel();
+                    exitChannel(false);
                 }
             }
 
@@ -1481,7 +1492,7 @@ public class EaseMultipleVideoActivity extends EaseBaseCallActivity implements V
     /**
      * 退出频道
      */
-    void exitChannel(){
+    void exitChannel(boolean isSendEnd){
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -1509,6 +1520,17 @@ public class EaseMultipleVideoActivity extends EaseBaseCallActivity implements V
                         }
                     }
                 }
+
+                if(isSendEnd && mUidsList.size() <= 1 && TextUtils.equals(mUidsList.get(0).getUserAccount(), EMClient.getInstance().getCurrentUser())){
+                    // 最后退出通话的发送结束消息
+                    JSONObject json = EaseCallKit.getInstance().getInviteExt();
+                    EMMessage message = EMMessage.createTextSendMessage("callState", json.optString("groupId"));
+                    message.setChatType(EMMessage.ChatType.GroupChat);
+                    message.setAttribute(EaseConstant.MESSAGE_ATTR_CALL_STATE, EaseConstant.CONFERENCE_STATE_END);
+                    message.setAttribute(EaseConstant.MESSAGE_ATTR_CALL_USER, EMClient.getInstance().getCurrentUser());
+                    EMClient.getInstance().chatManager().sendMessage(message);
+                }
+
                 if(isFloatWindowShowing()){
                     EaseCallFloatWindow.getInstance().dismiss();
                 }
@@ -1596,6 +1618,7 @@ public class EaseMultipleVideoActivity extends EaseBaseCallActivity implements V
     }
 
     private void checkConference(boolean isNew) {
+        isNewConference = isNew;
         ArrayList<String> users = EaseCallKit.getInstance().getInviteeUsers();
         if(users != null && users.size()> 0){
             handler.sendEmptyMessage(EaseMsgUtils.MSG_MAKE_CONFERENCE_VIDEO);
@@ -1768,7 +1791,7 @@ public class EaseMultipleVideoActivity extends EaseBaseCallActivity implements V
             public void onClick(View view) {
                 dialog.dismiss();
                 EMLog.e(TAG, "exitChannelDisplay  exit channel:");
-                exitChannel();
+                exitChannel(true);
             }
         });
 

@@ -29,6 +29,7 @@ import com.hyphenate.easeui.model.EaseEvent;
 import com.hyphenate.easeui.widget.EaseTitleBar;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,7 +47,7 @@ public class ConferenceInviteActivity extends BaseInitActivity implements View.O
     private GroupDetailViewModel viewModel;
     private ConferenceInviteAdapter inviteAdapter;
     private List<EaseUser> memberList;
-    private List<EaseUser> selectedList;
+    private List<String> selectedList;
 
     @Override
     protected int getLayoutId() {
@@ -114,7 +115,7 @@ public class ConferenceInviteActivity extends BaseInitActivity implements View.O
     private String[] getSelectMembers(){
         String[] array = new String[selectedList.size()];
         for(int i = 0; i < selectedList.size(); i++){
-            array[i] = selectedList.get(i).getUsername();
+            array[i] = selectedList.get(i);
         }
         return array;
     }
@@ -130,10 +131,17 @@ public class ConferenceInviteActivity extends BaseInitActivity implements View.O
                     EaseThreadManager.getInstance().runOnMainThread(new Runnable() {
                         @Override
                         public void run() {
-                            for(EaseUser user : data){
+                            for(int i = data.size() - 1; i >= 0; i--){
+                                EaseUser user = data.get(i);
                                 if(TextUtils.equals(user.getUsername(), EMClient.getInstance().getCurrentUser())){
                                     data.remove(user);
-                                    break;
+                                }
+                                if(exist_member != null && exist_member.length > 0){
+                                    for (String s : exist_member) {
+                                        if (TextUtils.equals(user.getUsername(), s)) {
+                                            data.remove(user);
+                                        }
+                                    }
                                 }
                             }
                             memberList = data;
@@ -206,12 +214,16 @@ public class ConferenceInviteActivity extends BaseInitActivity implements View.O
             if(TextUtils.equals(item.getUsername(), user.getUsername())){
                 item.setChecked(user.isChecked());
                 if(item.isChecked()){
-                    selectedList.add(item);
+                    selectedList.add(item.getUsername());
                 } else {
-                    selectedList.remove(item);
+                    selectedList.remove(item.getUsername());
                 }
             }
         }
+        refreshSelectedView();
+    }
+
+    private void refreshSelectedView(){
         if(selectedList.size() > 0){
             selectedView.setVisibility(View.VISIBLE);
             selectedAdapter.setData(selectedList);
@@ -220,6 +232,5 @@ public class ConferenceInviteActivity extends BaseInitActivity implements View.O
             selectedView.setVisibility(View.GONE);
             mTitleBar.setRightLayoutVisibility(View.GONE);
         }
-
     }
 }

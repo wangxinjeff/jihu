@@ -14,12 +14,16 @@ import androidx.appcompat.widget.AppCompatTextView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
+import com.hyphenate.easeim.EaseIMHelper;
 import com.hyphenate.easeim.R;
+import com.hyphenate.easeui.EaseIM;
 import com.hyphenate.easeui.adapter.EaseBaseRecyclerViewAdapter;
 import com.hyphenate.easeui.domain.EaseUser;
+import com.hyphenate.easeui.provider.EaseUserProfileProvider;
+import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.hyphenate.easeui.widget.EaseImageView;
 
-public class InviteSelectedAdapter extends EaseBaseRecyclerViewAdapter<EaseUser> {
+public class InviteSelectedAdapter extends EaseBaseRecyclerViewAdapter<String> {
 
     @Override
     public int getEmptyLayoutId() {
@@ -37,7 +41,7 @@ public class InviteSelectedAdapter extends EaseBaseRecyclerViewAdapter<EaseUser>
 
     }
 
-    private class InviteViewHolder extends ViewHolder<EaseUser> {
+    private class InviteViewHolder extends ViewHolder<String> {
         private AppCompatImageView mAvatar;
         private AppCompatTextView mName;
 
@@ -52,22 +56,17 @@ public class InviteSelectedAdapter extends EaseBaseRecyclerViewAdapter<EaseUser>
         }
 
         @Override
-        public void setData(EaseUser item, int position) {
-            String avatarUrl = item.getAvatar();
-            String nickname = item.getNickname();
-            if(!TextUtils.isEmpty(avatarUrl)){
-                Glide.with(mContext).load(avatarUrl).apply(RequestOptions.bitmapTransform(new CircleCrop())).error(R.drawable.ease_default_avatar).into(mAvatar);
+        public void setData(String item, int position) {
+            EaseUserProfileProvider provider = EaseIM.getInstance().getUserProvider();
+            if(provider != null){
+                EaseUser user = provider.getUser(item);
+                if(user != null){
+                    Glide.with(mContext).load(user.getAvatar()).apply(RequestOptions.bitmapTransform(new CircleCrop())).error(R.drawable.ease_default_avatar).into(mAvatar);
+                    mName.setText(user.getNickname());
+                }
+            } else {
+                mName.setText(item);
             }
-            mName.setText(nickname);
         }
-    }
-
-
-    @Override
-    public boolean filterToCompare(String filter, EaseUser data) {
-        if(data.getNickname().contains(filter)){
-            return true;
-        }
-        return false;
     }
 }

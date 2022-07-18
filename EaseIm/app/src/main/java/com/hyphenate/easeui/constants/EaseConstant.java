@@ -82,4 +82,10 @@ public interface EaseConstant {
 
     String IS_EXCLUSIVE = "isExclusive";
 
+    String MESSAGE_ATTR_CALL_STATE = "callState";
+    String MESSAGE_ATTR_CALL_USER = "callUser";
+
+    String CONFERENCE_STATE_CREATE = "createCall";
+    String CONFERENCE_STATE_END = "endCall";
+
 }

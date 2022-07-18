@@ -132,6 +132,10 @@ public class EaseCommonUtils {
                     }else{
                         digest = getString(context, R.string.dynamic_expression);
                     }
+                } else if(message.getStringAttribute(EaseConstant.MESSAGE_ATTR_CALL_STATE, "").equals("startCall")) {
+                    digest = getString(context, R.string.initiated_call);
+                }else if(message.getStringAttribute(EaseConstant.MESSAGE_ATTR_CALL_STATE, "").equals("endCall")) {
+                    digest = getString(context, R.string.call_over);
                 }else{
                     digest = txtBody.getMessage();
                 }

@@ -59,6 +59,7 @@ import com.hyphenate.easeim.section.chat.delegates.ChatRecallAdapterDelegate;
 import com.hyphenate.easeim.section.chat.delegates.ChatUserCardAdapterDelegate;
 import com.hyphenate.easeim.section.chat.delegates.ChatVideoCallAdapterDelegate;
 import com.hyphenate.easeim.section.chat.delegates.ChatVoiceCallAdapterDelegate;
+import com.hyphenate.easeim.section.chat.delegates.ConferenceStateAdapterDelegate;
 import com.hyphenate.easeim.section.conference.ConferenceInviteActivity;
 import com.hyphenate.easeim.section.conversation.ConversationListActivity;
 import com.hyphenate.easeui.EaseIM;
@@ -122,7 +123,7 @@ public class EaseIMHelper {
     private Thread fetchUserTread;
     private FetchUserInfoList fetchUserInfoList;
     private boolean isAdmin = false;
-    private String chatPageConId;
+    private String chatPageConId = "";
 
 
     private EaseIMHelper() {}
@@ -232,7 +233,8 @@ public class EaseIMHelper {
                 .addMessageType(ChatVoiceCallAdapterDelegate.class)        //语音通话
                 .addMessageType(ChatUserCardAdapterDelegate.class)         //名片消息
                 .addMessageType(EaseCustomAdapterDelegate.class)           //自定义消息
-                .addMessageType(ChatNotificationAdapterDelegate.class)     //入群等通知消息
+                .addMessageType(ChatNotificationAdapterDelegate.class)
+                .addMessageType(ConferenceStateAdapterDelegate.class)//入群等通知消息
                 .setDefaultMessageType(EaseTextAdapterDelegate.class);       //文本
     }
 
@@ -903,7 +905,7 @@ public class EaseIMHelper {
 
             @Override
             public void onInViteCallMessageSent(){
-                LiveDataBus.get().with(DemoConstant.MESSAGE_CHANGE_CHANGE).postValue(new EaseEvent(DemoConstant.MESSAGE_CHANGE_CHANGE, EaseEvent.TYPE.MESSAGE));
+//                LiveDataBus.get().with(DemoConstant.MESSAGE_CHANGE_CHANGE).postValue(new EaseEvent(DemoConstant.MESSAGE_CHANGE_CHANGE, EaseEvent.TYPE.MESSAGE));
             }
 
             @Override
@@ -1091,21 +1093,21 @@ public class EaseIMHelper {
 //            public void onSuccess() {
         //todo:登录成功之后获取专属群列表，开启线程获取，还是获取到之后再返回成功
 
-        EMConversation conversation = EMClient.getInstance().chatManager().getConversation("186245684723713", EMConversation.EMConversationType.GroupChat, true);
-        String ext = conversation.getExtField();
-
-        try {
-            JSONObject extJson;
-            if(!ext.isEmpty()){
-                extJson = new JSONObject(ext);
-            } else {
-                extJson = new JSONObject();
-            }
-            extJson.put(EaseConstant.IS_EXCLUSIVE, 1);
-            conversation.setExtField(extJson.toString());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+//        EMConversation conversation = EMClient.getInstance().chatManager().getConversation("186245684723713", EMConversation.EMConversationType.GroupChat, true);
+//        String ext = conversation.getExtField();
+//
+//        try {
+//            JSONObject extJson;
+//            if(!ext.isEmpty()){
+//                extJson = new JSONObject(ext);
+//            } else {
+//                extJson = new JSONObject();
+//            }
+//            extJson.put(EaseConstant.IS_EXCLUSIVE, 1);
+//            conversation.setExtField(extJson.toString());
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
 
 //                callBack.onSuccess();
 //            }
