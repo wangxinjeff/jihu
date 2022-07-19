@@ -27,6 +27,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.hyphenate.EMCallBack;
 import com.hyphenate.EMError;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.easeim.EaseIMHelper;
@@ -223,7 +224,33 @@ public class LoginFragment extends BaseInitFragment implements View.OnClickListe
             return;
         }
         isClick = true;
-        mFragmentViewModel.login(mUserName, mPwd, isTokenFlag);
+//        mFragmentViewModel.login(mUserName, mPwd, isTokenFlag);
+        EaseIMHelper.getInstance().init(mContext, false);
+        EaseIMHelper.getInstance().loginChat(mUserName, mPwd, new EMCallBack() {
+            @Override
+            public void onSuccess() {
+                LoginFragment.this.dismissLoading();
+                EaseIMHelper.getInstance().setAutoLogin(true);
+                //跳转到主页
+                startActivity(new Intent(mContext, MainActivity.class));
+                mContext.finish();
+            }
+
+            @Override
+            public void onError(int i, String s) {
+                LoginFragment.this.dismissLoading();
+                if(i == EMError.USER_AUTHENTICATION_FAILED) {
+                    ToastUtils.showToast(R.string.demo_error_user_authentication_failed);
+                }else {
+                    ToastUtils.showToast(s);
+                }
+            }
+
+            @Override
+            public void onProgress(int i, String s) {
+                showLoading();
+            }
+        });
     }
 
     @Override

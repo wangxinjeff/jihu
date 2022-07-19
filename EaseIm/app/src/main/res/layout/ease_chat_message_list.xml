@@ -6,7 +6,7 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/message_list"
-        android:background="?attr/themeBgColor"
+        android:background="?attr/themeFloatBgColor"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 

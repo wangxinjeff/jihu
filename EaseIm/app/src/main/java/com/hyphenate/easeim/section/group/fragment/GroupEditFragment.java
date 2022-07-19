@@ -4,10 +4,13 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentTransaction;
 
+import com.hyphenate.easeim.EaseIMHelper;
 import com.hyphenate.easeim.R;
 import com.hyphenate.easeim.section.base.BaseActivity;
 import com.hyphenate.easeim.section.base.BaseDialogFragment;
@@ -22,6 +25,7 @@ public class GroupEditFragment extends BaseDialogFragment implements EaseTitleBa
     private OnSaveClickListener listener;
     private String title;
     private boolean canEdit;
+    private LinearLayout editRoot;
 
     public static void showDialog(BaseActivity activity, String title, String content, String hint, OnSaveClickListener listener) {
         showDialog(activity, title, content, hint, true, listener);
@@ -49,7 +53,7 @@ public class GroupEditFragment extends BaseDialogFragment implements EaseTitleBa
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setStyle(STYLE_NO_TITLE, R.style.NightTheme);
+        setStyle(STYLE_NO_TITLE, R.style.CustomerTheme);
         StatusBarCompat.setLightStatusBar(mContext, true);
     }
 
@@ -76,6 +80,23 @@ public class GroupEditFragment extends BaseDialogFragment implements EaseTitleBa
         super.initView(savedInstanceState);
         titleBar = findViewById(R.id.title_bar);
         etContent = findViewById(R.id.et_content);
+        editRoot = findViewById(R.id.edit_root);
+        if(EaseIMHelper.getInstance().isAdmin()){
+            editRoot.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.theme_float_bg));
+            titleBar.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.theme_bg));
+            titleBar.getTitle().setTextColor(ContextCompat.getColor(getContext(), R.color.normal_text));
+            titleBar.getRightText().setTextColor(ContextCompat.getColor(getContext(), R.color.normal_text));
+            etContent.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.theme_float_bg));
+            etContent.setTextColor(ContextCompat.getColor(getContext(), R.color.normal_text));
+        } else {
+            editRoot.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.theme_float_bg_color));
+            titleBar.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.theme_bg_color));
+            titleBar.getTitle().setTextColor(ContextCompat.getColor(getContext(), R.color.normal_text_color));
+            titleBar.getRightText().setTextColor(ContextCompat.getColor(getContext(), R.color.normal_text_color));
+            etContent.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.theme_float_bg_color));
+            etContent.setTextColor(ContextCompat.getColor(getContext(), R.color.normal_text_color));
+        }
+
 
         if(TextUtils.isEmpty(content)) {
             etContent.setHint(hint);

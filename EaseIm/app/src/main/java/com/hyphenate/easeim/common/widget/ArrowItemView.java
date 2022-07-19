@@ -60,7 +60,7 @@ public class ArrowItemView extends ConstraintLayout {
         tvTitle.setText(title);
 
         int titleColorId = a.getResourceId(R.styleable.ArrowItemView_arrowItemTitleColor, -1);
-        titleColor = a.getColor(R.styleable.ArrowItemView_arrowItemTitleColor, ContextCompat.getColor(getContext(), R.color.name_title_color));
+        titleColor = a.getColor(R.styleable.ArrowItemView_arrowItemTitleColor, ContextCompat.getColor(getContext(), R.color.normal_text_color));
         if(titleColorId != -1) {
             titleColor = ContextCompat.getColor(getContext(), titleColorId);
         }
@@ -81,7 +81,7 @@ public class ArrowItemView extends ConstraintLayout {
         tvContent.setText(content);
 
         int contentColorId = a.getResourceId(R.styleable.ArrowItemView_arrowItemContentColor, -1);
-        contentColor = a.getColor(R.styleable.ArrowItemView_arrowItemContentColor, ContextCompat.getColor(getContext(), R.color.name_title_color));
+        contentColor = a.getColor(R.styleable.ArrowItemView_arrowItemContentColor, ContextCompat.getColor(getContext(), R.color.normal_text_color));
         if(contentColorId != -1) {
             contentColor = ContextCompat.getColor(getContext(), contentColorId);
         }

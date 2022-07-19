@@ -834,4 +834,15 @@
     <string name="show_chat_history">Displaying chat History</string>
     <string name="initiated_call">made an call</string>
     <string name="call_over">Call over</string>
+    <string name="message_notify">Message notify</string>
+    <string name="search_group">Search group</string>
+    <string name="create_group">Create group</string>
+    <string name="group_apply">Group apply</string>
+
+    <string name="order_id">Order id</string>
+    <string name="phone_number">Phone num</string>
+    <string name="win_code">WIN code</string>
+    <string name="open_notify">Open notify</string>
+    <string name="close_notify">Close notify</string>
+    <string name="call_join_group">Please join the group</string>
 </resources>

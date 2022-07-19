@@ -22,6 +22,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
+import androidx.core.content.ContextCompat;
+
+import com.hyphenate.easeim.EaseIMHelper;
 import com.hyphenate.easeim.R;
 import com.hyphenate.easeui.modules.chat.interfaces.EaseChatPrimaryMenuListener;
 import com.hyphenate.easeui.modules.chat.interfaces.IChatPrimaryMenu;
@@ -72,6 +75,14 @@ public class EaseChatPrimaryMenu extends RelativeLayout implements IChatPrimaryM
         faceChecked = findViewById(R.id.iv_face_checked);
         buttonMore = findViewById(R.id.btn_more);
         buttonSend = findViewById(R.id.btn_send);
+
+        if(EaseIMHelper.getInstance().isAdmin()){
+            buttonSetModeVoice.setImageResource(R.drawable.icon_input_voice);
+            buttonSetModeKeyboard.setImageResource(R.drawable.icon_input_keyboard);
+            buttonMore.setBackground(ContextCompat.getDrawable(getContext(),R.drawable.icon_input_add));
+            faceNormal.setImageResource(R.drawable.icon_input_emoji);
+            faceChecked.setImageResource(R.drawable.icon_input_keyboard);
+        }
 
         editText.requestFocus();
 

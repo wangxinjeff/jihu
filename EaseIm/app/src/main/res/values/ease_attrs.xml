@@ -289,8 +289,17 @@
     </declare-styleable>
 
     <attr name="themeBgColor" format="color"/>
-    <attr name="timeTextColor" format="color"/>
-    <attr name="titleNameColor" format="color"/>
+    <attr name="themeFloatBgColor" format="color"/>
+    <attr name="conContentTimeColor" format="color"/>
+    <attr name="conItemColor" format="color"/>
+    <attr name="conGroupIdColor" format="color"/>
+    <attr name="normalTextColor" format="color"/>
+    <attr name="groupDetailMid" format="color"/>
+
+    <attr name="resultNameColor" format="color"/>
+    <attr name="checkNameColor" format="color"/>
+    <attr name="rmsgBubbleBg" format="color"/>
+
     <attr name="inputViewTextColor" format="color"/>
     <attr name="inputViewBgColor" format="color"/>
     <attr name="inputTextColor" format="color"/>
@@ -300,6 +309,9 @@
     <attr name="searchViewBg" format="color"/>
     <attr name="searchHintColor" format="color"/>
     <attr name="searchCloseColor" format="color"/>
+    <attr name="searchTextColor" format="color"/>
+    <attr name="addSelectedBgColor" format="color"/>
+    <attr name="dividerColor" format="color"/>
     <attr name="letterColor" format="color"/>
     <attr name="callFloatBg" format="color"/>
     <attr name="callFloatTimeBg" format="color"/>

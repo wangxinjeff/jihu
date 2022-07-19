@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
-    <solid android:color="@color/input_view_text_color" />
+    <solid android:color="?attr/rmsgBubbleBg" />
     <corners
         android:topLeftRadius="0dp"
         android:topRightRadius="8dp"

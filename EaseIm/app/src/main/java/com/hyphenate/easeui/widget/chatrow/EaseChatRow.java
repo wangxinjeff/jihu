@@ -18,6 +18,7 @@ import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMMessage.Direct;
+import com.hyphenate.easeim.EaseIMHelper;
 import com.hyphenate.easeui.EaseIM;
 import com.hyphenate.easeim.R;
 import com.hyphenate.easeui.adapter.EaseBaseAdapter;
@@ -154,6 +155,10 @@ public abstract class EaseChatRow extends LinearLayout {
         statusView = (ImageView) findViewById(R.id.msg_status);
         ackedView = (TextView) findViewById(R.id.tv_ack);
         deliveredView = (TextView) findViewById(R.id.tv_delivered);
+
+        if(EaseIMHelper.getInstance().isAdmin()){
+            statusView.setImageResource(R.drawable.ease_msg_state_fail_resend);
+        }
 
         setLayoutStyle();
 

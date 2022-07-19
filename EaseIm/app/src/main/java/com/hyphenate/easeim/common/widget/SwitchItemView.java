@@ -60,7 +60,7 @@ public class SwitchItemView extends ConstraintLayout {
         tvTitle.setText(title);
 
         int titleColorId = a.getResourceId(R.styleable.SwitchItemView_switchItemTitleColor, -1);
-        titleColor = a.getColor(R.styleable.SwitchItemView_switchItemTitleColor, ContextCompat.getColor(getContext(), R.color.name_title_color));
+        titleColor = a.getColor(R.styleable.SwitchItemView_switchItemTitleColor, ContextCompat.getColor(getContext(), R.color.normal_text_color));
         if(titleColorId != -1) {
             titleColor = ContextCompat.getColor(getContext(), titleColorId);
         }

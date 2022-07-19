@@ -16,7 +16,7 @@
         android:id="@+id/member_item_nick"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/name_title_color"
+        android:textColor="?attr/normalTextColor"
         android:textSize="@dimen/em_size_normal"
         android:text="name"
         android:layout_marginStart="5dp"

@@ -98,14 +98,25 @@ public class ChatFragment extends EaseChatFragment implements OnRecallMessageRes
     private void resetChatExtendMenu() {
         IChatExtendMenu chatExtendMenu = chatLayout.getChatInputMenu().getChatExtendMenu();
         chatExtendMenu.clear();
-        chatExtendMenu.registerMenuItem(R.string.attach_take_pic, R.drawable.ease_chat_takepic_selector, R.id.extend_item_take_picture);
-        chatExtendMenu.registerMenuItem(R.string.attach_picture, R.drawable.ease_chat_image_selector, R.id.extend_item_picture);
-        chatExtendMenu.registerMenuItem(R.string.attach_location, R.drawable.ease_chat_location_selector, R.id.extend_item_location);
+        if(EaseIMHelper.getInstance().isAdmin()){
+            chatExtendMenu.registerMenuItem(R.string.attach_take_pic, R.drawable.icon_chat_camera, R.id.extend_item_take_picture);
+            chatExtendMenu.registerMenuItem(R.string.attach_picture, R.drawable.icon_chat_image, R.id.extend_item_picture);
+            chatExtendMenu.registerMenuItem(R.string.attach_location, R.drawable.icon_chat_location, R.id.extend_item_location);
 
-        if (chatType == EaseConstant.CHATTYPE_GROUP) { // 音视频
-            chatExtendMenu.registerMenuItem(R.string.attach_media_call, R.drawable.em_chat_video_call_selector, R.id.extend_item_call);
-            chatExtendMenu.registerMenuItem(R.string.attach_file, R.drawable.em_chat_file_selector, R.id.extend_item_file);
-            chatExtendMenu.registerMenuItem(R.string.attach_order, R.drawable.em_chat_order_selector, R.id.extend_item_order);
+            if (chatType == EaseConstant.CHATTYPE_GROUP) { // 音视频
+                chatExtendMenu.registerMenuItem(R.string.attach_media_call, R.drawable.icon_chat_video_call, R.id.extend_item_call);
+                chatExtendMenu.registerMenuItem(R.string.attach_file, R.drawable.icon_chat_file, R.id.extend_item_file);
+            }
+        } else {
+            chatExtendMenu.registerMenuItem(R.string.attach_take_pic, R.drawable.ease_chat_takepic_pressed, R.id.extend_item_take_picture);
+            chatExtendMenu.registerMenuItem(R.string.attach_picture, R.drawable.ease_chat_image_pressed, R.id.extend_item_picture);
+            chatExtendMenu.registerMenuItem(R.string.attach_location, R.drawable.ease_chat_location_pressed, R.id.extend_item_location);
+
+            if (chatType == EaseConstant.CHATTYPE_GROUP) { // 音视频
+                chatExtendMenu.registerMenuItem(R.string.attach_media_call, R.drawable.em_chat_video_call_pressed, R.id.extend_item_call);
+                chatExtendMenu.registerMenuItem(R.string.attach_file, R.drawable.em_chat_file_pressed, R.id.extend_item_file);
+                chatExtendMenu.registerMenuItem(R.string.attach_order, R.drawable.em_chat_order_pressed, R.id.extend_item_order);
+            }
         }
     }
 

@@ -13,6 +13,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:titleBarTitleTextColor="?attr/normalTextColor"
         />
 
     <com.google.android.material.tabs.TabLayout
@@ -22,9 +23,10 @@
         app:layout_constraintTop_toBottomOf="@+id/title_bar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:tabSelectedTextColor="?attr/titleNameColor"
-        app:tabTextColor="?attr/timeTextColor"
+        app:tabSelectedTextColor="?attr/normalTextColor"
+        app:tabTextColor="?attr/conContentTimeColor"
         app:tabIndicator="@null"
+        android:background="?attr/themeBgColor"
         />
 
     <androidx.viewpager2.widget.ViewPager2

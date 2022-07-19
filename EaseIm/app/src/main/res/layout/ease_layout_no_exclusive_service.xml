@@ -16,7 +16,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:textSize="16sp"
-        android:textColor="@color/text_time_color"
+        android:textColor="?attr/conContentTimeColor"
         android:text="@string/not_add_service_group"/>
 
 </LinearLayout>

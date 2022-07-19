@@ -1,5 +1,6 @@
 package com.hyphenate.easeim;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
@@ -15,7 +16,6 @@ import com.hyphenate.easeim.common.livedatas.LiveDataBus;
 import com.hyphenate.easeim.common.permission.PermissionsManager;
 import com.hyphenate.easeim.common.permission.PermissionsResultAction;
 import com.hyphenate.easeim.section.base.BaseInitActivity;
-import com.hyphenate.easeui.EaseIM;
 import com.hyphenate.easeui.constants.EaseConstant;
 import com.hyphenate.easeui.model.EaseEvent;
 
@@ -26,11 +26,10 @@ import java.util.Map;
 
 
 public class MainActivity extends BaseInitActivity implements View.OnClickListener {
-    private AppCompatImageView groupIcon;
+    private AppCompatTextView groupChat;
     private AppCompatTextView groupUnread;
-    private AppCompatTextView chatText;
+    private AppCompatTextView userChat;
     private AppCompatTextView chatUnread;
-    private AppCompatEditText groupId;
     private AppCompatEditText chatId;
 
 
@@ -42,11 +41,10 @@ public class MainActivity extends BaseInitActivity implements View.OnClickListen
     @Override
     protected void initView(Bundle savedInstanceState) {
         super.initView(savedInstanceState);
-        groupIcon = findViewById(R.id.icon);
+        groupChat = findViewById(R.id.group_chat);
         groupUnread = findViewById(R.id.group_unread);
-        chatText = findViewById(R.id.text);
+        userChat = findViewById(R.id.user_chat);
         chatUnread = findViewById(R.id.chat_unread);
-        groupId = findViewById(R.id.group_id);
         chatId = findViewById(R.id.chat_id);
     }
 
@@ -89,18 +87,18 @@ public class MainActivity extends BaseInitActivity implements View.OnClickListen
     @Override
     protected void initListener() {
         super.initListener();
-        groupIcon.setOnClickListener(this);
-        chatText.setOnClickListener(this);
+        groupChat.setOnClickListener(this);
+        userChat.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
         switch (v.getId()){
-            case R.id.icon:
-                if(groupId.getText().toString().isEmpty()){
+            case R.id.group_chat:
+                if(chatId.getText().toString().isEmpty()){
                     return;
                 }
-                EMConversation conversation = EMClient.getInstance().chatManager().getConversation(groupId.getText().toString(), EMConversation.EMConversationType.GroupChat, true);
+                EMConversation conversation = EMClient.getInstance().chatManager().getConversation(chatId.getText().toString(), EMConversation.EMConversationType.GroupChat, true);
                 String ext = conversation.getExtField();
                 try {
                     JSONObject extJson;
@@ -114,14 +112,23 @@ public class MainActivity extends BaseInitActivity implements View.OnClickListen
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                EaseIMHelper.getInstance().startChat(MainActivity.this, EaseConstant.CON_TYPE_EXCLUSIVE);
+
+                if(EaseIMHelper.getInstance().isAdmin()){
+                    EaseIMHelper.getInstance().startChat(MainActivity.this, EaseConstant.CON_TYPE_ADMIN);
+                } else {
+                    EaseIMHelper.getInstance().startChat(MainActivity.this, EaseConstant.CON_TYPE_EXCLUSIVE);
+                }
                 break;
-            case R.id.text:
+            case R.id.user_chat:
                 if(chatId.getText().toString().isEmpty()){
                     return;
                 }
                 EMClient.getInstance().chatManager().getConversation(chatId.getText().toString(), EMConversation.EMConversationType.Chat, true);
-                EaseIMHelper.getInstance().startChat(MainActivity.this, EaseConstant.CON_TYPE_MY_CHAT);
+                if(EaseIMHelper.getInstance().isAdmin()){
+                    EaseIMHelper.getInstance().startChat(MainActivity.this, EaseConstant.CON_TYPE_ADMIN);
+                } else {
+                    EaseIMHelper.getInstance().startChat(MainActivity.this, EaseConstant.CON_TYPE_MY_CHAT);
+                }
                 break;
         }
     }

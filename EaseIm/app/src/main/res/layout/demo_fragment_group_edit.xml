@@ -5,7 +5,9 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/themeBgColor">
+    android:background="?attr/themeFloatBgColor"
+    android:id="@+id/edit_root"
+    >
 
     <com.hyphenate.easeui.widget.EaseTitleBar
         android:id="@+id/title_bar"
@@ -13,7 +15,10 @@
         android:layout_height="@dimen/em_common_title_bar_height"
         app:titleBarRightTitle="@string/em_chat_group_save"
         app:titleBarRightVisible="true"
-        app:titleBarLeftImage="@drawable/icon_back"/>
+        app:titleBarLeftImage="@drawable/icon_back"
+        android:background="?attr/themeBgColor"
+        app:titleBarTitleTextColor="?attr/normalTextColor"
+        />
 
     <EditText
         android:id="@+id/et_content"
@@ -27,7 +32,7 @@
         android:paddingTop="10dp"
         tools:hint="请输入群公告"
         android:gravity="left|top"
-        android:textColor="@color/text_time_color"
-        android:background="?attr/themeBgColor"/>
+        android:textColor="?attr/normalTextColor"
+        android:background="?attr/themeFloatBgColor"/>
 
 </LinearLayout>

@@ -15,6 +15,7 @@
             android:id="@+id/list_conversation"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            app:ease_con_item_title_text_color="?attr/normalTextColor"
             />
 
     </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>

@@ -26,6 +26,6 @@
         android:gravity="center"
         tools:text="相册"
         android:textSize="12sp"
-        android:textColor="#ff999999" />
+        android:textColor="?attr/conContentTimeColor" />
 
 </LinearLayout>

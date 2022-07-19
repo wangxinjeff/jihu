@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="?attr/themeBgColor"
+    android:background="?attr/themeFloatBgColor"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <com.hyphenate.easeui.widget.EaseTitleBar
@@ -15,6 +15,7 @@
         app:titleBarRightVisible="true"
         app:titleBarDisplayHomeAsUpEnabled="true"
         app:titleBarLeftImage="@drawable/icon_back"
+        app:titleBarTitleTextColor="?attr/normalTextColor"
         />
 
     <com.hyphenate.easeim.common.widget.SearchBar
@@ -75,7 +76,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/em_size_normal"
-            android:textColor="?attr/titleNameColor"
+            android:textColor="?attr/resultNameColor"
             android:layout_toEndOf="@+id/user_avatar"
             android:layout_marginStart="@dimen/margin_start_normal"
             android:layout_alignTop="@+id/user_avatar"
@@ -97,7 +98,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/service_personnel"
-                android:textColor="?attr/letterColor"
+                android:textColor="?attr/checkNameColor"
                 style="@style/EaseRadioButton"
                 />
 
@@ -106,7 +107,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/customer"
-                android:textColor="?attr/letterColor"
+                android:textColor="?attr/checkNameColor"
                 style="@style/EaseRadioButton"
                 android:layout_marginStart="@dimen/margin_start_normal"
                 />

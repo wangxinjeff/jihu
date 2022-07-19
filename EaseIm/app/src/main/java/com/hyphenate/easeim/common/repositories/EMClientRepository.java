@@ -206,6 +206,13 @@ public class EMClientRepository extends BaseEMRepository{
         callBack.onSuccess(new MutableLiveData<>(user));
     }
 
+    public void loginSuccess(){
+        // ** manually load all local groups and conversation
+        loadAllConversationsAndGroups();
+        //从服务器拉取加入的群，防止进入会话页面只显示id
+        getAllJoinGroup();
+    }
+
     private void getContactsFromServer() {
         new EMContactManagerRepository().getContactList(new ResultCallBack<List<EaseUser>>() {
             @Override

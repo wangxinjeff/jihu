@@ -515,6 +515,7 @@ public class EaseMultipleVideoActivity extends EaseBaseCallActivity implements V
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTheme(R.style.CustomerTheme);
         setContentView(R.layout.activity_ease_multiple_video);
         //初始化
         if(savedInstanceState == null){

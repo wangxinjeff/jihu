@@ -810,6 +810,20 @@ public class DemoModel {
         PreferenceManager.getInstance().setTargetLanguage(languageCode);
     }
 
+    /**
+     *  获取会话列表提醒
+     */
+    public Boolean getConversationNotify() {
+        return PreferenceManager.getInstance().getConversationNotify();
+    }
+
+    /**
+     *  设置会话列表提醒
+     */
+    public void setConversationNotify(Boolean isNotify) {
+        PreferenceManager.getInstance().setConversationNotify(isNotify);
+    }
+
     enum Key{
         VibrateAndPlayToneOn,
         VibrateOn,

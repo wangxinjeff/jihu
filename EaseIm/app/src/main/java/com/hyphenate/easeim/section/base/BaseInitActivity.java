@@ -7,6 +7,7 @@ import com.hyphenate.easecallkit.EaseCallKit;
 import com.hyphenate.easecallkit.base.EaseCallFloatWindow;
 import com.hyphenate.easecallkit.base.EaseCallType;
 import com.hyphenate.easecallkit.utils.EaseCallState;
+import com.hyphenate.easeim.EaseIMHelper;
 import com.hyphenate.easeim.R;
 import com.hyphenate.easeim.section.av.MultipleVideoActivity;
 import com.hyphenate.easeim.section.av.VideoCallActivity;
@@ -20,7 +21,11 @@ public abstract class BaseInitActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        setTheme(R.style.NightTheme);
+        if(EaseIMHelper.getInstance().isAdmin()){
+            setTheme(R.style.AdminTheme);
+        } else {
+            setTheme(R.style.CustomerTheme);
+        }
         setContentView(getLayoutId());
         initSystemFit();
         initIntent(getIntent());

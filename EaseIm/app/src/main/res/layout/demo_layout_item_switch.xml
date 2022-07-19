@@ -2,7 +2,6 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/detail_bg"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
@@ -16,7 +15,7 @@
         android:layout_marginLeft="@dimen/em_margin_20"
         android:layout_marginStart="@dimen/em_margin_20"
         android:textSize="@dimen/em_size_big"
-        android:textColor="@color/name_title_color"
+        android:textColor="?attr/groupDetailMid"
         app:layout_constraintVertical_chainStyle="packed"
         tools:text="群文件"/>
 
@@ -35,7 +34,7 @@
         android:layout_marginEnd="@dimen/em_margin_10"
         android:layout_marginTop="2dp"
         android:textSize="@dimen/em_size_small"
-        android:textColor="@color/name_title_color"
+        android:textColor="?attr/groupDetailMid"
         android:visibility="visible"
         tools:text="群文件"/>
 

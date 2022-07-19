@@ -82,6 +82,8 @@ public class PreferenceManager {
 
 	private static String SHARED_KEY_TARGET_LANGUAGE = "shared_key_target_language";
 
+	private static String SHARED_KEY_CON_NOTIFY = "shared_key_con_notify";
+
 	@SuppressLint("CommitPrefEdits")
 	private PreferenceManager(Context cxt) {
 		mSharedPreferences = cxt.getSharedPreferences(PREFERENCE_NAME, Context.MODE_PRIVATE);
@@ -583,6 +585,19 @@ public class PreferenceManager {
 
 	public String getTargetLanguage() {
 		return mSharedPreferences.getString(SHARED_KEY_TARGET_LANGUAGE, "en");
+	}
+
+	/**
+	 * 会话列表提醒
+	 * @param isNotify
+	 */
+	public void setConversationNotify(boolean isNotify) {
+		editor.putBoolean(SHARED_KEY_CON_NOTIFY, isNotify);
+		editor.apply();
+	}
+
+	public Boolean getConversationNotify() {
+		return mSharedPreferences.getBoolean(SHARED_KEY_CON_NOTIFY, true);
 	}
 
 }

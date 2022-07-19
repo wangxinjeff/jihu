@@ -834,4 +834,16 @@
     <string name="show_chat_history">显示聊天记录</string>
     <string name="initiated_call">发起音视频通话</string>
     <string name="call_over">音视频通话已经结束</string>
+    <string name="message_notify">消息提醒</string>
+    <string name="search_group">搜索群聊</string>
+    <string name="create_group">创建群组</string>
+    <string name="group_apply">群组申请</string>
+
+    <string name="order_id">订单号</string>
+    <string name="phone_number">客户手机号</string>
+    <string name="win_code">WIN码</string>
+
+    <string name="open_notify">打开消息提醒</string>
+    <string name="close_notify">关闭消息提醒</string>
+    <string name="call_join_group">请联系同事入群</string>
 </resources>

@@ -113,7 +113,7 @@ public class EaseConversationListLayout extends EaseBaseLayout implements IConve
                 titleTextColor = ContextCompat.getColor(context, titleTextColorRes);
             }else {
                 titleTextColor = a.getColor(R.styleable.EaseConversationListLayout_ease_con_item_title_text_color
-                        , ContextCompat.getColor(context, R.color.name_title_color));
+                        , ContextCompat.getColor(context, R.color.normal_text_color));
             }
             setModel.setTitleTextColor(titleTextColor);
 
@@ -126,7 +126,7 @@ public class EaseConversationListLayout extends EaseBaseLayout implements IConve
                 contentTextColor = ContextCompat.getColor(context, contentTextColorRes);
             }else {
                 contentTextColor = a.getColor(R.styleable.EaseConversationListLayout_ease_con_item_content_text_color
-                        , ContextCompat.getColor(context, R.color.text_time_color));
+                        , ContextCompat.getColor(context, R.color.con_content_time_color));
             }
             setModel.setContentTextColor(contentTextColor);
 
@@ -139,7 +139,7 @@ public class EaseConversationListLayout extends EaseBaseLayout implements IConve
                 dateTextColor = ContextCompat.getColor(context, dateTextColorRes);
             }else {
                 dateTextColor = a.getColor(R.styleable.EaseConversationListLayout_ease_con_item_date_text_color
-                        , ContextCompat.getColor(context, R.color.text_time_color));
+                        , ContextCompat.getColor(context, R.color.con_content_time_color));
             }
             setModel.setDateTextColor(dateTextColor);
 
@@ -314,9 +314,9 @@ public class EaseConversationListLayout extends EaseBaseLayout implements IConve
     }
 
     private void showDefaultMenu(View view, int position, EaseConversationInfo info) {
-        menuHelper.addItemMenu(Menu.NONE, R.id.action_con_make_read, 0, getContext().getString(R.string.ease_conversation_menu_make_read));
-        menuHelper.addItemMenu(Menu.NONE, R.id.action_con_make_top, 1, getContext().getString(R.string.ease_conversation_menu_make_top));
-        menuHelper.addItemMenu(Menu.NONE, R.id.action_con_cancel_top, 2, getContext().getString(R.string.ease_conversation_menu_cancel_top));
+//        menuHelper.addItemMenu(Menu.NONE, R.id.action_con_make_read, 0, getContext().getString(R.string.ease_conversation_menu_make_read));
+//        menuHelper.addItemMenu(Menu.NONE, R.id.action_con_make_top, 1, getContext().getString(R.string.ease_conversation_menu_make_top));
+//        menuHelper.addItemMenu(Menu.NONE, R.id.action_con_cancel_top, 2, getContext().getString(R.string.ease_conversation_menu_cancel_top));
         menuHelper.addItemMenu(Menu.NONE, R.id.action_con_delete, 3, getContext().getString(R.string.ease_conversation_menu_delete));
 
         menuHelper.initMenu(view);
@@ -365,6 +365,9 @@ public class EaseConversationListLayout extends EaseBaseLayout implements IConve
                 }
             }
         });
+        if(conversationsType == EaseConstant.CON_TYPE_ADMIN){
+            menuHelper.show((int) getTouchX(), 0);
+        }
         //去掉长按菜单
 //        menuHelper.show((int) getTouchX(), 0);
     }

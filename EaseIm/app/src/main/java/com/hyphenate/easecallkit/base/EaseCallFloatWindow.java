@@ -16,12 +16,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.core.content.ContextCompat;
 
 import com.hyphenate.chat.EMClient;
+import com.hyphenate.easeim.EaseIMHelper;
 import com.hyphenate.easeim.R;
 import com.hyphenate.util.EMLog;
 
@@ -66,6 +68,7 @@ public class EaseCallFloatWindow {
     private ConferenceInfo conferenceInfo;
     private SingleCallInfo singleCallInfo;
     private TextView callTime;
+    private LinearLayout callView;
 
     public EaseCallFloatWindow(Context context) {
         initFloatWindow(context);
@@ -146,6 +149,18 @@ public class EaseCallFloatWindow {
         floatView = LayoutInflater.from(context).inflate(R.layout.activity_float_window, null);
         floatView.setFocusableInTouchMode(true);
         callTime = floatView.findViewById(R.id.call_time);
+        callView = floatView.findViewById(R.id.call_view);
+
+        if(EaseIMHelper.getInstance().isAdmin()){
+            floatView.setBackground(ContextCompat.getDrawable(context, R.drawable.call_float_bg));
+            callView.setBackground(ContextCompat.getDrawable(context, R.drawable.call_float_time_bg));
+            callTime.setTextColor(ContextCompat.getColor(context, R.color.normal_text));
+        } else {
+            floatView.setBackground(ContextCompat.getDrawable(context, R.drawable.call_float_bg_dark));
+            callView.setBackground(ContextCompat.getDrawable(context, R.drawable.call_float_time_bg_dark));
+            callTime.setTextColor(ContextCompat.getColor(context, R.color.normal_text_color));
+        }
+
 
         if(floatView instanceof ViewGroup) {
             chronometer = new MyChronometer(context);

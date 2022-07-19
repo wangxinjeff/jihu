@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/list_itease_layout"
     android:foreground="@drawable/ease_ripple_click_gray"
-    android:background="?attr/themeBgColor"
+    android:background="?attr/conItemColor"
     android:longClickable="true">
 
     <com.hyphenate.easeui.widget.EaseImageView
@@ -51,7 +51,7 @@
         android:maxLines="1"
         android:ellipsize="end"
         android:textSize="17sp"
-        android:textColor="@color/name_title_color"
+        android:textColor="?attr/normalTextColor"
         tools:text="聊天室"/>
     
     <ImageView
@@ -75,7 +75,7 @@
         android:layout_marginRight="18dp"
         android:layout_marginEnd="18dp"
         android:layout_marginTop="12dp"
-        android:textColor="@color/text_time_color"
+        android:textColor="?attr/conContentTimeColor"
         android:textSize="12sp"
         tools:text="09:51"/>
 
@@ -122,7 +122,7 @@
         app:layout_goneMarginRight="20dp"
         android:maxLines="1"
         android:ellipsize="end"
-        android:textColor="@color/text_time_color"
+        android:textColor="?attr/conContentTimeColor"
         android:textSize="14sp"
         tools:text="环信成立于2013年4月，是国内领先的企业级软件服务提供商，于2016年荣膺"/>
 

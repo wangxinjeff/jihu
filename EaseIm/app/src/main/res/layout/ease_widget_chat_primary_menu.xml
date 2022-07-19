@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@color/input_view_bg_color"
+    android:background="?attr/inputViewBgColor"
     android:paddingTop="2dip">
 
     <View
@@ -27,7 +27,7 @@
             style="@style/ease_chat_input_button_size"
             android:layout_marginBottom="5dp"
             android:layout_marginLeft="16dp"
-            android:src="@drawable/ease_chatting_setmode_voice_btn"
+            android:src="@drawable/ease_chatting_setmode_voice_btn_pressed"
             android:visibility="visible" />
 
         <ImageView
@@ -35,7 +35,7 @@
             style="@style/ease_chat_input_button_size"
             android:layout_marginBottom="5dp"
             android:layout_marginLeft="16dp"
-            android:src="@drawable/ease_chatting_setmode_keyboard_btn"
+            android:src="@drawable/ease_chatting_setmode_keyboard_btn_pressed"
             android:visibility="gone" />
 
         <FrameLayout
@@ -56,12 +56,13 @@
                 android:minHeight="32dp"
                 android:layout_marginLeft="5dp"
                 android:text="@string/button_pushtotalk"
-                android:textColor="@color/white"
+                android:textColor="?attr/normalTextColor"
                 android:paddingTop="3dp"
                 android:paddingBottom="3dp"
                 android:gravity="center"
                 android:background="@drawable/ease_chat_press_speak_btn"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                />
 
         </FrameLayout>
 
@@ -92,7 +93,7 @@
                 android:paddingBottom="3dp"
                 android:hint="@string/say_what"
                 android:textSize="@dimen/em_size_normal"
-                android:textColor="@color/input_text_color"
+                android:textColor="?attr/inputTextColor"
                 />
 
         </FrameLayout>
@@ -118,22 +119,22 @@
                 android:id="@+id/iv_face_checked"
                 android:layout_width="@dimen/ease_chat_primary_menu_icon_size"
                 android:layout_height="@dimen/ease_chat_primary_menu_icon_size"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ease_chatting_setmode_keyboard_btn"
                 android:padding="5dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ease_chatting_setmode_keyboard_btn_pressed"
                 android:visibility="invisible" />
 
         </RelativeLayout>
 
         <CheckBox
             android:id="@+id/btn_more"
-            android:layout_width="@dimen/ease_chat_primary_menu_icon_size"
-            android:layout_height="@dimen/ease_chat_primary_menu_icon_size"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             android:layout_gravity="center_vertical"
             android:layout_marginEnd="@dimen/ease_chat_primary_margin_right"
             android:button="@null"
             android:visibility="visible"
-            android:background="@drawable/ease_type_select_btn" />
+            android:background="@drawable/ease_type_select_btn_nor" />
 
         <FrameLayout
             android:layout_width="wrap_content"

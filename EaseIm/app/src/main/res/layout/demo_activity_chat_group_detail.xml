@@ -15,6 +15,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:titleBarTitle="@string/em_chat_group_detail_title"
         app:titleBarLeftImage="@drawable/icon_back"
+        app:titleBarTitleTextColor="?attr/normalTextColor"
         />
 
     <androidx.core.widget.NestedScrollView
@@ -39,7 +40,7 @@
                 app:layout_constraintTop_toTopOf="parent"
                 android:paddingBottom="@dimen/em_margin_15"
                 android:paddingTop="@dimen/em_margin_15"
-                android:background="@color/detail_bg"
+                android:background="?attr/themeFloatBgColor"
                 >
 
                 <com.hyphenate.easeui.widget.EaseImageView
@@ -57,7 +58,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/name_title_color"
+                    android:textColor="?attr/groupDetailMid"
                     android:textSize="@dimen/em_size_big"
                     app:layout_constraintBottom_toBottomOf="@+id/cl_group_info"
                     app:layout_constraintStart_toStartOf="@+id/cl_group_info"
@@ -86,7 +87,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                android:background="@color/detail_bg"
+                android:background="?attr/themeFloatBgColor"
                 app:layout_constraintTop_toBottomOf="@id/view_group_divider">
 
                 <TextView
@@ -148,7 +149,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:textSize="@dimen/em_size_normal"
-                        android:textColor="@color/text_time_color"
+                        android:textColor="?attr/groupDetailMid"
                         android:text="@string/shwo_more_member"
                         />
 
@@ -170,6 +171,9 @@
                 android:layout_marginTop="@dimen/em_margin_20"
                 app:arrowItemTitle="@string/em_chat_group_detail_name"
                 app:arrowItemShowArrow="false"
+                android:background="?attr/themeFloatBgColor"
+                app:arrowItemTitleColor="?attr/groupDetailMid"
+                app:arrowItemContentColor="?attr/groupDetailMid"
                 style="@style/em_group_arrow_item" />
 
             <com.hyphenate.easeim.common.widget.ArrowItemView
@@ -179,6 +183,9 @@
                 app:layout_constraintTop_toBottomOf="@id/item_group_name"
                 app:arrowItemTitle="@string/group_owner"
                 app:arrowItemShowArrow="false"
+                android:background="?attr/themeFloatBgColor"
+                app:arrowItemTitleColor="?attr/groupDetailMid"
+                app:arrowItemContentColor="?attr/groupDetailMid"
                 style="@style/em_group_arrow_item"/>
 
             <com.hyphenate.easeim.common.widget.ArrowItemView
@@ -187,6 +194,9 @@
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/item_group_owner"
                 app:arrowItemTitle="@string/em_chat_group_detail_announcement"
+                android:background="?attr/themeFloatBgColor"
+                app:arrowItemTitleColor="?attr/groupDetailMid"
+                app:arrowItemContentColor="?attr/groupDetailMid"
                 style="@style/em_group_arrow_item"/>
 
             <com.hyphenate.easeim.common.widget.ArrowItemView
@@ -196,6 +206,9 @@
                 app:layout_constraintTop_toBottomOf="@id/item_group_notice"
                 app:arrowItemTitle="@string/em_chat_group_detail_introduction"
                 app:arrowItemShowDivider="false"
+                android:background="?attr/themeFloatBgColor"
+                app:arrowItemTitleColor="?attr/groupDetailMid"
+                app:arrowItemContentColor="?attr/groupDetailMid"
                 style="@style/em_group_arrow_item"/>
 
             <com.hyphenate.easeim.common.widget.ArrowItemView
@@ -215,6 +228,9 @@
                 app:layout_constraintTop_toBottomOf="@id/item_group_member_manage"
                 android:layout_marginTop="@dimen/em_margin_20"
                 app:arrowItemTitle="@string/em_chat_group_detail_history"
+                android:background="?attr/themeFloatBgColor"
+                app:arrowItemTitleColor="?attr/groupDetailMid"
+                app:arrowItemContentColor="?attr/groupDetailMid"
                 style="@style/em_group_arrow_item"/>
 
             <com.hyphenate.easeim.common.widget.SwitchItemView
@@ -224,6 +240,8 @@
                 app:layout_constraintTop_toBottomOf="@id/item_group_history"
                 app:switchItemTitle="@string/em_chat_group_detail_not_disturb"
                 app:switchItemShowDivider="false"
+                android:background="?attr/themeFloatBgColor"
+                app:switchItemTitleColor="?attr/groupDetailMid"
                 style="@style/em_group_arrow_item"/>
 
             <com.hyphenate.easeim.common.widget.SwitchItemView

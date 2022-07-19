@@ -52,7 +52,7 @@ public class FullEditDialogFragment extends BaseDialogFragment implements EaseTi
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setStyle(STYLE_NO_TITLE, R.style.NightTheme);
+        setStyle(STYLE_NO_TITLE, R.style.CustomerTheme);
         StatusBarCompat.setLightStatusBar(mContext, true);
     }
 

@@ -3,7 +3,7 @@
     android:id="@+id/ll_face_container"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/input_view_bg_color"
+    android:background="?attr/inputViewBgColor"
     android:orientation="vertical"
     >
 

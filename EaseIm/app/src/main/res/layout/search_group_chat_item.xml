@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/member_item_height"
+    android:gravity="center_vertical"
+    >
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/group_avatar"
+        android:layout_width="@dimen/member_item_avatar_size"
+        android:layout_height="@dimen/member_item_avatar_size"
+        android:src="@drawable/ease_group_icon"
+        android:layout_marginStart="@dimen/margin_start"
+        />
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/group_name"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:layout_marginStart="@dimen/margin_start_normal"
+        android:textSize="@dimen/em_size_normal"
+        android:textColor="?attr/normalTextColor"
+        />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/join_group_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/em_size_small"
+        android:textColor="?attr/conContentTimeColor"
+        android:text="@string/call_join_group"
+        android:layout_marginStart="@dimen/margin_small"
+        android:layout_marginEnd="@dimen/margin_small"
+        android:visibility="gone"
+        />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/icon_next"
+        android:layout_width="@dimen/next_size"
+        android:layout_height="@dimen/next_size"
+        android:src="@drawable/em_arrow_right"
+        android:layout_marginStart="@dimen/margin_small"
+        android:layout_marginEnd="@dimen/margin_small"
+        />
+
+</LinearLayout>

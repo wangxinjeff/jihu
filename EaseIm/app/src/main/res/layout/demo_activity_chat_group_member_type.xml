@@ -14,6 +14,7 @@
         app:titleBarRightTitle="@string/add_member"
         app:titleBarRightVisible="true"
         app:titleBarLeftImage="@drawable/icon_back"
+        app:titleBarTitleTextColor="?attr/normalTextColor"
         />
 
     <com.hyphenate.easeim.common.widget.SearchBar
@@ -24,7 +25,9 @@
     <com.hyphenate.easeui.widget.EaseRecyclerView
         android:id="@+id/rv_member_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:background="?attr/themeFloatBgColor"
+        />
 
 
 </LinearLayout>

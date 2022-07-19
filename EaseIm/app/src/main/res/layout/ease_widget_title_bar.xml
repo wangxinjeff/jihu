@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:minWidth="50dp"
-        android:background="@drawable/ease_common_tab_bg" >
+        >
 
         <ImageView
             android:id="@+id/left_image"
@@ -38,7 +38,7 @@
         android:layout_marginLeft="60dp"
         android:layout_marginRight="60dp"
         android:layout_centerInParent="true"
-        android:textColor="@color/white"
+        android:textColor="?attr/normalTextColor"
         android:textSize="@dimen/em_toolbar_title_size"
         android:maxLines="1"
         android:ellipsize="end"
@@ -69,7 +69,7 @@
             android:textSize="@dimen/em_size_normal"
             android:maxLines="1"
             android:maxLength="10"
-            android:textColor="@color/white"/>
+            android:textColor="?attr/normalTextColor"/>
 
     </RelativeLayout>
 

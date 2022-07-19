@@ -95,7 +95,7 @@
         android:requestLegacyExternalStorage="false"
         android:usesCleartextTraffic="true"
         android:name=".DemoApplication"
-        android:theme="@style/NightTheme">
+        android:theme="@style/CustomerTheme">
 
         <!--android 9.0要求-->
         <!--<uses-library android:name="org.apache.http.legacy" android:required="false"/>-->
@@ -541,7 +541,8 @@
 
         <activity android:name=".MainActivity"
             android:launchMode="singleTask"
-            />
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
 
         <activity android:name=".section.chat.activity.OrderListActivity"
             android:launchMode="singleTask"
@@ -576,6 +577,11 @@
             />
 
         <activity android:name=".section.search.ShowChatHistoryActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"
+            />
+
+        <activity android:name=".section.search.SearchGroupChatActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleTask"
             />

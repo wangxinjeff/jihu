@@ -46,6 +46,7 @@ import com.hyphenate.easeim.common.manager.UserProfileManager;
 import com.hyphenate.easeim.common.model.DemoModel;
 import com.hyphenate.easeim.common.model.EmojiconExampleGroupData;
 import com.hyphenate.easeim.common.receiver.HeadsetReceiver;
+import com.hyphenate.easeim.common.repositories.EMClientRepository;
 import com.hyphenate.easeim.common.utils.FetchUserInfoList;
 import com.hyphenate.easeim.common.utils.FetchUserRunnable;
 import com.hyphenate.easeim.common.utils.PreferenceManager;
@@ -140,7 +141,7 @@ public class EaseIMHelper {
     }
 
     public void init(Context context, boolean isAdmin) {
-        this.isAdmin = isAdmin;
+        this.isAdmin = true;
         demoModel = new DemoModel(context);
         //初始化IM SDK
         if(initSDK(context)) {
@@ -1088,10 +1089,15 @@ public class EaseIMHelper {
 
     //登录
     public void loginChat(String username, String password, EMCallBack callBack){
-//        EMClient.getInstance().login(username, password, new EMCallBack() {
-//            @Override
-//            public void onSuccess() {
+        EMClient.getInstance().login(username, password, new EMCallBack() {
+            @Override
+            public void onSuccess() {
+                EaseIMHelper.getInstance().getModel().setCurrentUserName(username);
+                EaseIMHelper.getInstance().getModel().setCurrentUserPwd(password);
+                new EMClientRepository().loginSuccess();
         //todo:登录成功之后获取专属群列表，开启线程获取，还是获取到之后再返回成功
+
+
 
 //        EMConversation conversation = EMClient.getInstance().chatManager().getConversation("186245684723713", EMConversation.EMConversationType.GroupChat, true);
 //        String ext = conversation.getExtField();
@@ -1109,14 +1115,14 @@ public class EaseIMHelper {
 //            e.printStackTrace();
 //        }
 
-//                callBack.onSuccess();
-//            }
-//
-//            @Override
-//            public void onError(int i, String s) {
-//                callBack.onError(i, s);
-//            }
-//        });
+                callBack.onSuccess();
+            }
+
+            @Override
+            public void onError(int i, String s) {
+                callBack.onError(i, s);
+            }
+        });
     }
 
     // 获取专属群的未读数
@@ -1150,21 +1156,25 @@ public class EaseIMHelper {
     }
 
     public void startChat(Context context, int conversationType){
-        if(conversationType == EaseConstant.CON_TYPE_EXCLUSIVE){
-            Map<String, EMConversation> map = EMClient.getInstance().chatManager().getAllConversations();
-            List<EMConversation> list = new ArrayList<>();
-            for(EMConversation conversation : map.values()){
-                if(isExclusiveGroup(conversation)){
-                    list.add(conversation);
+        if(isAdmin()){
+            ConversationListActivity.actionStart(context, EaseConstant.CON_TYPE_ADMIN);
+        } else {
+            if(conversationType == EaseConstant.CON_TYPE_EXCLUSIVE){
+                Map<String, EMConversation> map = EMClient.getInstance().chatManager().getAllConversations();
+                List<EMConversation> list = new ArrayList<>();
+                for(EMConversation conversation : map.values()){
+                    if(isExclusiveGroup(conversation)){
+                        list.add(conversation);
+                    }
                 }
-            }
-            if(list.size() == 1){
-                ChatActivity.actionStart(context, list.get(0).conversationId(), EaseConstant.CHATTYPE_GROUP);
+                if(list.size() == 1){
+                    ChatActivity.actionStart(context, list.get(0).conversationId(), EaseConstant.CHATTYPE_GROUP);
+                } else {
+                    ConversationListActivity.actionStart(context, conversationType);
+                }
             } else {
                 ConversationListActivity.actionStart(context, conversationType);
             }
-        } else {
-            ConversationListActivity.actionStart(context, conversationType);
         }
     }
 

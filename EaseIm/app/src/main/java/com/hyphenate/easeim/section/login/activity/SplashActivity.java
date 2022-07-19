@@ -85,8 +85,6 @@ public class SplashActivity extends BaseInitActivity {
             parseResource(response, new OnResourceParseCallback<Boolean>(true) {
                 @Override
                 public void onSuccess(Boolean data) {
-                    EaseIMHelper.getInstance().loginChat("", "", null);
-
                     startActivity(new Intent(mContext, MainActivity.class));
                     finish();
                 }

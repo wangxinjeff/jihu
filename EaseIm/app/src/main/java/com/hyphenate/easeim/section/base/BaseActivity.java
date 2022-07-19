@@ -275,7 +275,11 @@ public class BaseActivity extends AppCompatActivity {
      * @param fitSystemForTheme
      */
     public void setFitSystemForTheme(boolean fitSystemForTheme) {
-        setFitSystemForTheme(fitSystemForTheme, R.color.theme_color);
+        if(EaseIMHelper.getInstance().isAdmin()){
+            setFitSystemForTheme(fitSystemForTheme, R.color.theme_bg);
+        } else {
+            setFitSystemForTheme(fitSystemForTheme, R.color.theme_bg_color);
+        }
         setStatusBarTextColor(true);
     }
 
