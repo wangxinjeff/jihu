@@ -46,6 +46,7 @@ public class EaseConversationDelegate extends EaseDefaultConversationDelegate {
         Context context = holder.itemView.getContext();
         String username = item.conversationId();
         holder.mentioned.setVisibility(View.GONE);
+        holder.groupId.setVisibility(View.GONE);
         int defaultAvatar = 0;
         String showName = null;
         if(!setModel.isHideUnreadDot()) {
@@ -53,6 +54,8 @@ public class EaseConversationDelegate extends EaseDefaultConversationDelegate {
         }
 
         if(item.getType() == EMConversation.EMConversationType.GroupChat) {
+            holder.groupId.setVisibility(View.VISIBLE);
+            holder.groupId.setText("群组ID："+username);
             if(EaseAtMessageHelper.get().hasAtMeMsg(username)) {
                 holder.mentioned.setText(R.string.were_mentioned);
                 holder.mentioned.setVisibility(View.VISIBLE);

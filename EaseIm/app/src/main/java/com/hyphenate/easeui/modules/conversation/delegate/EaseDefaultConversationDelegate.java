@@ -50,6 +50,7 @@ public abstract class EaseDefaultConversationDelegate extends EaseBaseConversati
         public TextView time;
         public ImageView mMsgState;
         public TextView mentioned;
+        public TextView groupId;
         public TextView message;
         public Context mContext;
         private final Drawable bgDrawable;
@@ -66,6 +67,7 @@ public abstract class EaseDefaultConversationDelegate extends EaseBaseConversati
             time = findViewById(R.id.time);
             mMsgState = findViewById(R.id.msg_state);
             mentioned = findViewById(R.id.mentioned);
+            groupId = findViewById(R.id.group_id);
             message = findViewById(R.id.message);
             noPush = findViewById(R.id.no_push);
             EaseUserUtils.setUserAvatarStyle(avatar);

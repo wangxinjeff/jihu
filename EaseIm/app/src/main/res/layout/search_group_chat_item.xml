@@ -28,7 +28,7 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/em_size_small"
         android:textColor="?attr/conContentTimeColor"
-        android:text="@string/call_join_group"
+        android:text="@string/em_call_join_group"
         android:layout_marginStart="@dimen/margin_small"
         android:layout_marginEnd="@dimen/margin_small"
         android:visibility="gone"

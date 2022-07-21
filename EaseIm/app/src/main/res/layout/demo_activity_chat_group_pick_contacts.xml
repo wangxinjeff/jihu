@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/em_size_normal"
         android:textColor="?attr/letterColor"
-        android:text="@string/selected_user"
+        android:text="@string/em_selected_user"
         android:paddingStart="@dimen/em_margin_15"
         android:layout_marginTop="@dimen/em_margin_15"
         />
@@ -49,7 +49,7 @@
         android:layout_height="wrap_content"
         android:textSize="@dimen/em_size_normal"
         android:textColor="?attr/letterColor"
-        android:text="@string/search_result"
+        android:text="@string/em_search_result"
         android:paddingStart="@dimen/em_margin_15"
         android:layout_marginTop="@dimen/em_margin_15"
         />
@@ -97,7 +97,7 @@
                 android:id="@+id/rb_service"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/service_personnel"
+                android:text="@string/em_service_personnel"
                 android:textColor="?attr/checkNameColor"
                 style="@style/EaseRadioButton"
                 />
@@ -106,7 +106,7 @@
                 android:id="@+id/rb_customer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/customer"
+                android:text="@string/em_customer"
                 android:textColor="?attr/checkNameColor"
                 style="@style/EaseRadioButton"
                 android:layout_marginStart="@dimen/margin_start_normal"

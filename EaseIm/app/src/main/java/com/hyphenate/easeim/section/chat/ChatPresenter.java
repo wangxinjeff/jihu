@@ -203,6 +203,11 @@ public class ChatPresenter extends EaseChatPresenter {
         for (EMMessage message : messages) {
             EMLog.d(TAG, "onMessageReceived id : " + message.getMsgId());
             EMLog.d(TAG, "onMessageReceived: " + message.getType());
+
+            if(EaseIMHelper.getInstance().isAdmin() && !EaseIMHelper.getInstance().getModel().getConversationNotify()){
+                return;
+            }
+
             // 如果设置群组离线消息免打扰，则不进行消息通知
             List<String> disabledIds = EaseIMHelper.getInstance().getPushManager().getNoPushGroups();
             if(disabledIds != null && disabledIds.contains(message.conversationId())) {

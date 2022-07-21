@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
 import com.hyphenate.easeui.EaseIM;
 import com.hyphenate.easeim.R;
@@ -59,16 +60,19 @@ public class EaseUserUtils {
     public static void setUserAvatar(Context context, String username, ImageView imageView){
     	EaseUser user = getUserInfo(username);
         if(user != null && user.getAvatar() != null){
-            EMLog.e("testapi:", user.getUsername() + "'s avatar = " + user.getAvatar());
             try {
                 int avatarResId = Integer.parseInt(user.getAvatar());
                 Glide.with(context).load(avatarResId).into(imageView);
             } catch (Exception e) {
                 //use default avatar
                 Glide.with(context).load(user.getAvatar())
-                        .apply(RequestOptions.placeholderOf(R.drawable.ease_default_avatar)
-                                .diskCacheStrategy(DiskCacheStrategy.ALL))
+                        .apply(RequestOptions.bitmapTransform(new CircleCrop()))
+                        .error(R.drawable.ease_default_avatar)
                         .into(imageView);
+//                Glide.with(context).load(user.getAvatar())
+//                        .apply(RequestOptions.placeholderOf(R.drawable.ease_default_avatar)
+//                                .diskCacheStrategy(DiskCacheStrategy.ALL))
+//                        .into(imageView);
             }
         }else{
             Glide.with(context).load(R.drawable.ease_default_avatar).into(imageView);
@@ -92,9 +96,13 @@ public class EaseUserUtils {
         } catch (Exception e) {
             //use default avatar
             Glide.with(context).load(avatar)
-                    .apply(RequestOptions.placeholderOf(R.drawable.ease_default_avatar)
-                            .diskCacheStrategy(DiskCacheStrategy.ALL))
+                    .apply(RequestOptions.bitmapTransform(new CircleCrop()))
+                    .error(R.drawable.ease_default_avatar)
                     .into(imageView);
+//            Glide.with(context).load(avatar)
+//                    .apply(RequestOptions.placeholderOf(R.drawable.ease_default_avatar)
+//                            .diskCacheStrategy(DiskCacheStrategy.ALL))
+//                    .into(imageView);
         }
     }
     

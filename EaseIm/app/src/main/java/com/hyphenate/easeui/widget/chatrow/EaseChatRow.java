@@ -14,6 +14,8 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMMessage;
@@ -156,10 +158,6 @@ public abstract class EaseChatRow extends LinearLayout {
         ackedView = (TextView) findViewById(R.id.tv_ack);
         deliveredView = (TextView) findViewById(R.id.tv_delivered);
 
-        if(EaseIMHelper.getInstance().isAdmin()){
-            statusView.setImageResource(R.drawable.ease_msg_state_fail_resend);
-        }
-
         setLayoutStyle();
 
         mainThreadHandler = new Handler(Looper.getMainLooper());
@@ -251,6 +249,14 @@ public abstract class EaseChatRow extends LinearLayout {
         this.position = position;
         this.itemClickListener = itemClickListener;
         this.itemActionCallback = itemActionCallback;
+
+        if(EaseIMHelper.getInstance().isAdmin()){
+            if(statusView != null){
+                statusView.setImageResource(R.drawable.ease_msg_state_fail_resend);
+            }
+
+
+        }
 
         setUpBaseView();
         onSetUpView();

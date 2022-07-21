@@ -66,7 +66,9 @@ public class ConversationListFragment extends EaseConversationListFragment{
             llRoot.addView(searchBar, 0);
         }
 
-        conversationListLayout.getListAdapter().setEmptyLayoutId(R.layout.ease_layout_no_exclusive_service);
+        if(!EaseIMHelper.getInstance().isAdmin()){
+            conversationListLayout.getListAdapter().setEmptyLayoutId(R.layout.ease_layout_no_exclusive_service);
+        }
 
         initViewModel();
     }

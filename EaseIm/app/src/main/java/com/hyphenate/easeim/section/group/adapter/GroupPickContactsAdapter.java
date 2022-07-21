@@ -1,10 +1,11 @@
 package com.hyphenate.easeim.section.group.adapter;
 
 import com.hyphenate.easeim.R;
-import com.hyphenate.easeim.common.model.SelectedUser;
 import com.hyphenate.easeui.adapter.EaseBaseDelegateAdapter;
+import com.hyphenate.easeui.domain.EaseUser;
 
-public class GroupPickContactsAdapter extends EaseBaseDelegateAdapter<SelectedUser> {
+
+public class GroupPickContactsAdapter extends EaseBaseDelegateAdapter<EaseUser> {
     private int emptyLayoutId;
 
     @Override

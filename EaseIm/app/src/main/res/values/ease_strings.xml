@@ -337,6 +337,7 @@
     <string name="em_chat_group_detail_share_file">Shared files</string>
     <string name="em_chat_group_detail_announcement">Group announcement</string>
     <string name="em_chat_group_detail_announcement_hint">Enter the group announcement</string>
+    <string name="em_chat_group_detail_name_hint">Enter the group name</string>
     <string name="em_chat_group_detail_history">Find chat history</string>
     <string name="em_chat_group_detail_clear_history">Clear chat history</string>
     <string name="em_chat_group_detail_clear_history_warning">Are you sure you want to clear all chat history?</string>
@@ -500,7 +501,6 @@
     <string name="em_group_list_search_hint">Search</string>
     <string name="em_chat_room_list_search_hint">Search</string>
     <string name="em_black_list_search_hint">Search</string>
-    <string name="em_search_group">Group</string>
     <string name="em_search_group_public">Public groups</string>
     <string name="em_search_group_public_hint">Enter a Public Group ID to search</string>
     <string name="em_search_group_chat">Group chat</string>
@@ -532,8 +532,8 @@
 
     <string name="demo_no_disturb_time">Set a time slot</string>
 
-    <string name="push_message_style_title">Message Details</string>
-    <string name="push_incoming_call">You\'ve got a new call notification</string>
+    <string name="em_push_message_style_title">Message Details</string>
+    <string name="em_push_incoming_call">You\'ve got a new call notification</string>
     <string name="push_message_style_simple">Show unread messages only</string>
     <string name="push_message_style_summary">Show message details</string>
     <string name="push_message_show_detail">Show message details</string>
@@ -622,6 +622,7 @@
     <string name="invite_join_group">invited you to join group:</string>
     <string name="Has_agreed_to">You\'ve approved the request from %1$s</string>
     <string name="Has_refused_to">Rejected</string>
+    <string name="Has_agree_to">Agreed</string>
     <string name="accept_join_group">%s approved the request to join group</string>
     <string name="refuse_join_group">%s rejected the request to join group</string>
 
@@ -796,53 +797,66 @@
     <!-- The representation of a time duration when negative. An example is -1:14. This can be used with a countdown timer for example.-->
     <string name="negative_duration">\u2212<xliff:g id="time" example="1:14">%1$s</xliff:g></string>
 
-    <string name="invited_to_join_video_call">invited you to a video call</string>
-    <string name="camera">Camera</string>
-    <string name="waiting_for_accept">Waiting for the other party to accept the invitation</string>
-    <string name="make_sure_leave">Are you sure you want to leave the current conversation?</string>
-    <string name="invited_to_make_multi_party_call">invited you to a voice/video conference call</string>
-    <string name="invite_you_for_audio_and_video_call">invited you to a voice/video call</string>
-    <string name="in_the_call">Call in progress</string>
-    <string name="invite_you_for_video_call">invited you to a video call</string>
-    <string name="invite_you_for_audio_call">invited you to a voice call</string>
+    <string name="em_invited_to_join_video_call">invited you to a video call</string>
+    <string name="em_camera">Camera</string>
+    <string name="em_waiting_for_accept">Waiting for the other party to accept the invitation</string>
+    <string name="em_make_sure_leave">Are you sure you want to leave the current conversation?</string>
+    <string name="em_invited_to_make_multi_party_call">invited you to a voice/video conference call</string>
+    <string name="em_invite_you_for_audio_and_video_call">invited you to a voice/video call</string>
+    <string name="em_in_the_call">Call in progress</string>
+    <string name="em_invite_you_for_video_call">invited you to a video call</string>
+    <string name="em_invite_you_for_audio_call">invited you to a voice call</string>
 
-    <string name="group_head">Group of head</string>
-    <string name="add_member">Add</string>
-    <string name="choose_reminder">Choose reminder</string>
-    <string name="shwo_more_member">Show more group members</string>
-    <string name="selected_user">The selected user</string>
-    <string name="search_result">The search results</string>
-    <string name="service_personnel">The serivce personnel</string>
-    <string name="customer">The customer</string>
-    <string name="invite_user_toast">After the group leader agrees, the members you invite will automatically join the group chat</string>
-    <string name="can_not_select_again">You can\'t double select</string>
-    <string name="search_no_result">No search results</string>
-    <string name="countdown_send">A voice message will be sent directly after %s second</string>
+    <string name="em_group_head">Group of head</string>
+    <string name="em_add_member">Add</string>
+    <string name="em_choose_reminder">Choose reminder</string>
+    <string name="em_show_more_member">Show more group members</string>
+    <string name="em_selected_user">The selected user</string>
+    <string name="em_search_result">The search results</string>
+    <string name="em_service_personnel">The serivce personnel</string>
+    <string name="em_customer">The customer</string>
+    <string name="em_invite_user_toast">After the group leader agrees, the members you invite will automatically join the group chat</string>
+    <string name="em_can_not_select_again">You can\'t double select</string>
+    <string name="em_search_no_result">No search results</string>
+    <string name="em_countdown_send">A voice message will be sent directly after %s second</string>
 
-    <string name="permission_request_denied">Corresponding permissions are required</string>
-    <string name="error_gif">Not more than %1$dpx long, not more than %2$dpx wide, and not more than %3$sM in size.</string>
-    <string name="error_original">Size does not exceed %1$sM.</string>
-    <string name="error_video">Video length does not exceed %1$d seconds.</string>
-    <string name="error_size">File size should not exceed %1$dM.</string>
-    <string name="file_details">File Details</string>
-    <string name="open_file">Open file</string>
-    <string name="start_download">Start download</string>
-    <string name="try_again_later">Network connection failed. Please try again later</string>
-    <string name="search_message">Message</string>
-    <string name="search_file">File</string>
-    <string name="image_and_video">Photos and videos</string>
-    <string name="show_chat_history">Displaying chat History</string>
-    <string name="initiated_call">made an call</string>
-    <string name="call_over">Call over</string>
-    <string name="message_notify">Message notify</string>
-    <string name="search_group">Search group</string>
-    <string name="create_group">Create group</string>
-    <string name="group_apply">Group apply</string>
+    <string name="em_permission_request_denied">Corresponding permissions are required</string>
+    <string name="em_error_gif">Not more than %1$dpx long, not more than %2$dpx wide, and not more than %3$sM in size.</string>
+    <string name="em_error_original">Size does not exceed %1$sM.</string>
+    <string name="em_error_video">Video length does not exceed %1$d seconds.</string>
+    <string name="em_error_size">File size should not exceed %1$dM.</string>
+    <string name="em_file_details">File Details</string>
+    <string name="em_open_file">Open file</string>
+    <string name="em_start_download">Start download</string>
+    <string name="em_try_again_later">Network connection failed. Please try again later</string>
+    <string name="em_search_message">Message</string>
+    <string name="em_search_file">File</string>
+    <string name="em_image_and_video">Photos and videos</string>
+    <string name="em_show_chat_history">Displaying chat History</string>
+    <string name="em_initiated_call">made an call</string>
+    <string name="em_call_over">Call over</string>
+    <string name="em_message_notify">Message notify</string>
+    <string name="em_search_group">Search group</string>
+    <string name="em_create_group">Create group</string>
+    <string name="em_group_apply">Group apply</string>
 
-    <string name="order_id">Order id</string>
-    <string name="phone_number">Phone num</string>
-    <string name="win_code">WIN code</string>
-    <string name="open_notify">Open notify</string>
-    <string name="close_notify">Close notify</string>
-    <string name="call_join_group">Please join the group</string>
+    <string name="em_order_id">Order id</string>
+    <string name="em_phone_number">Phone num</string>
+    <string name="em_win_code">WIN code</string>
+    <string name="em_open_notify">Open notify</string>
+    <string name="em_close_notify">Close notify</string>
+    <string name="em_call_join_group">Please join the group</string>
+    <string name="em_must_be_no_less_than_2_members">Must be no less than 2 members</string>
+
+    <string name="em_action_edit">Edit</string>
+    <string name="em_group_mute">Group mute</string>
+    <string name="em_group_note">Group note</string>
+    <string name="em_system_note">System note</string>
+    <string name="em_service_note">Service note</string>
+    <string name="em_group_note_hint">Please enter service remarks</string>
+    <string name="em_group_mute_set">Group mute setting</string>
+    <string name="em_group_add_mute">Add mute member</string>
+    <string name="em_group_mute_member">Mute member</string>
+    <string name="em_group_remove_mute">Lifting the ban</string>
+    <string name="em_group_mute_failed">Mute failed</string>
 </resources>

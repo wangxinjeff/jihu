@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.hyphenate.easeim.EaseIMHelper;
 import com.hyphenate.easeim.R;
 import com.hyphenate.easeui.EaseIM;
 import com.hyphenate.easeui.adapter.EaseBaseRecyclerViewAdapter;
@@ -23,7 +24,7 @@ public class PickUserAdapter extends EaseBaseRecyclerViewAdapter<EaseUser> {
 
     @Override
     public int getEmptyLayoutId() {
-        return R.layout.ease_layout_default_no_search_result;
+        return EaseIMHelper.getInstance().isAdmin() ? R.layout.ease_layout_default_no_search_result_admin : R.layout.ease_layout_default_no_search_result;
     }
 
     @Override
@@ -63,16 +64,17 @@ public class PickUserAdapter extends EaseBaseRecyclerViewAdapter<EaseUser> {
                     mHeader.setText(header);
                 }
             }
-            EaseUserProfileProvider provider = EaseIM.getInstance().getUserProvider();
-            if (provider != null){
-                EaseUser easeUser = provider.getUser(item.getUsername());
-                if(easeUser != null){
-                    item.setAvatar(easeUser.getAvatar());
-                    item.setNickname(easeUser.getNickname());
-                }
-            }
-            mName.setText(item.getNickname());
+//            EaseUserProfileProvider provider = EaseIM.getInstance().getUserProvider();
+//            if (provider != null){
+//                EaseUser easeUser = provider.getUser(item.getUsername());
+//                if(easeUser != null){
+//                    item.setAvatar(easeUser.getAvatar());
+//                    item.setNickname(easeUser.getNickname());
+//                }
+//            }
+//            mName.setText(item.getNickname());
             EaseUserUtils.setUserAvatar(mContext, item.getUsername(), mAvatar);
+            EaseUserUtils.setUserNick(item.getUsername(), mName);
         }
     }
 

@@ -37,6 +37,7 @@ public class EaseTitleBar extends RelativeLayout implements View.OnClickListener
     protected RelativeLayout rightLayout;
     protected ImageView rightImage;
     protected TextView titleView;
+    protected TextView conIdView;
     protected RelativeLayout titleLayout;
     private TextView titleMenu;
     private OnBackPressListener mBackPressListener;
@@ -85,6 +86,7 @@ public class EaseTitleBar extends RelativeLayout implements View.OnClickListener
         rightLayout = (RelativeLayout) findViewById(R.id.right_layout);
         rightImage = (ImageView) findViewById(R.id.right_image);
         titleView = (TextView) findViewById(R.id.title);
+        conIdView = findViewById(R.id.conversation_id);
         titleLayout = (RelativeLayout) findViewById(R.id.root);
         titleMenu = findViewById(R.id.right_menu);
         parseStyle(context, attrs);
@@ -302,6 +304,10 @@ public class EaseTitleBar extends RelativeLayout implements View.OnClickListener
 
     public Toolbar getToolbar() {
         return toolbar;
+    }
+
+    public TextView getConIdView(){
+        return conIdView;
     }
 
     @Override

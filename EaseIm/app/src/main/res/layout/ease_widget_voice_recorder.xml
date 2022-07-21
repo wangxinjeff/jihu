@@ -59,7 +59,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="10dp"
         android:padding="2dp"
-        android:text="@string/countdown_send"
+        android:text="@string/em_countdown_send"
         android:textColor="@color/white"
         android:visibility="invisible"
         android:textSize="14sp" />

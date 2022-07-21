@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="?attr/themeBgColor"
+    android:orientation="vertical">
+
+    <com.hyphenate.easeui.widget.EaseTitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/em_common_title_bar_height"
+        app:titleBarTitleTextColor="?attr/normalTextColor"
+        app:titleBarLeftImage="@drawable/icon_back_admin"
+        app:titleBarTitle="@string/em_group_apply"
+        android:background="?attr/themeBgColor"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/apple_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        />
+
+</LinearLayout>

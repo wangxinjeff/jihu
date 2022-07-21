@@ -60,19 +60,19 @@ public class FileSizeFilter extends Filter {
     public IncapableCause filter(Context context, Item item) {
         if (item.duration > 0) {
             if (item.duration > mMaxVideoLength) {
-                return new IncapableCause(IncapableCause.DIALOG, context.getString(R.string.error_video, mMaxVideoLength / 1000));
+                return new IncapableCause(IncapableCause.DIALOG, context.getString(R.string.em_error_video, mMaxVideoLength / 1000));
             }
             if (item.size > mMaxVideoSize) {
-                return new IncapableCause(IncapableCause.DIALOG,  context.getString(R.string.error_size,  mMaxVideoSize / Filter.K / Filter.K));
+                return new IncapableCause(IncapableCause.DIALOG,  context.getString(R.string.em_error_size,  mMaxVideoSize / Filter.K / Filter.K));
             }
 
         } else if (item.duration == 0) {
             Point size = PhotoMetadataUtils.getBitmapBound(context.getContentResolver(), item.getContentUri());
             if (item.size > mMaxImageSize) {
-                return new IncapableCause(IncapableCause.DIALOG,  context.getString(R.string.error_size,  mMaxImageSize / Filter.K / Filter.K));
+                return new IncapableCause(IncapableCause.DIALOG,  context.getString(R.string.em_error_size,  mMaxImageSize / Filter.K / Filter.K));
             }
             if (size.x > mMaxWidth || size.y > mMaxHeight || item.size > mMaxImageSize) {
-                return new IncapableCause(IncapableCause.DIALOG, context.getString(R.string.error_gif,mMaxHeight,mMaxWidth
+                return new IncapableCause(IncapableCause.DIALOG, context.getString(R.string.em_error_gif,mMaxHeight,mMaxWidth
                         , String.valueOf(PhotoMetadataUtils.getSizeInMB(mMaxImageSize))));
             }
 

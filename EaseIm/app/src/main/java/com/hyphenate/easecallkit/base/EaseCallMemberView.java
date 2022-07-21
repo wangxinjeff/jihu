@@ -26,6 +26,7 @@ import com.hyphenate.easecallkit.utils.EaseCallKitUtils;
 import com.hyphenate.easeui.EaseIM;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.provider.EaseUserProfileProvider;
+import com.hyphenate.easeui.utils.EaseUserUtils;
 
 import io.agora.rtc.models.UserInfo;
 
@@ -113,20 +114,23 @@ public class EaseCallMemberView extends RelativeLayout {
     }
 
     public void updateUserInfo(){
-        if(userInfo != null){
-            EaseUserProfileProvider userProvider = EaseIM.getInstance().getUserProvider();
-            if(userProvider != null) {
-                EaseUser user = userProvider.getUser(userInfo.getUserName());
-                if(user != null) {
-                    if(!TextUtils.isEmpty(user.getNickname())) {
-                        nameView.setText(user.getNickname());
-                    }
-                    if(!TextUtils.isEmpty(user.getAvatar())) {
-                        Glide.with(context).load(user.getAvatar()).apply(RequestOptions.bitmapTransform(new CircleCrop())).error(R.drawable.call_memberview_background).into(avatarView);
-                    }
-                }
-            }
-        }
+//        if(userInfo != null){
+//            EaseUserProfileProvider userProvider = EaseIM.getInstance().getUserProvider();
+//            if(userProvider != null) {
+//                EaseUser user = userProvider.getUser(userInfo.getUserName());
+//                if(user != null) {
+//                    if(!TextUtils.isEmpty(user.getNickname())) {
+//                        nameView.setText(user.getNickname());
+//                    }
+//                    if(!TextUtils.isEmpty(user.getAvatar())) {
+//                        Glide.with(context).load(user.getAvatar()).apply(RequestOptions.bitmapTransform(new CircleCrop())).error(R.drawable.call_memberview_background).into(avatarView);
+//                    }
+//                }
+//            }
+//        }
+
+        EaseUserUtils.setUserAvatar(context, userInfo.getUserName(), avatarView);
+        EaseUserUtils.setUserNick(userInfo.getUserName(), nameView);
     }
 
     public EaseUserAccount getUserInfo(){

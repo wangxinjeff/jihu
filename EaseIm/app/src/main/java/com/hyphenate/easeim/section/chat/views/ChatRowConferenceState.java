@@ -4,15 +4,12 @@ import android.content.Context;
 import android.text.TextUtils;
 import android.widget.TextView;
 
-import androidx.core.content.ContextCompat;
-
-import com.hyphenate.chat.EMClient;
-import com.hyphenate.chat.EMTextMessageBody;
 import com.hyphenate.easeim.R;
 import com.hyphenate.easeui.EaseIM;
 import com.hyphenate.easeui.constants.EaseConstant;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.provider.EaseUserProfileProvider;
+import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.hyphenate.easeui.widget.chatrow.EaseChatRow;
 
 public class ChatRowConferenceState extends EaseChatRow {
@@ -41,18 +38,19 @@ public class ChatRowConferenceState extends EaseChatRow {
         String user = message.getStringAttribute(EaseConstant.MESSAGE_ATTR_CALL_USER, "");
         if(TextUtils.equals(createCall, EaseConstant.CONFERENCE_STATE_CREATE)){
             name.setVisibility(VISIBLE);
-            name.setText(user);
-            content.setText(context.getString(R.string.initiated_call));
-            EaseUserProfileProvider profileProvider = EaseIM.getInstance().getUserProvider();
-            if(profileProvider != null){
-                EaseUser easeUser = profileProvider.getUser(user);
-                if(easeUser != null){
-                    name.setText(easeUser.getNickname());
-                }
-            }
+//            name.setText(user);
+            content.setText(context.getString(R.string.em_initiated_call));
+//            EaseUserProfileProvider profileProvider = EaseIM.getInstance().getUserProvider();
+//            if(profileProvider != null){
+//                EaseUser easeUser = profileProvider.getUser(user);
+//                if(easeUser != null){
+//                    name.setText(easeUser.getNickname());
+//                }
+//            }
+            EaseUserUtils.setUserNick(user, name);
         } else if(TextUtils.equals(createCall, EaseConstant.CONFERENCE_STATE_END)){
             name.setVisibility(GONE);
-            content.setText(context.getString(R.string.call_over));
+            content.setText(context.getString(R.string.em_call_over));
         }
 
     }

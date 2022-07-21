@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/em_common_title_bar_height"
         app:titleBarTitle="@string/em_group_member_type_title"
-        app:titleBarRightTitle="@string/add_member"
+        app:titleBarRightTitle="@string/em_add_member"
         app:titleBarRightVisible="true"
         app:titleBarLeftImage="@drawable/icon_back"
         app:titleBarTitleTextColor="?attr/normalTextColor"

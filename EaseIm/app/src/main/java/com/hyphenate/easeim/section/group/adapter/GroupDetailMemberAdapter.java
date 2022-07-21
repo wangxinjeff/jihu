@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CircleCrop;
 import com.bumptech.glide.request.RequestOptions;
+import com.hyphenate.easeim.EaseIMHelper;
 import com.hyphenate.easeim.R;
 import com.hyphenate.easeui.EaseIM;
 import com.hyphenate.easeui.domain.EaseUser;
@@ -27,6 +28,7 @@ public class GroupDetailMemberAdapter extends RecyclerView.Adapter<GroupDetailMe
 
     private List<EaseUser> userData = new ArrayList<>();
     private GroupMemberAddClickListener memberClickListener;
+    private boolean isShowAll = false;
 
     @NonNull
     @Override
@@ -37,15 +39,37 @@ public class GroupDetailMemberAdapter extends RecyclerView.Adapter<GroupDetailMe
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         EaseUser user = userData.get(position);
-        if(TextUtils.equals(user.getUsername(), "addUser")){
+        if(TextUtils.equals(user.getUsername(), "em_editUser") && position == 0){
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     memberClickListener.onAddClick();
                 }
             });
-            holder.memberAvatar.setImageDrawable(ContextCompat.getDrawable(holder.mContext, R.drawable.icon_group_invite));
-            holder.memberNick.setText("");
+            holder.memberAvatar.setImageDrawable(ContextCompat.getDrawable(holder.mContext, R.drawable.icon_group_edit));
+            holder.memberNick.setText(user.getNickname());
+        } else if(TextUtils.equals(user.getUsername(), "em_addUser") && position == 0){
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    memberClickListener.onAddClick();
+                }
+            });
+            if(EaseIMHelper.getInstance().isAdmin()){
+                holder.memberAvatar.setImageDrawable(ContextCompat.getDrawable(holder.mContext, R.drawable.icon_invite_admin));
+            } else {
+                holder.memberAvatar.setImageDrawable(ContextCompat.getDrawable(holder.mContext, R.drawable.icon_group_invite));
+            }
+            holder.memberNick.setText(user.getNickname());
+        } else if(TextUtils.equals(user.getUsername(), "em_removeUser") && position == 1){
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    memberClickListener.onRemoveClick();
+                }
+            });
+            holder.memberAvatar.setImageDrawable(ContextCompat.getDrawable(holder.mContext, R.drawable.icon_remove_admin));
+            holder.memberNick.setText(user.getNickname());
         } else {
             EaseUserProfileProvider provider = EaseIM.getInstance().getUserProvider();
             if(provider != null){
@@ -67,14 +91,22 @@ public class GroupDetailMemberAdapter extends RecyclerView.Adapter<GroupDetailMe
 
     public void setData(List<EaseUser> data){
         if(data != null){
-            data.add(0, new EaseUser("addUser"));
-            if(data.size() > 12){
-                userData = data.subList(0, 11);
-            } else {
+            if(isShowAll){
                 userData = data;
+            } else {
+                if(data.size() > 12){
+                    userData = data.subList(0, 11);
+                } else {
+                    userData = data;
+                }
             }
+
             notifyDataSetChanged();
         }
+    }
+
+    public void setShowAll(boolean isShowAll){
+        this.isShowAll = isShowAll;
     }
 
     public void setOnAddClickListener(GroupMemberAddClickListener listener){
@@ -96,5 +128,6 @@ public class GroupDetailMemberAdapter extends RecyclerView.Adapter<GroupDetailMe
 
     public interface GroupMemberAddClickListener{
         void onAddClick();
+        void onRemoveClick();
     }
 }

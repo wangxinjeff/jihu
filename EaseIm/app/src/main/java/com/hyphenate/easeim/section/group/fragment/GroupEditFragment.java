@@ -27,6 +27,8 @@ public class GroupEditFragment extends BaseDialogFragment implements EaseTitleBa
     private boolean canEdit;
     private LinearLayout editRoot;
 
+
+
     public static void showDialog(BaseActivity activity, String title, String content, String hint, OnSaveClickListener listener) {
         showDialog(activity, title, content, hint, true, listener);
     }
@@ -86,6 +88,7 @@ public class GroupEditFragment extends BaseDialogFragment implements EaseTitleBa
             titleBar.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.theme_bg));
             titleBar.getTitle().setTextColor(ContextCompat.getColor(getContext(), R.color.normal_text));
             titleBar.getRightText().setTextColor(ContextCompat.getColor(getContext(), R.color.normal_text));
+            titleBar.setLeftImageResource(R.drawable.icon_back_admin);
             etContent.setBackgroundColor(ContextCompat.getColor(getContext(), R.color.theme_float_bg));
             etContent.setTextColor(ContextCompat.getColor(getContext(), R.color.normal_text));
         } else {

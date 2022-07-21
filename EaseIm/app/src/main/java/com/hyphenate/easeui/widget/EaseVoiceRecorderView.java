@@ -5,7 +5,6 @@ import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.os.Handler;
 import android.os.Looper;
-import android.os.Message;
 import android.os.PowerManager;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -22,7 +21,6 @@ import androidx.core.content.ContextCompat;
 
 import com.hyphenate.EMError;
 import com.hyphenate.easeim.R;
-import com.hyphenate.easeim.common.utils.ToastUtils;
 import com.hyphenate.easeui.manager.EaseThreadManager;
 import com.hyphenate.easeui.manager.EaseVoiceRecorder;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
@@ -116,7 +114,7 @@ public class EaseVoiceRecorderView extends RelativeLayout {
             @Override
             public void run() {
                 countdownHint.setVisibility(VISIBLE);
-                countdownHint.setText(String.format(context.getString(R.string.countdown_send), totalTime + ""));
+                countdownHint.setText(String.format(context.getString(R.string.em_countdown_send), totalTime + ""));
             }
         });
     }

@@ -137,6 +137,10 @@ public class ArrowItemView extends ConstraintLayout {
 
     public EaseImageView getAvatar() { return avatar; }
 
+    public void setItemShowArrow(boolean show){
+        ivArrow.setVisibility(show ? VISIBLE : GONE);
+    }
+
     /**
      * sp to px
      * @param context

@@ -5,7 +5,7 @@
         <shape>
             <corners android:radius="16dp" />
 
-            <solid android:color="#ffc6c6c6" />
+            <solid android:color="?attr/voiceBtnPressColor" />
 
         </shape>
     </item>
@@ -13,7 +13,7 @@
         <shape>
             <corners android:radius="16dp" />
 
-            <solid android:color="?attr/inputViewTextColor" />
+            <solid android:color="?attr/voiceBtnNormalColor" />
 
         </shape>
     </item>

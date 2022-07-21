@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class EaseUser implements Serializable {
+public class EaseUser implements Parcelable {
     /**
      * \~chinese
      * 此用户的唯一标示名, 即用户的环信id
@@ -31,6 +31,38 @@ public class EaseUser implements Serializable {
     private String username;
     private String nickname;
 
+    protected EaseUser(Parcel in) {
+        username = in.readString();
+        nickname = in.readString();
+        isOwner = in.readByte() != 0;
+        isChecked = in.readByte() != 0;
+        isCustomer  = in.readByte() != 0;
+        isMuted = in.readByte() != 0;
+        initialLetter = in.readString();
+        avatar = in.readString();
+        contact = in.readInt();
+        lastModifyTimestamp = in.readLong();
+        modifyInitialLetterTimestamp = in.readLong();
+        email = in.readString();
+        phone = in.readString();
+        gender = in.readInt();
+        sign = in.readString();
+        birth = in.readString();
+        ext = in.readString();
+    }
+
+    public static final Creator<EaseUser> CREATOR = new Creator<EaseUser>() {
+        @Override
+        public EaseUser createFromParcel(Parcel in) {
+            return new EaseUser(in);
+        }
+
+        @Override
+        public EaseUser[] newArray(int size) {
+            return new EaseUser[size];
+        }
+    };
+
     public boolean isChecked() {
         return isChecked;
     }
@@ -40,7 +72,26 @@ public class EaseUser implements Serializable {
     }
 
     private boolean isOwner = false;
+
+    public boolean isCustomer() {
+        return isCustomer;
+    }
+
+    public void setCustomer(boolean customer) {
+        isCustomer = customer;
+    }
+
     private boolean isChecked = false;
+    private boolean isCustomer = false;
+    private boolean isMuted = false;
+
+    public boolean isMuted() {
+        return isMuted;
+    }
+
+    public void setMuted(boolean muted) {
+        isMuted = muted;
+    }
 
     public boolean isOwner() {
         return isOwner;
@@ -309,6 +360,32 @@ public class EaseUser implements Serializable {
 
         }
         return users;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(username);
+        dest.writeString(nickname);
+        dest.writeByte((byte) (isOwner ? 1 : 0));
+        dest.writeByte((byte) (isChecked ? 1 : 0));
+        dest.writeByte((byte) (isCustomer ? 1 : 0));
+        dest.writeByte((byte) (isMuted ? 1 : 0));
+        dest.writeString(initialLetter);
+        dest.writeString(avatar);
+        dest.writeInt(contact);
+        dest.writeLong(lastModifyTimestamp);
+        dest.writeLong(modifyInitialLetterTimestamp);
+        dest.writeString(email);
+        dest.writeString(phone);
+        dest.writeInt(gender);
+        dest.writeString(sign);
+        dest.writeString(birth);
+        dest.writeString(ext);
     }
 
     public class GetInitialLetter {

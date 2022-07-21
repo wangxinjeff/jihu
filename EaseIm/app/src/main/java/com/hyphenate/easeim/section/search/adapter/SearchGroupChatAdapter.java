@@ -28,6 +28,11 @@ public class SearchGroupChatAdapter extends EaseBaseRecyclerViewAdapter<SearchRe
     }
 
     @Override
+    public int getEmptyLayoutId() {
+        return EaseIMHelper.getInstance().isAdmin() ? R.layout.ease_layout_default_no_search_result_admin : R.layout.ease_layout_default_no_search_result;
+    }
+
+    @Override
     public ViewHolder getViewHolder(ViewGroup parent, int viewType) {
         return new GroupChatViewHolder(LayoutInflater.from(parent.getContext()).inflate(R.layout.search_group_chat_item, parent, false));
     }

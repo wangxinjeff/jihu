@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center_horizontal"
     android:orientation="vertical"
     android:paddingTop="13dp">
@@ -22,16 +23,19 @@
             android:id="@+id/iv_userhead"
             style="@style/ease_row_sent_iv_userhead_style"/>
 
-        <RelativeLayout 
+        <com.hyphenate.easeim.common.widget.ChatView
             android:id="@+id/bubble"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@id/iv_userhead"
-            android:layout_marginRight="10dp"
+            android:layout_toStartOf="@id/iv_userhead"
+            android:layout_marginEnd="10dp"
             android:minHeight="38dp"
             android:layout_below="@id/tv_userid"
             android:layout_marginTop="2dp"
-             android:background="@drawable/ease_chat_bubble_send_bg"
+            app:arrow_direction="right"
+            app:fill_color="?attr/msgBubbleBg"
+            app:stroke_color="?attr/msgBubbleBg"
+            app:conner_radius="8dp"
             >
 	        <ImageView
 	            android:id="@+id/iv_voice"
@@ -52,10 +56,11 @@
                 android:layout_toRightOf="@id/iv_voice"
                 tools:text="12''"
                 android:maxLines="1"
+                android:textColor="?attr/msgTextColor"
                 android:layout_centerVertical="true"
                 android:gravity="center" />
 
-		</RelativeLayout>
+		</com.hyphenate.easeim.common.widget.ChatView>
 
         <ImageView
             android:id="@+id/iv_unread_voice"

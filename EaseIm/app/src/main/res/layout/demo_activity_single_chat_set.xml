@@ -13,6 +13,8 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:titleBarTitle="@string/em_single_set_title"
+        app:titleBarTitleTextColor="?attr/normalTextColor"
+        android:background="?attr/themeBgColor"
         app:titleBarLeftImage="@drawable/icon_back"/>
 
     <com.hyphenate.easeim.common.widget.ArrowItemView
@@ -28,6 +30,8 @@
         app:arrowItemShowAvatar="true"
         app:arrowItemShowDivider="false"
         app:arrowItemShowArrow="false"
+        app:arrowItemTitleColor="?attr/normalTextColor"
+        android:background="?attr/themeFloatBgColor"
         android:foreground="@drawable/demo_ripple_click_gray"/>
 
     <com.hyphenate.easeim.common.widget.ArrowItemView
@@ -40,6 +44,8 @@
         app:layout_constraintTop_toBottomOf="@id/item_user_info"
         app:arrowItemShowDivider="false"
         app:arrowItemTitle="@string/em_single_search_history"
+        app:arrowItemTitleColor="?attr/normalTextColor"
+        android:background="?attr/themeFloatBgColor"
         android:foreground="@drawable/demo_ripple_click_gray"/>
 
     <com.hyphenate.easeim.common.widget.SwitchItemView
@@ -62,6 +68,8 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/item_switch_top"
         app:switchItemShowDivider="false"
+        android:background="?attr/themeFloatBgColor"
+        app:switchItemTitleColor="?attr/normalTextColor"
         app:switchItemTitle="@string/push_settings"/>
 
     <com.hyphenate.easeim.common.widget.ArrowItemView

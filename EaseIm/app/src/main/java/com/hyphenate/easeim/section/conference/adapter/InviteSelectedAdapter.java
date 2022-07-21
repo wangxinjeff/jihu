@@ -27,7 +27,7 @@ public class InviteSelectedAdapter extends EaseBaseRecyclerViewAdapter<String> {
 
     @Override
     public int getEmptyLayoutId() {
-        return R.layout.ease_layout_default_no_search_result;
+        return EaseIMHelper.getInstance().isAdmin() ? R.layout.ease_layout_default_no_search_result_admin : R.layout.ease_layout_default_no_search_result;
     }
 
     @Override
@@ -57,16 +57,18 @@ public class InviteSelectedAdapter extends EaseBaseRecyclerViewAdapter<String> {
 
         @Override
         public void setData(String item, int position) {
-            EaseUserProfileProvider provider = EaseIM.getInstance().getUserProvider();
-            if(provider != null){
-                EaseUser user = provider.getUser(item);
-                if(user != null){
-                    Glide.with(mContext).load(user.getAvatar()).apply(RequestOptions.bitmapTransform(new CircleCrop())).error(R.drawable.ease_default_avatar).into(mAvatar);
-                    mName.setText(user.getNickname());
-                }
-            } else {
-                mName.setText(item);
-            }
+//            EaseUserProfileProvider provider = EaseIM.getInstance().getUserProvider();
+//            if(provider != null){
+//                EaseUser user = provider.getUser(item);
+//                if(user != null){
+//                    Glide.with(mContext).load(user.getAvatar()).apply(RequestOptions.bitmapTransform(new CircleCrop())).error(R.drawable.ease_default_avatar).into(mAvatar);
+//                    mName.setText(user.getNickname());
+//                }
+//            } else {
+//                mName.setText(item);
+//            }
+            EaseUserUtils.setUserAvatar(mContext, item, mAvatar);
+            EaseUserUtils.setUserNick(item, mName);
         }
     }
 }

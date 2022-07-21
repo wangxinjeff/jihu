@@ -10,16 +10,13 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.bitmap.CircleCrop;
-import com.bumptech.glide.request.RequestOptions;
+
 import com.hyphenate.easeim.R;
-import com.hyphenate.easeim.common.model.SelectedUser;
 import com.hyphenate.easeui.adapter.EaseAdapterDelegate;
 import com.hyphenate.easeui.adapter.EaseBaseRecyclerViewAdapter;
 import com.hyphenate.easeui.domain.EaseUser;
 
-public class PickContactDelegate extends EaseAdapterDelegate<SelectedUser, PickContactDelegate.ViewHolder>{
+public class PickContactDelegate extends EaseAdapterDelegate<EaseUser, PickContactDelegate.ViewHolder>{
 
     private onCloseClickListener listener;
 
@@ -30,9 +27,9 @@ public class PickContactDelegate extends EaseAdapterDelegate<SelectedUser, PickC
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position, SelectedUser item) {
+    public void onBindViewHolder(ViewHolder holder, int position, EaseUser item) {
         super.onBindViewHolder(holder, position, item);
-        holder.nickView.setText(item.getName());
+        holder.nickView.setText(item.getNickname());
         holder.closeView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -44,14 +41,14 @@ public class PickContactDelegate extends EaseAdapterDelegate<SelectedUser, PickC
     }
 
     public interface onCloseClickListener{
-        void onMemberRemove(SelectedUser name);
+        void onMemberRemove(EaseUser name);
     }
 
     public void setCloseClickListener(onCloseClickListener listener){
         this.listener = listener;
     }
 
-    static class ViewHolder extends EaseBaseRecyclerViewAdapter.ViewHolder<SelectedUser>{
+    static class ViewHolder extends EaseBaseRecyclerViewAdapter.ViewHolder<EaseUser>{
         public Context mContext;
         public AppCompatImageView closeView;
         public AppCompatTextView nickView;
@@ -69,7 +66,7 @@ public class PickContactDelegate extends EaseAdapterDelegate<SelectedUser, PickC
         }
 
         @Override
-        public void setData(SelectedUser name, int position) {
+        public void setData(EaseUser name, int position) {
 
         }
     }

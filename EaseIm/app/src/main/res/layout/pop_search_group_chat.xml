@@ -18,7 +18,7 @@
         android:id="@+id/item2"
         android:layout_width="94dp"
         android:layout_height="36dp"
-        android:text="@string/order_id"
+        android:text="@string/em_order_id"
         android:gravity="center"
         android:textColor="?attr/normalTextColor"
         />
@@ -26,7 +26,7 @@
         android:id="@+id/item3"
         android:layout_width="94dp"
         android:layout_height="36dp"
-        android:text="@string/phone_number"
+        android:text="@string/em_phone_number"
         android:gravity="center"
         android:textColor="?attr/normalTextColor"
         />
@@ -34,7 +34,7 @@
         android:id="@+id/item4"
         android:layout_width="94dp"
         android:layout_height="36dp"
-        android:text="@string/win_code"
+        android:text="@string/em_win_code"
         android:gravity="center"
         android:textColor="?attr/normalTextColor"
         />

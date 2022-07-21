@@ -44,6 +44,16 @@
             app:ease_shape_type="round"
             android:src="@drawable/ease_default_avatar" />
 
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/icon_mute"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            app:layout_constraintEnd_toEndOf="@+id/avatar"
+            app:layout_constraintBottom_toBottomOf="@+id/avatar"
+            android:src="@drawable/em_icon_mute"
+            android:visibility="gone"
+            />
+
         <TextView
             android:id="@+id/label"
             android:layout_width="wrap_content"
@@ -119,17 +129,6 @@
             android:gravity="center"
             android:visibility="gone"
             android:textSize="12sp" />
-
-        <View
-            android:id="@+id/bottom_line"
-            android:layout_width="0dp"
-            android:layout_height="1dp"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginLeft="64dp"
-            android:layout_marginStart="64dp"
-            android:background="@color/em_base_color_divider"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

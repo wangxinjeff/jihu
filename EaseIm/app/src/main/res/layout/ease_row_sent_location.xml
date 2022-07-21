@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center_horizontal"
     android:orientation="vertical"
     android:paddingTop="13dp">
@@ -22,57 +23,58 @@
             android:id="@+id/iv_userhead"
             style="@style/ease_row_sent_iv_userhead_style"/>
 
-        <LinearLayout
+        <com.hyphenate.easeim.common.widget.ChatView
             android:id="@+id/bubble"
-            android:layout_width="200dp"
-            android:layout_height="160dp"
+            android:layout_width="230dp"
+            android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/margin_chat_activity"
             android:layout_toLeftOf="@id/iv_userhead"
-            android:orientation="vertical"
             android:layout_marginLeft="3dp"
             android:layout_below="@id/tv_userid"
-            android:background="@drawable/ease_chat_location_bubble_send_bg">
+            app:arrow_direction="right"
+            app:fill_color="?attr/msgBubbleBg"
+            app:stroke_color="?attr/msgBubbleBg"
+            app:conner_radius="8dp"
+            android:paddingEnd="13dp"
+            android:paddingStart="10dp"
+            >
+
+            <ImageView
+                android:id="@+id/icon_location"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/em_icon_location_admin"
+                android:layout_marginTop="13dp"
+                android:layout_marginBottom="13dp"
+                />
 
             <TextView
                 android:id="@+id/tv_location_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="6dp"
-                android:paddingRight="6dp"
-                android:paddingTop="4dp"
                 android:maxLines="1"
                 android:ellipsize="end"
-                tools:text="环信"
-                android:textSize="14sp"
-                android:textColor="#ff333333"
-                android:visibility="gone"
-                android:background="@color/white"/>
+                android:layout_toEndOf="@+id/icon_location"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="7dp"
+                tools:text="数码大厦A座（北京市海淀区）"
+                android:textSize="@dimen/em_size_normal"
+                android:textColor="?attr/msgTextColor"/>
 
             <TextView
                 android:id="@+id/tv_location"
-                style="@style/chat_location_content_style"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_below="@+id/tv_location_name"
                 android:gravity="center|left"
-                android:textSize="13sp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:layout_alignStart="@+id/tv_location_name"
+                android:textSize="@dimen/em_size_small"
                 tools:text="北京市海淀区中关村南大街2号A座31层3102"
-                android:background="@drawable/ease_chat_location_content_send_bg"
-                android:textColor="#ff999999" />
+                android:textColor="?attr/conContentTimeColor" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
-
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginTop="26dp"
-                    android:src="@drawable/ease_chat_location"
-                    android:layout_centerInParent="true"/>
-
-            </RelativeLayout>
-
-        </LinearLayout>
+        </com.hyphenate.easeim.common.widget.ChatView>
 
         <ImageView
             android:id="@+id/msg_status"

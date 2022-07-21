@@ -2,10 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center_horizontal"
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
-    android:paddingTop="13dp" >
+    android:paddingTop="13dp">
 
     <TextView
         android:id="@+id/timestamp"
@@ -22,56 +23,57 @@
             android:id="@+id/iv_userhead"
             style="@style/ease_row_receive_iv_userhead_style"/>
 
-        <LinearLayout
+        <com.hyphenate.easeim.common.widget.ChatView
             android:id="@+id/bubble"
-            android:layout_width="200dp"
-            android:layout_height="160dp"
+            android:layout_width="230dp"
+            android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/margin_chat_activity"
             android:layout_toRightOf="@id/iv_userhead"
             android:layout_below="@+id/tv_userid"
-            android:orientation="vertical"
-            android:background="@drawable/ease_chat_location_bubble_receive_bg" >
+            android:paddingEnd="10dp"
+            android:paddingStart="13dp"
+            app:arrow_direction="left"
+            app:fill_color="?attr/msgBubbleBg"
+            app:stroke_color="?attr/msgBubbleBg"
+            app:conner_radius="8dp" >
+
+            <ImageView
+                android:id="@+id/icon_location"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:src="@drawable/em_icon_location_admin"
+                android:layout_marginTop="13dp"
+                android:layout_marginBottom="13dp"
+                />
 
             <TextView
                 android:id="@+id/tv_location_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingLeft="6dp"
-                android:paddingRight="6dp"
-                android:paddingTop="4dp"
                 android:maxLines="1"
                 android:ellipsize="end"
-                tools:text="环信"
-                android:textSize="14sp"
-                android:textColor="#ff333333"
-                android:visibility="gone"
-                android:background="@color/white"/>
+                android:layout_toEndOf="@+id/icon_location"
+                android:layout_marginStart="3dp"
+                android:layout_marginTop="7dp"
+                tools:text="数码大厦A座（北京市海淀区）"
+                android:textSize="@dimen/em_size_normal"
+                android:textColor="?attr/msgTextColor"/>
 
             <TextView
                 android:id="@+id/tv_location"
-                style="@style/chat_location_content_style"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="13sp"
+                android:layout_below="@+id/tv_location_name"
+                android:gravity="center|left"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:layout_alignStart="@+id/tv_location_name"
+                android:textSize="@dimen/em_size_small"
                 tools:text="北京市海淀区中关村南大街2号A座31层3102"
-                android:background="@drawable/ease_chat_location_content_receive_bg"
-                android:textColor="#ff999999" />
+                android:textColor="?attr/conContentTimeColor" />
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1">
 
-                <ImageView
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginTop="26dp"
-                    android:src="@drawable/ease_chat_location"
-                    android:layout_centerInParent="true"/>
-
-            </RelativeLayout>
-
-        </LinearLayout>
+        </com.hyphenate.easeim.common.widget.ChatView>
          <TextView
             android:id="@+id/tv_userid"
             style="@style/chat_text_name_style"

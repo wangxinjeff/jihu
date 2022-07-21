@@ -15,6 +15,7 @@ import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMGroup;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMNormalFileMessageBody;
+import com.hyphenate.easeim.EaseIMHelper;
 import com.hyphenate.easeim.R;
 import com.hyphenate.easeui.EaseIM;
 import com.hyphenate.easeui.adapter.EaseBaseRecyclerViewAdapter;
@@ -34,7 +35,7 @@ public class SearchAllAdapter extends EaseBaseRecyclerViewAdapter<EMMessage> {
 
     @Override
     public int getEmptyLayoutId() {
-        return R.layout.ease_layout_default_no_search_result;
+        return EaseIMHelper.getInstance().isAdmin() ? R.layout.ease_layout_default_no_search_result_admin : R.layout.ease_layout_default_no_search_result;
     }
 
     @Override
@@ -78,8 +79,8 @@ public class SearchAllAdapter extends EaseBaseRecyclerViewAdapter<EMMessage> {
                     name.setText(item.getTo());
                 }
             }else {
-                EaseUserProfileProvider profileProvider = EaseIM.getInstance().getUserProvider();
-                if(profileProvider != null){
+//                EaseUserProfileProvider profileProvider = EaseIM.getInstance().getUserProvider();
+//                if(profileProvider != null){
                     if(item.direct() == EMMessage.Direct.SEND) {
                         EaseUserUtils.setUserNick(item.getFrom(), name);
                         EaseUserUtils.setUserAvatar(mContext, item.getFrom(), avatar);
@@ -87,18 +88,13 @@ public class SearchAllAdapter extends EaseBaseRecyclerViewAdapter<EMMessage> {
                         EaseUserUtils.setUserNick(item.getTo(), name);
                         EaseUserUtils.setUserAvatar(mContext, item.getTo(), avatar);
                     }
-                } else {
-                    if(item.direct() == EMMessage.Direct.SEND) {
-                        name.setText(item.getFrom());
-                    }else {
-                        name.setText(item.getTo());
-                    }
-                }
-                if(item.direct() == EMMessage.Direct.SEND) {
-                    name.setText(item.getFrom());
-                }else {
-                    name.setText(item.getTo());
-                }
+//                } else {
+//                    if(item.direct() == EMMessage.Direct.SEND) {
+//                        name.setText(item.getFrom());
+//                    }else {
+//                        name.setText(item.getTo());
+//                    }
+//                }
             }
             if (item.direct() == EMMessage.Direct.SEND && item.status() == EMMessage.Status.FAIL) {
                 msg_state.setVisibility(View.VISIBLE);

@@ -3,9 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:paddingTop="13dp" >
+    android:paddingTop="13dp">
 
     <TextView
         android:id="@+id/timestamp"
@@ -23,32 +24,38 @@
             android:id="@+id/iv_userhead"
             style="@style/ease_row_sent_iv_userhead_style"/>
 
-        <LinearLayout
+        <com.hyphenate.easeim.common.widget.ChatView
             android:id="@+id/bubble"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="68dp"
             android:minHeight="@dimen/ease_chat_file_bubble_min_height"
             android:layout_marginRight="@dimen/margin_chat_activity"
             android:layout_toLeftOf="@id/iv_userhead"
             android:layout_toRightOf="@+id/ll_loading"
             android:layout_below="@id/tv_userid"
-            android:gravity="center_vertical"
-            android:background="@drawable/ease_chat_bubble_send_bg" >
+            app:arrow_direction="right"
+            app:fill_color="?attr/msgBubbleBg"
+            app:stroke_color="?attr/msgBubbleBg"
+            app:conner_radius="8dp" >
 
             <ImageView
                 android:id="@+id/file_type"
-                android:layout_width="@dimen/ease_chat_file_icon_size"
-                android:layout_height="@dimen/ease_chat_file_icon_size"
+                android:layout_width="44dp"
+                android:layout_height="44dp"
                 android:layout_marginLeft="@dimen/ease_chat_file_icon_margin"
+                android:layout_marginTop="12dp"
+                android:layout_marginBottom="12dp"
                 android:src="@drawable/icon_file_other" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_gravity="center_vertical"
-                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
+                android:layout_marginEnd="15dp"
+                android:layout_toEndOf="@+id/file_type"
                 android:gravity="center_vertical"
                 android:orientation="vertical" >
 
@@ -60,7 +67,7 @@
                     android:paddingRight="8dp"
                     android:ellipsize="middle"
                     android:maxLines="2"
-                    android:textColor="#000"
+                    android:textColor="?attr/msgTextColor"
                     android:textSize="12sp"
                     tools:text="的链接发链接拉萨酱豆腐历史交锋垃圾啊多方了解按附件垃圾发是的龙卷风拉动房价"/>
 
@@ -97,7 +104,7 @@
 
             </LinearLayout>
 
-        </LinearLayout>
+        </com.hyphenate.easeim.common.widget.ChatView>
 
         <ImageView
             android:id="@+id/msg_status"

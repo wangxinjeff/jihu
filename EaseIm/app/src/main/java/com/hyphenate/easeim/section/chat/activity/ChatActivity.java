@@ -28,6 +28,7 @@ import com.hyphenate.easeui.constants.EaseConstant;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.model.EaseEvent;
 import com.hyphenate.easeui.provider.EaseUserProfileProvider;
+import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.hyphenate.easeui.widget.EaseTitleBar;
 
 public class ChatActivity extends BaseInitActivity implements EaseTitleBar.OnBackPressListener, EaseTitleBar.OnRightClickListener, ChatFragment.OnFragmentInfoListener {
@@ -63,6 +64,10 @@ public class ChatActivity extends BaseInitActivity implements EaseTitleBar.OnBac
     protected void initView(Bundle savedInstanceState) {
         super.initView(savedInstanceState);
         titleBarMessage = findViewById(R.id.title_bar_message);
+        if(EaseIMHelper.getInstance().isAdmin()){
+            titleBarMessage.setLeftImageResource(R.drawable.icon_back_admin);
+            titleBarMessage.setRightImageResource(R.drawable.em_icon_more_admin);
+        }
         initChatFragment();
     }
 
@@ -98,6 +103,10 @@ public class ChatActivity extends BaseInitActivity implements EaseTitleBar.OnBac
     @Override
     protected void initData() {
         super.initData();
+        if(EaseIMHelper.getInstance().isAdmin()){
+            titleBarMessage.getConIdView().setText("群组ID：" + conversationId);
+            titleBarMessage.getConIdView().setVisibility(View.VISIBLE);
+        }
         EMConversation conversation = EMClient.getInstance().chatManager().getConversation(conversationId);
         MessageViewModel messageViewModel = new ViewModelProvider(this).get(MessageViewModel.class);
         viewModel = new ViewModelProvider(this).get(ChatViewModel.class);
@@ -108,14 +117,6 @@ public class ChatActivity extends BaseInitActivity implements EaseTitleBar.OnBac
                     finish();
                     EaseEvent event = EaseEvent.create(DemoConstant.CONVERSATION_DELETE, EaseEvent.TYPE.MESSAGE);
                     messageViewModel.setMessageChange(event);
-                }
-            });
-        });
-        viewModel.getChatRoomObservable().observe(this, response -> {
-            parseResource(response, new OnResourceParseCallback<EMChatRoom>() {
-                @Override
-                public void onSuccess(@Nullable EMChatRoom data) {
-                    setDefaultTitle();
                 }
             });
         });
@@ -163,13 +164,6 @@ public class ChatActivity extends BaseInitActivity implements EaseTitleBar.OnBac
         String title;
         if(chatType == DemoConstant.CHATTYPE_GROUP) {
             title = GroupHelper.getGroupName(conversationId);
-        }else if(chatType == DemoConstant.CHATTYPE_CHATROOM) {
-            EMChatRoom room = EMClient.getInstance().chatroomManager().getChatRoom(conversationId);
-            if(room == null) {
-                viewModel.getChatRoom(conversationId);
-                return;
-            }
-            title =  TextUtils.isEmpty(room.getName()) ? conversationId : room.getName();
         }else {
             EaseUserProfileProvider userProvider = EaseIM.getInstance().getUserProvider();
             if(userProvider != null) {

@@ -68,7 +68,7 @@
             android:textAlignment="center"
             android:gravity="center"
             android:layout_centerInParent="true"
-            android:text="@string/invited_to_join_video_call" />
+            android:text="@string/em_invited_to_join_video_call" />
 
         <LinearLayout
             android:id="@+id/bottom"

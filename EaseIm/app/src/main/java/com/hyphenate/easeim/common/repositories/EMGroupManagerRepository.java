@@ -1019,7 +1019,7 @@ public class EMGroupManagerRepository extends BaseEMRepository{
     }
 
     /**
-     * 禁言
+     * 解除禁言
      * @param groupId
      * @param usernames
      * @return

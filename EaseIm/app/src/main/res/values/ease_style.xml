@@ -124,6 +124,9 @@
         <item name="msgTextColor">@color/send_text</item>
         <item name="rmsgBubbleBg">@color/receive_bubble_bg</item>
 
+        <item name="voiceBtnNormalColor">@color/voice_btn_normal</item>
+        <item name="voiceBtnPressColor">@color/voice_btn_press</item>
+
         <item name="detailBg">@color/detail_bg_color</item>
         <item name="searchViewBg">@color/search_bg</item>
         <item name="searchHintColor">@color/search_hint</item>
@@ -175,6 +178,8 @@
         <item name="msgBubbleBg">@color/send_bubble_bg_color</item>
         <item name="msgTextColor">@color/send_text_color</item>
         <item name="rmsgBubbleBg">@color/receive_bubble_bg_color</item>
+        <item name="voiceBtnNormalColor">@color/voice_btn_normal_color</item>
+        <item name="voiceBtnPressColor">@color/voice_btn_press_color</item>
 
         <item name="detailBg">@color/detail_bg_color</item>
         <item name="searchViewBg">@color/search_bg_color</item>
@@ -431,4 +436,8 @@
         <!-- remove button default shadow effect -->
         <item name="android:buttonStyle">@style/Button.BorderLess</item>
     </style>
+
+    <declare-styleable name="MaxHeightRecyclerView">
+        <attr name="maxHeight" format="dimension"/>
+    </declare-styleable>
 </resources>

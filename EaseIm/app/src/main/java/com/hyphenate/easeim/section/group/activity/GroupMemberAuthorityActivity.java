@@ -173,7 +173,7 @@ public class GroupMemberAuthorityActivity extends BaseInitActivity implements Ea
                 break;
             case R.id.action_group_add :
                 GroupPickContactsActivity.actionStartForResult(mContext,
-                        groupId, false, REQUEST_CODE_ADD_USER);
+                        groupId, false);
                 break;
         }
         return super.onOptionsItemSelected(item);

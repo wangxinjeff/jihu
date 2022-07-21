@@ -9,22 +9,17 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.baidu.platform.comapi.map.A;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
-import com.hyphenate.chat.EMMessage;
+import com.hyphenate.easeim.EaseIMHelper;
 import com.hyphenate.easeim.R;
 import com.hyphenate.easeim.section.base.BaseInitActivity;
-import com.hyphenate.easeim.section.chat.activity.ChatHistoryActivity;
-import com.hyphenate.easeim.section.search.adapter.SearchAllAdapter;
-import com.hyphenate.easeim.section.search.adapter.SearchMessageAdapter;
 import com.hyphenate.easeim.section.search.adapter.SectionPagerAdapter;
 import com.hyphenate.easeim.section.search.fragment.SearchAllFragment;
 import com.hyphenate.easeim.section.search.fragment.SearchFileFragment;
 import com.hyphenate.easeim.section.search.fragment.SearchMultiMediaFragment;
-import com.hyphenate.easeui.adapter.EaseBaseRecyclerViewAdapter;
 import com.hyphenate.easeui.constants.EaseConstant;
 import com.hyphenate.easeui.widget.EaseTitleBar;
 
@@ -64,6 +59,10 @@ public class SearchHistoryChatActivity extends BaseInitActivity {
     protected void initView(Bundle savedInstanceState) {
         super.initView(savedInstanceState);
         titleBar = findViewById(R.id.title_bar);
+        if(EaseIMHelper.getInstance().isAdmin()){
+            titleBar.setLeftImageResource(R.drawable.icon_back_admin);
+        }
+
         tabLayout = findViewById(R.id.tab_layout);
         viewPager = findViewById(R.id.view_pager);
 
@@ -75,11 +74,11 @@ public class SearchHistoryChatActivity extends BaseInitActivity {
         fragmentList.add(new SearchMultiMediaFragment(toUsername));
 
         List<String> titleList = new ArrayList<>();
-        titleList.add(getString(R.string.search_message));
+        titleList.add(getString(R.string.em_search_message));
         if(conversation.getType() == EMConversation.EMConversationType.GroupChat) {
-            titleList.add(getString(R.string.search_file));
+            titleList.add(getString(R.string.em_search_file));
         }
-        titleList.add(getString(R.string.image_and_video));
+        titleList.add(getString(R.string.em_image_and_video));
 
         viewPager.setAdapter(new SectionPagerAdapter(this, fragmentList));
         new TabLayoutMediator(tabLayout, viewPager, new TabLayoutMediator.TabConfigurationStrategy(){
@@ -91,6 +90,16 @@ public class SearchHistoryChatActivity extends BaseInitActivity {
 
     }
 
+    @Override
+    protected void initListener() {
+        super.initListener();
+        titleBar.setOnBackPressListener(new EaseTitleBar.OnBackPressListener() {
+            @Override
+            public void onBackPress(View view) {
+                onBackPressed();
+            }
+        });
+    }
 
     @Override
     protected void initData() {

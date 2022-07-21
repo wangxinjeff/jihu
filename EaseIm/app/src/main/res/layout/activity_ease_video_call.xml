@@ -59,7 +59,7 @@
         android:paddingRight="12dp"
         android:textColor="@color/white"
         android:textSize="@dimen/em_size_big"
-        tools:text="@string/waiting_for_accept"
+        tools:text="@string/em_waiting_for_accept"
         android:visibility="visible" />
 
     <View
@@ -111,7 +111,7 @@
         android:paddingRight="12dp"
         android:textColor="@color/white"
         android:textSize="@dimen/em_size_big"
-        android:text="@string/waiting_for_accept"
+        android:text="@string/em_waiting_for_accept"
         android:visibility="visible" />
 
 

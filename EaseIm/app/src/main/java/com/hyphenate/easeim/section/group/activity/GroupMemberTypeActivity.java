@@ -76,6 +76,11 @@ public class GroupMemberTypeActivity extends BaseInitActivity implements EaseTit
         super.initView(savedInstanceState);
 
         titleBar = findViewById(R.id.title_bar);
+
+        if(EaseIMHelper.getInstance().isAdmin()){
+            titleBar.setLeftImageResource(R.drawable.icon_back_admin);
+        }
+
         searchBar = findViewById(R.id.search_bar);
         searchBar.init(false);
 
@@ -107,7 +112,7 @@ public class GroupMemberTypeActivity extends BaseInitActivity implements EaseTit
         titleBar.setRightLayoutClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GroupPickContactsActivity.actionStartForResult(mContext, groupId, GroupHelper.isOwner(group), REQUEST_CODE_ADD_USER);
+                GroupPickContactsActivity.actionStartForResult(mContext, groupId, false);
             }
         });
     }

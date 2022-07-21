@@ -3,17 +3,11 @@ package com.hyphenate.easeim.section.group.activity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.Editable;
 import android.text.TextUtils;
-import android.text.TextWatcher;
-import android.view.KeyEvent;
 import android.view.View;
-import android.view.inputmethod.EditorInfo;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.flexbox.AlignItems;
@@ -21,22 +15,21 @@ import com.google.android.flexbox.FlexDirection;
 import com.google.android.flexbox.FlexWrap;
 import com.google.android.flexbox.FlexboxLayoutManager;
 import com.google.android.flexbox.JustifyContent;
+import com.hyphenate.easeim.EaseIMHelper;
 import com.hyphenate.easeim.R;
 import com.hyphenate.easeim.common.interfaceOrImplement.OnResourceParseCallback;
-import com.hyphenate.easeim.common.model.SelectedUser;
 import com.hyphenate.easeim.common.utils.ToastUtils;
 import com.hyphenate.easeim.common.widget.SearchBar;
 import com.hyphenate.easeim.section.group.delegate.PickContactDelegate;
 import com.hyphenate.easeim.section.base.BaseInitActivity;
 import com.hyphenate.easeim.section.group.adapter.GroupPickContactsAdapter;
 import com.hyphenate.easeim.section.group.viewmodels.GroupPickContactsViewModel;
-import com.hyphenate.easeui.utils.EaseCommonUtils;
+import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.widget.EaseTitleBar;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 import androidx.core.content.ContextCompat;
@@ -49,8 +42,8 @@ public class GroupPickContactsActivity extends BaseInitActivity implements EaseT
     protected GroupPickContactsAdapter adapter;
     private GroupPickContactsViewModel viewModel;
     private String groupId;
-    private boolean isOwner;
-    private String[] newmembers;
+    private boolean isCreate;
+    private List<EaseUser> members;
     private AppCompatImageView userAvatar;
     private AppCompatTextView userName;
     private RelativeLayout resultView;
@@ -61,19 +54,20 @@ public class GroupPickContactsActivity extends BaseInitActivity implements EaseT
 
     private AppCompatTextView selectedTitle;
     private AppCompatTextView resultTitle;
-    private List<SelectedUser> selectedList = new ArrayList<>();
+    private List<EaseUser> selectedList = new ArrayList<>();
 
-    public static void actionStartForResult(Activity context, String[] newmembers, int requestCode) {
-        Intent starter = new Intent(context, GroupPickContactsActivity.class);
-        starter.putExtra("newmembers", newmembers);
-        context.startActivityForResult(starter, requestCode);
-    }
-
-    public static void actionStartForResult(Activity context, String groupId, boolean owner, int requestCode) {
+    public static void actionStartForResult(Activity context, String groupId, boolean isCreate) {
         Intent starter = new Intent(context, GroupPickContactsActivity.class);
         starter.putExtra("groupId", groupId);
-        starter.putExtra("isOwner", owner);
-        context.startActivityForResult(starter, requestCode);
+        starter.putExtra("isCreate", isCreate);
+        context.startActivity(starter);
+    }
+
+    public static void actionStartForResult(Activity context, ArrayList<EaseUser> members) {
+        Intent starter = new Intent(context, GroupPickContactsActivity.class);
+        starter.putParcelableArrayListExtra("members", members);
+        starter.putExtra("isCreate", true);
+        context.startActivity(starter);
     }
 
     @Override
@@ -85,21 +79,25 @@ public class GroupPickContactsActivity extends BaseInitActivity implements EaseT
     protected void initIntent(Intent intent) {
         super.initIntent(intent);
         groupId = intent.getStringExtra("groupId");
-        isOwner = intent.getBooleanExtra("isOwner", false);
-        newmembers = intent.getStringArrayExtra("newmembers");
+        isCreate = intent.getBooleanExtra("isCreate", false);
+        members = intent.getParcelableArrayListExtra("members");
     }
 
     @Override
     protected void initView(Bundle savedInstanceState) {
         super.initView(savedInstanceState);
         titleBar = findViewById(R.id.title_bar);
+        if(EaseIMHelper.getInstance().isAdmin()){
+            titleBar.setLeftImageResource(R.drawable.icon_back_admin);
+        }
+
         rvList = findViewById(R.id.rl_user_list);
         userAvatar = findViewById(R.id.user_avatar);
         userName = findViewById(R.id.user_name);
         resultView = findViewById(R.id.result_view);
         radioGroup = findViewById(R.id.rb_group);
 
-        titleBar.getRightText().setTextColor(ContextCompat.getColor(mContext, R.color.em_color_brand));
+        titleBar.getRightText().setTextColor(ContextCompat.getColor(mContext, R.color.search_close_color));
 
         searchBar = findViewById(R.id.search_bar);
         searchBar.init(true);
@@ -122,6 +120,11 @@ public class GroupPickContactsActivity extends BaseInitActivity implements EaseT
         adapter.addDelegate(delegate);
         rvList.setAdapter(adapter);
 
+        if(members != null && members.size() > 0){
+            selectedList = members;
+            adapter.setData(selectedList);
+        }
+
         refreshSelectedView();
     }
 
@@ -130,33 +133,40 @@ public class GroupPickContactsActivity extends BaseInitActivity implements EaseT
         super.initListener();
         titleBar.setOnBackPressListener(this);
         titleBar.setOnRightClickListener(this);
+        addRadioGroupListener();
+
+        searchBar.setOnSearchBarListener(new SearchBar.OnSearchBarListener() {
+            @Override
+            public void onSearchContent(String text) {
+                radioGroup.setOnCheckedChangeListener(null);
+                radioGroup.clearCheck();
+                addRadioGroupListener();
+                viewModel.getSearchContacts(text);
+            }
+        });
+    }
+
+    private void addRadioGroupListener(){
         radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                SelectedUser user = new SelectedUser(result);
+                EaseUser user = new EaseUser(result);
 
                 RadioButton radioButton = findViewById(checkedId);
-                if(TextUtils.equals(radioButton.getText(), getString(R.string.service_personnel))){
+                if(TextUtils.equals(radioButton.getText(), getString(R.string.em_service_personnel))){
                     user.setCustomer(false);
                 } else {
                     user.setCustomer(true);
                 }
-                for(SelectedUser item : selectedList){
-                    if(TextUtils.equals(item.getName(), user.getName())){
-                        ToastUtils.showCenterToast("", getString(R.string.can_not_select_again), 0, Toast.LENGTH_SHORT);
+                for(EaseUser item : selectedList){
+                    if(TextUtils.equals(item.getUsername(), user.getUsername())){
+                        ToastUtils.showCenterToast("", getString(R.string.em_can_not_select_again), 0, Toast.LENGTH_SHORT);
                         return;
                     }
                 }
                 selectedList.add(user);
                 adapter.setData(selectedList);
                 refreshSelectedView();
-            }
-        });
-
-        searchBar.setOnSearchBarListener(new SearchBar.OnSearchBarListener() {
-            @Override
-            public void onSearchContent(String text) {
-                viewModel.getSearchContacts(text);
             }
         });
     }
@@ -199,7 +209,11 @@ public class GroupPickContactsActivity extends BaseInitActivity implements EaseT
 
     @Override
     public void onRightClick(View view) {
-        ToastUtils.showCenterToast("", getString(R.string.invite_user_toast), 0, Toast.LENGTH_SHORT);
+        if(isCreate){
+            NewGroupActivity.actionStart(mContext, (ArrayList<EaseUser>) selectedList);
+        } else {
+            ToastUtils.showCenterToast("", getString(R.string.em_invite_user_toast), 0, Toast.LENGTH_SHORT);
+        }
         onBackPressed();
     }
 
@@ -209,7 +223,7 @@ public class GroupPickContactsActivity extends BaseInitActivity implements EaseT
     }
 
     @Override
-    public void onMemberRemove(SelectedUser item) {
+    public void onMemberRemove(EaseUser item) {
         selectedList.remove(item);
         refreshSelectedView();
         adapter.setData(selectedList);

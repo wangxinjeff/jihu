@@ -18,6 +18,7 @@ import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMNormalFileMessageBody;
+import com.hyphenate.easeim.EaseIMHelper;
 import com.hyphenate.easeim.R;
 import com.hyphenate.easeim.common.utils.ToastUtils;
 import com.hyphenate.easeim.section.base.BaseInitActivity;
@@ -60,6 +61,9 @@ public class FileDetailsActivity extends BaseInitActivity implements EaseTitleBa
     protected void initView(Bundle savedInstanceState) {
         super.initView(savedInstanceState);
         titleBar = findViewById(R.id.title_bar);
+        if(EaseIMHelper.getInstance().isAdmin()){
+            titleBar.setLeftImageResource(R.drawable.icon_back_admin);
+        }
         fileTypeImg = findViewById(R.id.file_type);
         fileNameView = findViewById(R.id.file_name);
         fileSizeView = findViewById(R.id.file_size);
@@ -97,9 +101,9 @@ public class FileDetailsActivity extends BaseInitActivity implements EaseTitleBa
 
             fileSizeView.setText(TextFormater.getDataSize(fileMessageBody.getFileSize()));
             if (EaseFileUtils.isFileExistByUri(this, filePath)) {
-                startBtn.setText(getString(R.string.open_file));
+                startBtn.setText(getString(R.string.em_open_file));
             } else {
-                startBtn.setText(getString(R.string.start_download));
+                startBtn.setText(getString(R.string.em_start_download));
             }
         }
 
@@ -126,7 +130,7 @@ public class FileDetailsActivity extends BaseInitActivity implements EaseTitleBa
                     @Override
                     public void run() {
                         progressBar.setVisibility(View.GONE);
-                        ToastUtils.showCenterToast("", getString(R.string.try_again_later), 0, Toast.LENGTH_SHORT);
+                        ToastUtils.showCenterToast("", getString(R.string.em_try_again_later), 0, Toast.LENGTH_SHORT);
                     }
                 });
             }
@@ -145,12 +149,12 @@ public class FileDetailsActivity extends BaseInitActivity implements EaseTitleBa
         startBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(TextUtils.equals(getString(R.string.start_download), startBtn.getText().toString())){
+                if(TextUtils.equals(getString(R.string.em_start_download), startBtn.getText().toString())){
                     if(EaseCommonUtils.isNetConnection(FileDetailsActivity.this)){
                         EMClient.getInstance().chatManager().downloadAttachment(message);
                         progressBar.setVisibility(View.VISIBLE);
                     } else {
-                        ToastUtils.showCenterToast("", getString(R.string.try_again_later), 0, Toast.LENGTH_SHORT);
+                        ToastUtils.showCenterToast("", getString(R.string.em_try_again_later), 0, Toast.LENGTH_SHORT);
                     }
                 } else {
                     EaseCompat.openFile(FileDetailsActivity.this, fileMessageBody.getLocalUri());

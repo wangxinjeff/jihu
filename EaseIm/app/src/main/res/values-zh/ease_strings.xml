@@ -168,7 +168,7 @@
 
     <string name="my_exclusive_service">我的专属服务</string>
     <string name="my_chat">我的聊天</string>
-    <string name="my_conversations">我的会话</string>
+    <string name="my_conversations">会话列表</string>
     <string name="not_add_service_group">您当前未加入任何服务服务群</string>
     <string name="say_what">说点啥...</string>
     <string name="new_message">新消息</string>
@@ -337,6 +337,7 @@
     <string name="em_chat_group_detail_share_file">共享文件</string>
     <string name="em_chat_group_detail_announcement">群公告</string>
     <string name="em_chat_group_detail_announcement_hint">请输入群公告</string>
+    <string name="em_chat_group_detail_name_hint">请输入群名称</string>
     <string name="em_chat_group_detail_history">查找聊天记录</string>
     <string name="em_chat_group_detail_clear_history">清空聊天记录</string>
     <string name="em_chat_group_detail_clear_history_warning">您确认要清空所有聊天记录吗？</string>
@@ -442,7 +443,7 @@
     <string name="em_chat_room_new_name_cannot_be_empty">聊天室名称不能为空</string>
 
     <string name="em_notify_title">系统通知</string>
-    <string name="em_notify_agree">同意</string>
+    <string name="em_notify_agree">接受</string>
     <string name="em_notify_refuse">拒绝</string>
     <string name="em_notify_delete">删除</string>
     <string name="em_call_video_request">%1$s邀请您进行视频通话</string>
@@ -500,7 +501,6 @@
     <string name="em_group_list_search_hint">搜索</string>
     <string name="em_chat_room_list_search_hint">搜索</string>
     <string name="em_black_list_search_hint">搜索</string>
-    <string name="em_search_group">群组</string>
     <string name="em_search_group_public">公开群</string>
     <string name="em_search_group_public_hint">请输入公开群id进行搜索</string>
     <string name="em_search_group_chat">群聊</string>
@@ -532,8 +532,8 @@
 
     <string name="demo_no_disturb_time">设置时间段</string>
 
-    <string name="push_message_style_title">消息详情</string>
-    <string name="push_incoming_call">您有新的通话消息</string>
+    <string name="em_push_message_style_title">消息详情</string>
+    <string name="em_push_incoming_call">您有新的通话消息</string>
     <string name="push_message_style_simple">仅未读提示</string>
     <string name="push_message_style_summary">显示消息详情</string>
     <string name="push_message_show_detail">显示消息详情</string>
@@ -622,6 +622,7 @@
     <string name="invite_join_group">邀请加入群：</string>
     <string name="Has_agreed_to">已同意%1$s的请求</string>
     <string name="Has_refused_to">已拒绝</string>
+    <string name="Has_agree_to">已接受</string>
     <string name="accept_join_group">%s同意加入群</string>
     <string name="refuse_join_group">%s拒绝加入群</string>
 
@@ -794,56 +795,69 @@
     <!-- The representation of a time duration when negative. An example is -1:14. This can be used with a countdown timer for example.-->
     <string name="negative_duration">\u2212<xliff:g id="time" example="1:14">%1$s</xliff:g></string>
 
-    <string name="invited_to_join_video_call">邀请您加入音视频通话</string>
-    <string name="camera">摄像头</string>
-    <string name="waiting_for_accept">正在等待对方接受邀请</string>
-    <string name="make_sure_leave">确定要离开当前通话</string>
-    <string name="invited_to_make_multi_party_call">邀请您进行多人音视频通话</string>
-    <string name="invite_you_for_audio_and_video_call">邀请你进行音视频通话</string>
-    <string name="in_the_call">通话中</string>
-    <string name="invite_you_for_video_call">邀请您进行视频通话</string>
-    <string name="invite_you_for_audio_call">邀请您进行语音通话</string>
+    <string name="em_invited_to_join_video_call">邀请您加入音视频通话</string>
+    <string name="em_camera">摄像头</string>
+    <string name="em_waiting_for_accept">正在等待对方接受邀请</string>
+    <string name="em_make_sure_leave">确定要离开当前通话</string>
+    <string name="em_invited_to_make_multi_party_call">邀请您进行多人音视频通话</string>
+    <string name="em_invite_you_for_audio_and_video_call">邀请你进行音视频通话</string>
+    <string name="em_in_the_call">通话中</string>
+    <string name="em_invite_you_for_video_call">邀请您进行视频通话</string>
+    <string name="em_invite_you_for_audio_call">邀请您进行语音通话</string>
 
-    <string name="group_head">群头像</string>
-    <string name="add_member">添加</string>
-    <string name="choose_reminder">选择提醒人</string>
-    <string name="shwo_more_member">查看更多群成员</string>
-    <string name="selected_user">已选用户</string>
-    <string name="search_result">搜索结果</string>
-    <string name="service_personnel">选为服务人员</string>
-    <string name="customer">选为客户</string>
-    <string name="invite_user_toast">群主同意后，您邀请的成员将会自动加入本群聊</string>
-    <string name="can_not_select_again">不能重复选择</string>
-    <string name="search_no_result">搜索无结果</string>
-    <string name="countdown_send">%s 秒后语音将直接发送</string>
+    <string name="em_group_head">群头像</string>
+    <string name="em_add_member">添加</string>
+    <string name="em_choose_reminder">选择提醒人</string>
+    <string name="em_show_more_member">查看更多群成员</string>
+    <string name="em_selected_user">已选用户</string>
+    <string name="em_search_result">搜索结果</string>
+    <string name="em_service_personnel">选为服务人员</string>
+    <string name="em_customer">选为客户</string>
+    <string name="em_invite_user_toast">群主同意后，您邀请的成员将会自动加入本群聊</string>
+    <string name="em_can_not_select_again">不能重复选择</string>
+    <string name="em_search_no_result">搜索无结果</string>
+    <string name="em_countdown_send">%s 秒后语音将直接发送</string>
 
-    <string name="permission_request_denied">需要相应的权限</string>
-    <string name="error_gif">长不大于 %1$dpx，宽不大于 %2$dpx， 且大小不超过 %3$sM。</string>
-    <string name="error_original">大小不超过 %1$sM。</string>
-    <string name="error_video">视频长度不超过%1$d秒。</string>
-    <string name="error_size">文件大小不要超过%1$dM。</string>
+    <string name="em_permission_request_denied">需要相应的权限</string>
+    <string name="em_error_gif">长不大于 %1$dpx，宽不大于 %2$dpx， 且大小不超过 %3$sM。</string>
+    <string name="em_error_original">大小不超过 %1$sM。</string>
+    <string name="em_error_video">视频长度不超过%1$d秒。</string>
+    <string name="em_error_size">文件大小不要超过%1$dM。</string>
 
-    <string name="file_details">文件详情</string>
-    <string name="open_file">打开文件</string>
-    <string name="start_download">开始下载</string>
-    <string name="try_again_later">网络连接失败，请稍后再试</string>
+    <string name="em_file_details">文件详情</string>
+    <string name="em_open_file">打开文件</string>
+    <string name="em_start_download">开始下载</string>
+    <string name="em_try_again_later">网络连接失败，请稍后再试</string>
 
-    <string name="search_message">消息</string>
-    <string name="search_file">文件</string>
-    <string name="image_and_video">图片及视频</string>
-    <string name="show_chat_history">显示聊天记录</string>
-    <string name="initiated_call">发起音视频通话</string>
-    <string name="call_over">音视频通话已经结束</string>
-    <string name="message_notify">消息提醒</string>
-    <string name="search_group">搜索群聊</string>
-    <string name="create_group">创建群组</string>
-    <string name="group_apply">群组申请</string>
+    <string name="em_search_message">消息</string>
+    <string name="em_search_file">文件</string>
+    <string name="em_image_and_video">图片及视频</string>
+    <string name="em_show_chat_history">显示聊天记录</string>
+    <string name="em_initiated_call">发起音视频通话</string>
+    <string name="em_call_over">音视频通话已经结束</string>
+    <string name="em_message_notify">消息提醒</string>
+    <string name="em_search_group">搜索群聊</string>
+    <string name="em_create_group">创建群组</string>
+    <string name="em_group_apply">群组申请</string>
 
-    <string name="order_id">订单号</string>
-    <string name="phone_number">客户手机号</string>
-    <string name="win_code">WIN码</string>
+    <string name="em_order_id">订单号</string>
+    <string name="em_phone_number">客户手机号</string>
+    <string name="em_win_code">WIN码</string>
 
-    <string name="open_notify">打开消息提醒</string>
-    <string name="close_notify">关闭消息提醒</string>
-    <string name="call_join_group">请联系同事入群</string>
+    <string name="em_open_notify">打开消息提醒</string>
+    <string name="em_close_notify">关闭消息提醒</string>
+    <string name="em_call_join_group">请联系同事入群</string>
+    <string name="em_must_be_no_less_than_2_members">群成员不得少于2人</string>
+
+    <string name="em_action_edit">编辑</string>
+    <string name="em_group_mute">群禁言</string>
+    <string name="em_group_note">运营备注</string>
+    <string name="em_system_note">系统备注</string>
+    <string name="em_service_note">服务备注</string>
+    <string name="em_group_note_hint">请输入服务备注</string>
+    <string name="em_group_mute_set">群禁言设置</string>
+    <string name="em_group_add_mute">添加禁言人员</string>
+    <string name="em_group_mute_member">被禁言人员</string>
+    <string name="em_group_remove_mute">解禁</string>
+    <string name="em_group_mute_failed">禁言失败</string>
 </resources>

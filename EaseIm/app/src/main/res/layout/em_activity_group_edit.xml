@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/themeFloatBgColor"
+    android:id="@+id/edit_root"
+    >
+
+    <com.hyphenate.easeui.widget.EaseTitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/em_common_title_bar_height"
+        app:titleBarRightTitle="@string/em_chat_group_save"
+        app:titleBarLeftImage="@drawable/icon_back_admin"
+        android:background="?attr/themeBgColor"
+        app:titleBarTitleTextColor="?attr/normalTextColor"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/et_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="300dp"
+        android:layout_marginLeft="@dimen/em_margin_30"
+        android:layout_marginRight="@dimen/em_margin_30"
+        android:layout_marginStart="@dimen/em_margin_30"
+        android:layout_marginEnd="@dimen/em_margin_30"
+        android:paddingTop="10dp"
+        tools:hint="请输入群公告"
+        android:gravity="left|top"
+        android:textColor="?attr/normalTextColor"
+        android:background="?attr/themeFloatBgColor"
+        app:layout_constraintTop_toBottomOf="@+id/title_bar"
+        />
+
+    <LinearLayout
+        android:id="@+id/group_note_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/title_bar"
+        android:background="?attr/themeBgColor"
+        android:orientation="vertical"
+        >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/themeFloatBgColor"
+        android:padding="20dp"
+        android:orientation="vertical"
+        >
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="?attr/normalTextColor"
+            android:textSize="@dimen/em_size_normal"
+            android:layout_marginTop="8dp"
+            android:text="@string/em_system_note"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/system_note"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:minLines="4"
+            android:layout_marginTop="8dp"
+            android:textColor="?attr/normalTextColor"
+            android:textSize="@dimen/em_size_normal"
+
+            />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/themeFloatBgColor"
+            android:layout_marginTop="12dp"
+            android:padding="20dp"
+            >
+
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/service_note_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="?attr/normalTextColor"
+                android:textSize="@dimen/em_size_normal"
+                android:text="@string/em_service_note"
+                />
+            
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/em_icon_edit"
+                android:layout_toEndOf="@+id/service_note_text"
+                android:layout_alignTop="@+id/service_note_text"
+                android:layout_alignBottom="@+id/service_note_text"
+                android:scaleType="center"
+                android:layout_marginStart="@dimen/margin_small"
+                />
+
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/service_note"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/service_note_text"
+                android:layout_marginTop="8dp"
+                android:minLines="4"
+                android:background="@null"
+                android:textSize="@dimen/em_size_normal"
+                />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

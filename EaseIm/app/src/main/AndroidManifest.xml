@@ -411,6 +411,7 @@
             android:screenOrientation="portrait"/>
         <!--新建群组-->
         <activity android:name=".section.group.activity.NewGroupActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"/>
         <!--新建聊天室-->
         <activity android:name=".section.group.activity.NewChatRoomActivity"
@@ -582,6 +583,27 @@
             />
 
         <activity android:name=".section.search.SearchGroupChatActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"
+            />
+
+        <activity android:name=".section.group.activity.GroupApplyActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"
+            />
+        <activity android:name=".section.group.activity.GroupEditActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"
+            />
+
+        <activity android:name=".section.group.activity.GroupMuteActivity"
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"
+            />
+
+        <activity android:name=".section.group.activity.GroupAddMuteActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize"
             android:screenOrientation="portrait"
             android:launchMode="singleTask"
             />

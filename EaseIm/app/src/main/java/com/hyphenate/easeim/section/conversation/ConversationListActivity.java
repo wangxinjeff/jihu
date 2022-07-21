@@ -37,6 +37,8 @@ import com.hyphenate.easeim.section.av.MultipleVideoActivity;
 import com.hyphenate.easeim.section.av.VideoCallActivity;
 import com.hyphenate.easeim.section.base.BaseInitActivity;
 import com.hyphenate.easeim.section.chat.ChatPresenter;
+import com.hyphenate.easeim.section.group.activity.GroupApplyActivity;
+import com.hyphenate.easeim.section.group.activity.GroupPickContactsActivity;
 import com.hyphenate.easeim.section.search.SearchGroupChatActivity;
 import com.hyphenate.easeui.constants.EaseConstant;
 import com.hyphenate.easeui.model.EaseEvent;
@@ -101,6 +103,7 @@ public class ConversationListActivity extends BaseInitActivity implements EaseTi
             mTitleBar.setTitle(getString(R.string.my_chat));
         } else if(conversationsType == EaseConstant.CON_TYPE_ADMIN){
             mTitleBar.setTitle(getString(R.string.my_conversations));
+            mTitleBar.setLeftImageResource(R.drawable.icon_back_admin);
             mTitleBar.setRightImageResource(R.drawable.em_home_menu_add);
         }
         switchToHome();
@@ -259,19 +262,19 @@ public class ConversationListActivity extends BaseInitActivity implements EaseTi
                 EaseIMHelper.getInstance().getModel().setConversationNotify(!isNotify);
                 showNotifyIcon();
                 if(isNotify){
-                    ToastUtils.showCenterToast("", getString(R.string.open_notify), 0, Toast.LENGTH_SHORT);
+                    ToastUtils.showCenterToast("", getString(R.string.em_open_notify), 0, Toast.LENGTH_SHORT);
                 } else {
-                    ToastUtils.showCenterToast("", getString(R.string.close_notify), 0, Toast.LENGTH_SHORT);
+                    ToastUtils.showCenterToast("", getString(R.string.em_close_notify), 0, Toast.LENGTH_SHORT);
                 }
                 break;
             case R.id.search_view:
                 startActivity(new Intent(this, SearchGroupChatActivity.class));
                 break;
             case R.id.create_view:
-
+                GroupPickContactsActivity.actionStartForResult(mContext, "", true);
                 break;
             case R.id.apply_view:
-
+                startActivity(new Intent(ConversationListActivity.this, GroupApplyActivity.class));
                 break;
         }
         popupWindow.dismiss();

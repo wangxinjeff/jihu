@@ -9,7 +9,10 @@
         android:id="@+id/title_bar"
         android:layout_width="match_parent"
         android:layout_height="@dimen/em_common_title_bar_height"
-        app:titleBarTitle="@string/show_chat_history"
+        app:titleBarTitle="@string/em_show_chat_history"
+        app:titleBarTitleTextColor="?attr/normalTextColor"
+        android:background="?attr/themeBgColor"
+        app:titleBarLeftImage="@drawable/icon_back"
         />
 
     <com.hyphenate.easeui.modules.chat.EaseChatMessageListLayout

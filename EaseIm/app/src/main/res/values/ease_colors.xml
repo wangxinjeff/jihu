@@ -61,12 +61,17 @@
     <color name="send_bubble_bg">#e8f4ff</color>
     <color name="send_text">#171717</color>
     <color name="receive_bubble_bg">#f5f5f5</color>
+    <color name="voice_btn_normal">#ffffff</color>
+    <color name="voice_btn_press">#dedcdc</color>
 
 
     <color name="call_float_bg">#f5f5f5</color>
     <color name="call_float_time_bg">#ffffff</color>
 
 
+    <color name="refused_bg">#edeff2</color>
+    <color name="agree_bg">#4697ca</color>
+    <color name="operated_bg">#f5f5f5</color>
 
 
     <!-- CustomerTheme -->
@@ -91,6 +96,8 @@
     <color name="send_bubble_bg_color">#305b77</color>
     <color name="send_text_color">#aab0b7</color>
     <color name="receive_bubble_bg_color">#252525</color>
+    <color name="voice_btn_normal_color">#3c3c3c</color>
+    <color name="voice_btn_press_color">#ffc6c6c6</color>
 
     <color name="detail_bg_color">#1c1c1c</color>
 

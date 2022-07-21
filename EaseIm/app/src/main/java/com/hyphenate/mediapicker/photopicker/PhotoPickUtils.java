@@ -32,7 +32,7 @@ public class PhotoPickUtils {
                     if(granted){
                         startMatisse(true, config, Matisse.from(fragment));
                     } else {
-                        Toast.makeText(fragment.getContext(), R.string.permission_request_denied, Toast.LENGTH_LONG)
+                        Toast.makeText(fragment.getContext(), R.string.em_permission_request_denied, Toast.LENGTH_LONG)
                         .show();
                     }
             }
@@ -50,7 +50,7 @@ public class PhotoPickUtils {
                     if(granted){
                         startMatisse(true, config, Matisse.from(fragmentActivity));
                     } else {
-                        Toast.makeText(fragmentActivity, R.string.permission_request_denied, Toast.LENGTH_LONG)
+                        Toast.makeText(fragmentActivity, R.string.em_permission_request_denied, Toast.LENGTH_LONG)
                         .show();
                     }
                 }

@@ -99,11 +99,14 @@ public class EaseCommingCallView extends FrameLayout {
      * @return
      */
     private void loadHeadImage() {
-        EaseUserProfileProvider profileProvider = EaseIM.getInstance().getUserProvider();
-        if(profileProvider != null){
-            EaseUserUtils.setUserAvatar(getContext(), username, avatar_view);
-            EaseUserUtils.setUserNick(username, mInviterName);
-        }
+//        EaseUserProfileProvider profileProvider = EaseIM.getInstance().getUserProvider();
+//        if(profileProvider != null){
+//            EaseUserUtils.setUserAvatar(getContext(), username, avatar_view);
+//            EaseUserUtils.setUserNick(username, mInviterName);
+//        }
+
+        EaseUserUtils.setUserAvatar(getContext(), username, avatar_view);
+        EaseUserUtils.setUserNick(username, mInviterName);
     }
 
 

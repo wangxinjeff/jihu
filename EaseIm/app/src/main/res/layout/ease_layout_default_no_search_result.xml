@@ -17,6 +17,6 @@
         android:layout_marginTop="20dp"
         android:textSize="16sp"
         android:textColor="?attr/conContentTimeColor"
-        android:text="@string/search_no_result"/>
+        android:text="@string/em_search_no_result"/>
 
 </LinearLayout>

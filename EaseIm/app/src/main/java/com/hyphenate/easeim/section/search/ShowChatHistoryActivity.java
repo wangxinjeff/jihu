@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.hyphenate.chat.EMMessage;
+import com.hyphenate.easeim.EaseIMHelper;
 import com.hyphenate.easeim.R;
 import com.hyphenate.easeim.section.base.BaseInitActivity;
 import com.hyphenate.easeui.constants.EaseConstant;
@@ -47,6 +48,9 @@ public class ShowChatHistoryActivity extends BaseInitActivity implements EaseCha
     protected void initView(Bundle savedInstanceState) {
         super.initView(savedInstanceState);
         titleBar = findViewById(R.id.title_bar);
+        if(EaseIMHelper.getInstance().isAdmin()){
+            titleBar.setLeftImageResource(R.drawable.icon_back_admin);
+        }
         messageListLayout = findViewById(R.id.layout_chat_message);
         messageListLayout.init(EaseChatMessageListLayout.LoadDataType.HISTORY, conversationId, chatType);
     }

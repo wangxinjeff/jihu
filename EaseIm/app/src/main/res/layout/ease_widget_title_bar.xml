@@ -5,7 +5,7 @@
     android:id="@+id/root"
     android:background="?attr/themeBgColor"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="@dimen/em_common_title_bar_height"
     android:gravity="center_vertical">
 
     <androidx.appcompat.widget.Toolbar
@@ -31,18 +31,37 @@
 
     </RelativeLayout>
 
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerInParent="true"
+        android:gravity="center"
+        >
     <TextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="60dp"
         android:layout_marginRight="60dp"
-        android:layout_centerInParent="true"
+
         android:textColor="?attr/normalTextColor"
         android:textSize="@dimen/em_toolbar_title_size"
         android:maxLines="1"
         android:ellipsize="end"
         tools:text="标题"/>
+
+    <TextView
+        android:id="@+id/conversation_id"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/em_size_small"
+        android:textColor="?attr/conGroupIdColor"
+        android:layout_marginTop="3dp"
+        android:visibility="gone"
+        />
+
+    </LinearLayout>
 
     <RelativeLayout
         android:id="@+id/right_layout"

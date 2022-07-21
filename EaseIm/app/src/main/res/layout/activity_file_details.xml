@@ -14,7 +14,8 @@
         app:layout_constraintTop_toTopOf="parent"
         android:background="?attr/themeBgColor"
         app:titleBarLeftImage="@drawable/icon_back"
-        app:titleBarTitle="@string/file_details" />
+        app:titleBarTitleTextColor="?attr/normalTextColor"
+        app:titleBarTitle="@string/em_file_details" />
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/file_type"

@@ -27,7 +27,6 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -90,7 +89,6 @@ import io.agora.rtc.video.VideoEncoderConfiguration;
 import static com.hyphenate.easecallkit.utils.EaseMsgUtils.CALL_INVITE_EXT;
 import static com.hyphenate.easecallkit.utils.EaseMsgUtils.CALL_TIMER_CALL_TIME;
 import static com.hyphenate.easecallkit.utils.EaseMsgUtils.CALL_TIMER_TIMEOUT;
-import static io.agora.rtc.Constants.*;
 import static io.agora.rtc.Constants.CHANNEL_PROFILE_LIVE_BROADCASTING;
 import static io.agora.rtc.Constants.CLIENT_ROLE_BROADCASTER;
 import static io.agora.rtc.Constants.REMOTE_AUDIO_REASON_REMOTE_MUTED;
@@ -1202,7 +1200,7 @@ public class EaseMultipleVideoActivity extends EaseBaseCallActivity implements V
                     }
                 });
 
-                final EMMessage message = EMMessage.createTxtSendMessage(getApplicationContext().getString(R.string.invited_to_make_multi_party_call), username);
+                final EMMessage message = EMMessage.createTxtSendMessage(getApplicationContext().getString(R.string.em_invited_to_make_multi_party_call), username);
                 message.setAttribute(EaseMsgUtils.CALL_ACTION, EaseCallAction.CALL_INVITE.state);
                 message.setAttribute(EaseMsgUtils.CALL_CHANNELNAME, channelName);
                 message.setAttribute(EaseMsgUtils.CALL_TYPE, callType.code);

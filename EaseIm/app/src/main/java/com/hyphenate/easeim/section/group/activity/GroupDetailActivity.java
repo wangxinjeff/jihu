@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -24,7 +25,6 @@ import com.hyphenate.easeim.common.widget.ArrowItemView;
 import com.hyphenate.easeim.common.widget.SwitchItemView;
 import com.hyphenate.easeim.section.base.BaseInitActivity;
 import com.hyphenate.easeim.section.dialog.DemoDialogFragment;
-import com.hyphenate.easeim.section.dialog.EditTextDialogFragment;
 import com.hyphenate.easeim.section.dialog.SimpleDialogFragment;
 import com.hyphenate.easeim.section.group.GroupHelper;
 import com.hyphenate.easeim.section.group.adapter.GroupDetailMemberAdapter;
@@ -42,22 +42,25 @@ import com.hyphenate.easeui.widget.EaseTitleBar;
 import java.util.List;
 
 public class GroupDetailActivity extends BaseInitActivity implements EaseTitleBar.OnBackPressListener, View.OnClickListener, SwitchItemView.OnCheckedChangeListener {
-    private static final int REQUEST_CODE_ADD_USER = 0;
+    private static final int REQUEST_CODE_GROUP_NAME = 0;
+    private static final int REQUEST_CODE_GROUP_NOTICE = 1;
+    private static final int REQUEST_CODE_GROUP_INTRO = 2;
+    private static final int REQUEST_CODE_GROUP_MUTE = 3;
+    private static final int REQUEST_CODE_GROUP_NOTE = 4;
     private EaseTitleBar titleBar;
+    private View groupInfo;
     private EaseImageView ivGroupAvatar;
+    private ImageView iconNext;
     private TextView tvGroupMemberTitle;
     private TextView tvGroupMemberNum;
     private ArrowItemView itemGroupName;
     private ArrowItemView itemGroupOwner;
     private ArrowItemView itemGroupNotice;
     private ArrowItemView itemGroupIntroduction;
-    private ArrowItemView itemGroupMemberManage;
+    private ArrowItemView itemGroupMute;
+    private ArrowItemView itemGroupNote;
     private ArrowItemView itemGroupHistory;
-    private ArrowItemView itemGroupClearHistory;
     private SwitchItemView itemGroupNotDisturb;
-    private SwitchItemView itemGroupOffPush;
-    private SwitchItemView itemGroupTop;
-    private TextView tvGroupRefund;
     private String groupId;
     private EMGroup group;
     private GroupDetailViewModel viewModel;
@@ -65,6 +68,9 @@ public class GroupDetailActivity extends BaseInitActivity implements EaseTitleBa
     private GroupDetailMemberAdapter memberAdapter;
     private RecyclerView memberList;
     private LinearLayout showMore;
+
+    private String systemNote;
+    private String serviceNote;
 
     public static void actionStart(Context context, String groupId) {
         Intent intent = new Intent(context, GroupDetailActivity.class);
@@ -87,20 +93,19 @@ public class GroupDetailActivity extends BaseInitActivity implements EaseTitleBa
     protected void initView(Bundle savedInstanceState) {
         super.initView(savedInstanceState);
         titleBar = findViewById(R.id.title_bar);
+        groupInfo = findViewById(R.id.cl_group_info);
         ivGroupAvatar = findViewById(R.id.iv_group_avatar);
+        iconNext = findViewById(R.id.icon_next);
         tvGroupMemberTitle = findViewById(R.id.tv_group_member_title);
         tvGroupMemberNum = findViewById(R.id.tv_group_member_num);
         itemGroupName = findViewById(R.id.item_group_name);
         itemGroupOwner = findViewById(R.id.item_group_owner);
         itemGroupNotice = findViewById(R.id.item_group_notice);
         itemGroupIntroduction = findViewById(R.id.item_group_introduction);
+        itemGroupMute = findViewById(R.id.item_group_mute);
+        itemGroupNote = findViewById(R.id.item_group_note);
         itemGroupHistory = findViewById(R.id.item_group_history);
-        itemGroupClearHistory = findViewById(R.id.item_group_clear_history);
         itemGroupNotDisturb = findViewById(R.id.item_group_not_disturb);
-        itemGroupOffPush = findViewById(R.id.item_group_off_push);
-        itemGroupTop = findViewById(R.id.item_group_top);
-        tvGroupRefund = findViewById(R.id.tv_group_refund);
-        itemGroupMemberManage = findViewById(R.id.item_group_member_manage);
         memberList = findViewById(R.id.rl_member_list);
         memberAdapter = new GroupDetailMemberAdapter();
         memberList.setLayoutManager(new GridLayoutManager(this, 6));
@@ -108,6 +113,16 @@ public class GroupDetailActivity extends BaseInitActivity implements EaseTitleBa
         showMore = findViewById(R.id.show_more_member);
 
         group = EaseIMHelper.getInstance().getGroupManager().getGroup(groupId);
+
+        if(EaseIMHelper.getInstance().isAdmin()){
+            titleBar.setLeftImageResource(R.drawable.icon_back_admin);
+            if(isOwner()){
+                iconNext.setVisibility(View.VISIBLE);
+                itemGroupName.setItemShowArrow(true);
+                itemGroupMute.setVisibility(View.VISIBLE);
+            }
+        }
+
         initGroupView();
     }
 
@@ -115,22 +130,28 @@ public class GroupDetailActivity extends BaseInitActivity implements EaseTitleBa
     protected void initListener() {
         super.initListener();
         titleBar.setOnBackPressListener(this);
+        if(EaseIMHelper.getInstance().isAdmin() && isOwner()){
+            groupInfo.setOnClickListener(this);
+            itemGroupName.setOnClickListener(this);
+        }
         tvGroupMemberTitle.setOnClickListener(this);
         tvGroupMemberNum.setOnClickListener(this);
         itemGroupNotice.setOnClickListener(this);
         itemGroupIntroduction.setOnClickListener(this);
+        itemGroupMute.setOnClickListener(this);
+        itemGroupNote.setOnClickListener(this);
         itemGroupHistory.setOnClickListener(this);
-        itemGroupClearHistory.setOnClickListener(this);
         itemGroupNotDisturb.setOnCheckedChangeListener(this);
-        itemGroupOffPush.setOnCheckedChangeListener(this);
-        itemGroupTop.setOnCheckedChangeListener(this);
-        tvGroupRefund.setOnClickListener(this);
-        itemGroupMemberManage.setOnClickListener(this);
         showMore.setOnClickListener(this);
         memberAdapter.setOnAddClickListener(new GroupDetailMemberAdapter.GroupMemberAddClickListener() {
             @Override
             public void onAddClick() {
-                GroupPickContactsActivity.actionStartForResult(mContext, groupId, isOwner(), REQUEST_CODE_ADD_USER);
+                GroupPickContactsActivity.actionStartForResult(mContext, groupId, false);
+            }
+
+            @Override
+            public void onRemoveClick() {
+
             }
         });
     }
@@ -143,10 +164,7 @@ public class GroupDetailActivity extends BaseInitActivity implements EaseTitleBa
         itemGroupName.getTvContent().setText(group.getGroupName());
         itemGroupOwner.getTvContent().setText(group.getOwner());
         tvGroupMemberNum.setText(getString(R.string.em_chat_group_detail_member_num, group.getMemberCount()));
-        tvGroupRefund.setText(getResources().getString(isOwner() ? R.string.em_chat_group_detail_dissolve : R.string.em_chat_group_detail_refund));
         conversation = EaseIMHelper.getInstance().getConversation(groupId, EMConversation.EMConversationType.GroupChat, true);
-        String extField = conversation.getExtField();
-        itemGroupTop.getSwitch().setChecked(!TextUtils.isEmpty(extField) && EaseCommonUtils.isTimestamp(extField));
 
 //        itemGroupIntroduction.getTvContent().setText(group.getDescription());
 
@@ -241,6 +259,14 @@ public class GroupDetailActivity extends BaseInitActivity implements EaseTitleBa
                     EaseThreadManager.getInstance().runOnMainThread(new Runnable() {
                         @Override
                         public void run() {
+                            if(EaseIMHelper.getInstance().isAdmin() && isOwner()){
+                                EaseUser removeUser = new EaseUser("em_removeUser");
+                                removeUser.setNickname(getString(R.string.action_delete));
+                                data.add(0, removeUser);
+                            }
+                            EaseUser addUser = new EaseUser("em_addUser");
+                            addUser.setNickname(getString(R.string.em_add_member));
+                            data.add(0, addUser);
                             memberAdapter.setData(data);
                         }
                     });
@@ -249,7 +275,13 @@ public class GroupDetailActivity extends BaseInitActivity implements EaseTitleBa
                 @Override
                 public void hideLoading() {
                     super.hideLoading();
+                    dismissLoading();
+                }
 
+                @Override
+                public void onLoading(@Nullable List<EaseUser> data) {
+                    super.onLoading(data);
+                    showLoading();
                 }
             });
         });
@@ -277,30 +309,47 @@ public class GroupDetailActivity extends BaseInitActivity implements EaseTitleBa
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            case R.id.cl_group_info:
+
+                break;
             case R.id.tv_group_member_title :// 群成员
             case R.id.show_more_member:
                 GroupMemberTypeActivity.actionStart(mContext, groupId, isOwner());
                 break;
-//            case R.id.tv_group_invite ://邀请群成员
-//                GroupPickContactsActivity.actionStartForResult(mContext, groupId, isOwner(), REQUEST_CODE_ADD_USER);
-//                break;
+            case R.id.item_group_name ://群名称
+//                showGroupNameDialog();
+                GroupEditActivity.startEditForResult(mContext, getString(R.string.em_chat_group_detail_name),
+                        group.getGroupName(),
+                        getString(R.string.em_chat_group_detail_name_hint),
+                        GroupHelper.isOwner(group), REQUEST_CODE_GROUP_NAME);
+                break;
             case R.id.item_group_notice ://群公告
-                showAnnouncementDialog();
+//                showAnnouncementDialog();
+                GroupEditActivity.startEditForResult(mContext, getString(R.string.em_chat_group_detail_announcement),
+                        group.getAnnouncement(),
+                        getString(R.string.em_chat_group_detail_announcement_hint),
+                        GroupHelper.isOwner(group), REQUEST_CODE_GROUP_NOTICE);
                 break;
             case R.id.item_group_introduction ://群介绍
-                showIntroductionDialog();
+//                showIntroductionDialog();
+                GroupEditActivity.startEditForResult(mContext, getString(R.string.em_chat_group_detail_introduction),
+                        group.getDescription(),
+                        getString(R.string.em_chat_group_detail_introduction_hint),
+                        GroupHelper.isOwner(group), REQUEST_CODE_GROUP_NOTICE);
+                break;
+            case R.id.item_group_mute:
+                GroupMuteActivity.startAction(mContext, groupId);
+                break;
+            case R.id.item_group_note:
+                GroupEditActivity.startNoteForResult(mContext, getString(R.string.em_group_note),
+                        "",
+                        "",
+                        getString(R.string.em_group_note_hint),
+                        REQUEST_CODE_GROUP_NOTE
+                        );
                 break;
             case R.id.item_group_history ://查找聊天记录
                 SearchHistoryChatActivity.actionStart(mContext, groupId, EaseConstant.CHATTYPE_GROUP);
-                break;
-            case R.id.item_group_clear_history://清空聊天记录
-                showClearConfirmDialog();
-                break;
-            case R.id.tv_group_refund ://退出群组
-                showConfirmDialog();
-                break;
-            case R.id.item_group_member_manage://群组管理
-                GroupManageIndexActivity.actionStart(mContext, groupId);
                 break;
         }
     }
@@ -350,18 +399,18 @@ public class GroupDetailActivity extends BaseInitActivity implements EaseTitleBa
     }
 
     private void showGroupNameDialog() {
-        new EditTextDialogFragment.Builder(mContext)
-                .setContent(group.getGroupName())
-                .setConfirmClickListener(new EditTextDialogFragment.ConfirmClickListener() {
+        GroupEditFragment.showDialog(mContext,
+                getString(R.string.em_chat_group_detail_name),
+                group.getGroupName(),
+                getString(R.string.em_chat_group_detail_name_hint),
+                GroupHelper.isAdmin(group) || GroupHelper.isOwner(group),
+                new GroupEditFragment.OnSaveClickListener() {
                     @Override
-                    public void onConfirmClick(View view, String content) {
-                        if(!TextUtils.isEmpty(content)) {
-                            viewModel.setGroupName(groupId, content);
-                        }
+                    public void onSaveClick(View view, String content) {
+                        //修改群公告
+                        viewModel.setGroupName(groupId, content);
                     }
-                })
-                .setTitle(R.string.em_chat_group_detail_name)
-                .show();
+                });
     }
 
     private void showAnnouncementDialog() {
@@ -398,10 +447,25 @@ public class GroupDetailActivity extends BaseInitActivity implements EaseTitleBa
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(resultCode == RESULT_OK) {
+            String content = data.getStringExtra("content");
             switch (requestCode) {
-                case REQUEST_CODE_ADD_USER :
-                    loadGroup();
+                case REQUEST_CODE_GROUP_NAME:
+                    //修改群名称
+                    viewModel.setGroupName(groupId, content);
                     break;
+                case REQUEST_CODE_GROUP_NOTICE:
+                    //修改群公告
+                    viewModel.setGroupAnnouncement(groupId, content);
+                    break;
+                case REQUEST_CODE_GROUP_INTRO:
+                    //修改群介绍
+                    viewModel.setGroupDescription(groupId, content);
+                    break;
+                case REQUEST_CODE_GROUP_NOTE:
+                    //修改运营备注
+                    //todo：待实现  获取运营备注
+                    break;
+
             }
         }
     }

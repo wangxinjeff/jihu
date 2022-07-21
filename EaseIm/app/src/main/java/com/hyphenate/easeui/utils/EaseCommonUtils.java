@@ -36,10 +36,8 @@ import com.hyphenate.easeim.R;
 import com.hyphenate.easeui.constants.EaseConstant;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.provider.EaseUserProfileProvider;
-import com.hyphenate.easeui.utils.HanziToPinyin;
 import com.hyphenate.util.EMLog;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class EaseCommonUtils {
@@ -133,9 +131,9 @@ public class EaseCommonUtils {
                         digest = getString(context, R.string.dynamic_expression);
                     }
                 } else if(message.getStringAttribute(EaseConstant.MESSAGE_ATTR_CALL_STATE, "").equals("startCall")) {
-                    digest = getString(context, R.string.initiated_call);
+                    digest = getString(context, R.string.em_initiated_call);
                 }else if(message.getStringAttribute(EaseConstant.MESSAGE_ATTR_CALL_STATE, "").equals("endCall")) {
-                    digest = getString(context, R.string.call_over);
+                    digest = getString(context, R.string.em_call_over);
                 }else{
                     digest = txtBody.getMessage();
                 }

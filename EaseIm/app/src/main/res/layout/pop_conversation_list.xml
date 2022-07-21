@@ -23,7 +23,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/message_notify"
+            android:text="@string/em_message_notify"
             android:textSize="@dimen/em_size_normal"
             android:textColor="?attr/normalTextColor"
             android:layout_marginStart="@dimen/margin_small"
@@ -46,7 +46,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/search_group"
+            android:text="@string/em_search_group"
             android:textSize="@dimen/em_size_normal"
             android:textColor="?attr/normalTextColor"
             android:layout_marginStart="@dimen/margin_small"
@@ -69,7 +69,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/create_group"
+            android:text="@string/em_create_group"
             android:textSize="@dimen/em_size_normal"
             android:textColor="?attr/normalTextColor"
             android:layout_marginStart="@dimen/margin_small"
@@ -92,7 +92,7 @@
         <androidx.appcompat.widget.AppCompatTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/group_apply"
+            android:text="@string/em_group_apply"
             android:textSize="@dimen/em_size_normal"
             android:textColor="?attr/normalTextColor"
             android:layout_marginStart="@dimen/margin_small"
