@@ -37,6 +37,7 @@
             app:conner_radius="8dp"
             android:paddingEnd="13dp"
             android:paddingStart="10dp"
+            app:arrow_up_distance="10dp"
             >
 
             <ImageView
@@ -80,19 +81,30 @@
             android:id="@+id/msg_status"
             android:layout_toLeftOf="@id/bubble"
             style="@style/ease_row_sent_iv_fail_style"/>
-        
+
+        <ImageView
+            android:id="@+id/tv_ack_bg"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:src="@drawable/em_read_num_bg"
+            android:layout_toStartOf="@id/bubble"
+            android:layout_alignBottom="@+id/bubble"
+            android:layout_marginEnd="@dimen/ease_chat_ack_margin_bubble"
+            android:visibility="invisible" />
+
         <TextView
             android:id="@+id/tv_ack"
-            style="@style/chat_text_name_style"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:text="@string/text_ack_msg"
-            android:textSize="12sp"
-            android:layout_toLeftOf="@id/bubble"
-            android:layout_marginRight="@dimen/ease_chat_ack_margin_bubble"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_toStartOf="@id/bubble"
+            android:layout_alignBottom="@+id/bubble"
+            android:layout_marginEnd="@dimen/ease_chat_ack_margin_bubble"
+            android:gravity="center"
+            tools:text="99"
+            android:textColor="@color/read_num"
+            android:textSize="8sp"
             android:visibility="invisible"
-            />
+            tools:ignore="SmallSp" />
 
         <TextView
             android:id="@+id/tv_delivered"

@@ -56,14 +56,14 @@ public class GroupPickContactsActivity extends BaseInitActivity implements EaseT
     private AppCompatTextView resultTitle;
     private List<EaseUser> selectedList = new ArrayList<>();
 
-    public static void actionStartForResult(Activity context, String groupId, boolean isCreate) {
+    public static void actionStart(Activity context, String groupId, boolean isCreate) {
         Intent starter = new Intent(context, GroupPickContactsActivity.class);
         starter.putExtra("groupId", groupId);
         starter.putExtra("isCreate", isCreate);
         context.startActivity(starter);
     }
 
-    public static void actionStartForResult(Activity context, ArrayList<EaseUser> members) {
+    public static void actionStart(Activity context, ArrayList<EaseUser> members) {
         Intent starter = new Intent(context, GroupPickContactsActivity.class);
         starter.putParcelableArrayListExtra("members", members);
         starter.putExtra("isCreate", true);

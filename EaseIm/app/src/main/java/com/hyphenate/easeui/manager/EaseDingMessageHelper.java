@@ -2,6 +2,7 @@ package com.hyphenate.easeui.manager;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.text.TextUtils;
 import android.util.LruCache;
 
 import androidx.annotation.NonNull;
@@ -129,7 +130,7 @@ public class EaseDingMessageHelper {
             if (message.isNeedGroupAck() && !message.isUnread()) {
                 String to = message.conversationId(); // do not user getFrom() here
                 String msgId = message.getMsgId();
-                EMClient.getInstance().chatManager().ackGroupMessageRead(to, msgId, ((EMTextMessageBody)message.getBody()).getMessage());
+                EMClient.getInstance().chatManager().ackGroupMessageRead(to, msgId, "");
                 message.setUnread(false);
                 EMLog.i(TAG, "Send the group ack cmd-type message.");
             }
@@ -150,11 +151,16 @@ public class EaseDingMessageHelper {
                     List<EMGroupReadAck> acks = value.getData();
 
                     for (EMGroupReadAck c : acks) {
+                        EMLog.e(TAG, "EMGroupReadAck: " + c.getFrom());
                         handleGroupReadAck(c);
                     }
 
                 } else {
-                    EMLog.d(TAG, "no data");
+                    // Notify ack-user list changed.
+                    WeakReference<IAckUserUpdateListener> listenerRefs = listenerMap.get(msg.getMsgId());
+                    if (listenerRefs != null) {
+                        listenerRefs.get().onUpdate(new ArrayList<String>());
+                    }
                 }
             }
 
@@ -163,6 +169,49 @@ public class EaseDingMessageHelper {
                 EMLog.d(TAG, "asyncFetchGroupReadAcks fail: " + error);
             }
         });
+    }
+
+    public void getGroupReadAck(EMMessage msg){
+        List<String> userList = null;
+        if(msg != null) {
+            LruCache<String, List<String>> msgCache = dataCache.get(msg.conversationId());
+            if (msgCache != null) {
+                userList = msgCache.get(msg.getMsgId());
+            }
+        }
+
+        // Notify ack-user list changed.
+        WeakReference<IAckUserUpdateListener> listenerRefs = listenerMap.get(msg.getMsgId());
+        if (listenerRefs != null) {
+            listenerRefs.get().onUpdate(userList != null ? userList : new ArrayList<String>());
+        }
+    }
+
+    private void getLocalData(){
+        Map<String, ?> prefsMap = dataPrefs.getAll();
+        Set<String> keySet = prefsMap.keySet();
+        for (String key : keySet) {
+            String[] keys = key.split("\\|");
+            String conversationId = keys[0];
+            String messageId = keys[1];
+            LruCache<String, List<String>> msgCache = dataCache.get(conversationId);
+            if (msgCache == null) {
+                msgCache = createCache();
+                dataCache.put(conversationId, msgCache);
+            }
+
+            // Get the msg ack-user list.
+            List<String> userList = msgCache.get(messageId);
+            if (userList == null) {
+                userList = new ArrayList<>();
+                msgCache.put(messageId, userList);
+            }
+
+            Set<String> userSet = dataPrefs.getStringSet(key, new HashSet<>(userList));
+            if(userSet.size() > 0){
+                userList.addAll(userSet);
+            }
+        }
     }
 
     /**
@@ -194,7 +243,8 @@ public class EaseDingMessageHelper {
             msgCache.put(msgId, userList);
         }
 
-        if (!userList.contains(username)) {
+        if (!userList.contains(username) && !TextUtils.equals(username, conversationId)) {
+            EMLog.e(TAG, "username :" + username);
             userList.add(username);
         }
 
@@ -206,8 +256,7 @@ public class EaseDingMessageHelper {
 
         // Store in preferences.
         String key = generateKey(conversationId, msgId);
-        Set<String> set = new HashSet<>();
-        set.addAll(userList);
+        Set<String> set = new HashSet<>(userList);
         prefsEditor.putStringSet(key, set).commit();
     }
 
@@ -291,6 +340,8 @@ public class EaseDingMessageHelper {
 
         dataPrefs = context.getSharedPreferences(NAME_PREFS, Context.MODE_PRIVATE);
         prefsEditor = dataPrefs.edit();
+        getLocalData();
+
     }
 
     /**

@@ -20,11 +20,13 @@ import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMTextMessageBody;
 import com.hyphenate.chat.EMTranslationResult;
 import com.hyphenate.easeim.R;
+import com.hyphenate.easeim.common.utils.ToastUtils;
 import com.hyphenate.easeim.section.base.WebViewActivity;
 import com.hyphenate.easeui.manager.EaseDingMessageHelper;
 import com.hyphenate.easeui.utils.EaseSmileUtils;
 import com.hyphenate.util.EMLog;
 
+import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -144,18 +146,20 @@ public class EaseChatRowText extends EaseChatRow {
 
     @Override
     protected void onMessageSuccess() {
+        super.onMessageSuccess();
         setStatus(View.GONE, View.GONE);
 
         // Show "1 Read" if this msg is a ding-type msg.
-        if (isSender() && EaseDingMessageHelper.get().isDingMessage(message) && ackedView != null) {
-            ackedView.setVisibility(VISIBLE);
-            int count = message.groupAckCount();
-            ackedView.setText(String.format(getContext().getString(R.string.group_ack_read_count), count));
-        }
+//        if (isSender() && EaseDingMessageHelper.get().isDingMessage(message) && ackedView != null && ackedBg != null) {
+//            ackedView.setVisibility(VISIBLE);
+//            ackedBg.setVisibility(VISIBLE);
+//            int count = message.groupAckCount();
+//            ackedView.setText(count == 0 ? "" : count+"");
+//        }
 
         // Set ack-user list change listener.
         // Only use the group ack count from message. - 2022.04.27
-        //EaseDingMessageHelper.get().setUserUpdateListener(message, userUpdateListener);
+//        EaseDingMessageHelper.get().setUserUpdateListener(message, userUpdateListener);
     }
 
     @Override
@@ -183,16 +187,17 @@ public class EaseChatRowText extends EaseChatRow {
         }
     }
 
-    private EaseDingMessageHelper.IAckUserUpdateListener userUpdateListener = list -> onAckUserUpdate(list.size());
+    private EaseDingMessageHelper.IAckUserUpdateListener userUpdateListener = list -> onAckUserUpdate(list);
 
-    public void onAckUserUpdate(final int count) {
+    public void onAckUserUpdate(List<String> userList) {
         if(ackedView == null) {
             return;
         }
         ackedView.post(()->{
             if (isSender()) {
                 ackedView.setVisibility(VISIBLE);
-                ackedView.setText(String.format(getContext().getString(R.string.group_ack_read_count), count));
+                ackedView.setText(userList.size() == 0 ? "" : userList.size()+"");
+
             }
         });
     }

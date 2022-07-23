@@ -63,7 +63,7 @@
     <color name="receive_bubble_bg">#f5f5f5</color>
     <color name="voice_btn_normal">#ffffff</color>
     <color name="voice_btn_press">#dedcdc</color>
-
+    <color name="read_num">#07cea6</color>
 
     <color name="call_float_bg">#f5f5f5</color>
     <color name="call_float_time_bg">#ffffff</color>

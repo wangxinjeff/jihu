@@ -232,4 +232,5 @@
     <dimen name="margin_small">5dp</dimen>
     <dimen name="call_float_size">88dp</dimen>
     <dimen name="next_size">28dp</dimen>
+    <dimen name="read_ack_navigation_height">64dp</dimen>
 </resources>

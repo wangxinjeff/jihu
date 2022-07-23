@@ -36,13 +36,14 @@
             app:fill_color="?attr/msgBubbleBg"
             app:stroke_color="?attr/msgBubbleBg"
             app:conner_radius="8dp"
+            app:arrow_up_distance="10dp"
             >
 	        <ImageView
 	            android:id="@+id/iv_voice"
 	            android:layout_centerVertical="true"
-                android:layout_alignParentLeft="true"
-	            android:paddingLeft="6dp"
-	            android:paddingRight="5dp"
+                android:layout_alignParentStart="true"
+	            android:paddingStart="6dp"
+	            android:paddingEnd="5dp"
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"
 	            android:src="@drawable/ease_chatto_voice_playing" />
@@ -52,9 +53,10 @@
                 style="@style/chat_text_name_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginRight="10dp"
-                android:layout_toRightOf="@id/iv_voice"
+                android:layout_marginEnd="13dp"
+                android:layout_toEndOf="@id/iv_voice"
                 tools:text="12''"
+                android:textSize="@dimen/em_size_normal"
                 android:maxLines="1"
                 android:textColor="?attr/msgTextColor"
                 android:layout_centerVertical="true"
@@ -76,19 +78,30 @@
             android:id="@+id/msg_status"
             android:layout_toLeftOf="@id/bubble"
             style="@style/ease_row_sent_iv_fail_style"/>
-        
+
+        <ImageView
+            android:id="@+id/tv_ack_bg"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:src="@drawable/em_read_num_bg"
+            android:layout_toStartOf="@id/bubble"
+            android:layout_alignBottom="@+id/bubble"
+            android:layout_marginEnd="@dimen/ease_chat_ack_margin_bubble"
+            android:visibility="invisible" />
+
         <TextView
             android:id="@+id/tv_ack"
-            style="@style/chat_text_name_style"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:text="@string/text_ack_msg"
-            android:textSize="12sp"
-            android:layout_toLeftOf="@id/bubble"
-            android:layout_marginRight="@dimen/ease_chat_ack_margin_bubble"
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:layout_toStartOf="@id/bubble"
+            android:layout_alignBottom="@+id/bubble"
+            android:layout_marginEnd="@dimen/ease_chat_ack_margin_bubble"
+            android:gravity="center"
+            tools:text="99"
+            android:textColor="@color/read_num"
+            android:textSize="8sp"
             android:visibility="invisible"
-            />
+            tools:ignore="SmallSp" />
         <TextView
             android:id="@+id/tv_delivered"
             style="@style/chat_text_name_style"

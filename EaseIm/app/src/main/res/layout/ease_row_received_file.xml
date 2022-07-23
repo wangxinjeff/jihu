@@ -44,9 +44,10 @@
             android:layout_toRightOf="@id/iv_userhead"
             android:layout_below="@+id/tv_userid"
             app:arrow_direction="left"
-            app:fill_color="?attr/msgBubbleBg"
-            app:stroke_color="?attr/msgBubbleBg"
-            app:conner_radius="8dp">
+            app:fill_color="?attr/rmsgBubbleBg"
+            app:stroke_color="?attr/rmsgBubbleBg"
+            app:conner_radius="8dp"
+            app:arrow_up_distance="10dp">
 
             <ImageView
                 android:id="@+id/file_type"

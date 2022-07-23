@@ -16,6 +16,7 @@ import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMMessageBody;
 import com.hyphenate.chat.EMTextMessageBody;
 import com.hyphenate.chat.EMTranslationResult;
+import com.hyphenate.easeim.EaseIMHelper;
 import com.hyphenate.easeim.R;
 import com.hyphenate.easeui.constants.EaseConstant;
 import com.hyphenate.easeui.manager.EaseAtMessageHelper;
@@ -46,7 +47,7 @@ public class EaseHandleMessagePresenterImpl extends EaseHandleMessagePresenter {
             return;
         }
         EMMessage message = EMMessage.createTxtSendMessage(content, toChatUsername);
-        message.setIsNeedGroupAck(isNeedGroupAck);
+//        message.setIsNeedGroupAck(isNeedGroupAck);
         sendMessage(message);
     }
 
@@ -138,6 +139,9 @@ public class EaseHandleMessagePresenterImpl extends EaseHandleMessagePresenter {
         addMessageAttributes(message);
         if (chatType == EaseConstant.CHATTYPE_GROUP){
             message.setChatType(EMMessage.ChatType.GroupChat);
+            if(EaseIMHelper.getInstance().isAdmin()){
+                message.setIsNeedGroupAck(true);
+            }
         }else if(chatType == EaseConstant.CHATTYPE_CHATROOM){
             message.setChatType(EMMessage.ChatType.ChatRoom);
         }
@@ -203,7 +207,7 @@ public class EaseHandleMessagePresenterImpl extends EaseHandleMessagePresenter {
     public void recallMessage(EMMessage message) {
         try {
             EMMessage msgNotification = EMMessage.createSendMessage(EMMessage.Type.TXT);
-            EMTextMessageBody txtBody = new EMTextMessageBody(mView.context().getResources().getString(R.string.msg_recall_by_self));
+            EMTextMessageBody txtBody = new EMTextMessageBody("recall");
             msgNotification.addBody(txtBody);
             msgNotification.setTo(message.getTo());
             msgNotification.setDirection(message.direct());

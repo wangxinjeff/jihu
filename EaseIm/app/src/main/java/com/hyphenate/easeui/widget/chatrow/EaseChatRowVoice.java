@@ -10,6 +10,7 @@ import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMFileMessageBody;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMVoiceMessageBody;
+import com.hyphenate.easeim.EaseIMHelper;
 import com.hyphenate.easeim.R;
 import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.easeui.utils.EaseVoiceLengthUtils;
@@ -57,10 +58,10 @@ public class EaseChatRowVoice extends EaseChatRowFile {
         }
         if (!showSenderType) {
             voiceImageView.setImageResource(R.drawable.ease_chatfrom_voice_playing);
-            voiceLengthView.setPadding(padding, 0, 0, 0);
+            bubbleLayout.setPadding(0, 0, padding, 0);
         } else {
             voiceImageView.setImageResource(R.drawable.ease_chatto_voice_playing);
-            voiceLengthView.setPadding(0, 0, padding, 0);
+            bubbleLayout.setPadding(padding, 0, 0, 0);
         }
 
         if (message.direct() == EMMessage.Direct.RECEIVE) {
@@ -117,9 +118,17 @@ public class EaseChatRowVoice extends EaseChatRowFile {
 
     public void startVoicePlayAnimation() {
         if (message.direct() == EMMessage.Direct.RECEIVE) {
-            voiceImageView.setImageResource(R.drawable.voice_from_icon);
+            if(EaseIMHelper.getInstance().isAdmin()){
+                voiceImageView.setImageResource(R.drawable.voice_from_icon_admin);
+            } else {
+                voiceImageView.setImageResource(R.drawable.voice_from_icon);
+            }
         } else {
-            voiceImageView.setImageResource(R.drawable.voice_to_icon);
+            if(EaseIMHelper.getInstance().isAdmin()){
+                voiceImageView.setImageResource(R.drawable.voice_to_icon_admin);
+            } else {
+                voiceImageView.setImageResource(R.drawable.voice_to_icon);
+            }
         }
         voiceAnimation = (AnimationDrawable) voiceImageView.getDrawable();
         voiceAnimation.start();

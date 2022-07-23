@@ -891,6 +891,13 @@ public class EaseChatLayout extends RelativeLayout implements IChatLayout, IHand
     }
 
     @Override
+    public void onReadNumClick(EMMessage message) {
+        if(listener != null) {
+            listener.onReadNumClick(message);
+        }
+    }
+
+    @Override
     public void onChatError(int code, String errorMsg) {
         if(listener != null) {
             listener.onChatError(code, errorMsg);

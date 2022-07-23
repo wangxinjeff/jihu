@@ -31,6 +31,7 @@ import com.hyphenate.chat.EMConversation.EMConversationType;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMNormalFileMessageBody;
 import com.hyphenate.chat.EMTextMessageBody;
+import com.hyphenate.easeim.common.constant.DemoConstant;
 import com.hyphenate.easeui.EaseIM;
 import com.hyphenate.easeim.R;
 import com.hyphenate.easeui.constants.EaseConstant;
@@ -134,7 +135,11 @@ public class EaseCommonUtils {
                     digest = getString(context, R.string.em_initiated_call);
                 }else if(message.getStringAttribute(EaseConstant.MESSAGE_ATTR_CALL_STATE, "").equals("endCall")) {
                     digest = getString(context, R.string.em_call_over);
-                }else{
+                } else if(message.getBooleanAttribute(DemoConstant.MESSAGE_TYPE_RECALL, false)){
+                    digest = "消息撤回";
+                } else if(message.getBooleanAttribute(DemoConstant.CREATE_GROUP_PROMPT, false)){
+                    digest = "群组创建";
+                } else{
                     digest = txtBody.getMessage();
                 }
             }

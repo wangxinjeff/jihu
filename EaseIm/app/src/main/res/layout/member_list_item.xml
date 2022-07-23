@@ -28,6 +28,7 @@
         android:layout_height="wrap_content"
         android:src="@drawable/icon_member_owner"
         android:layout_marginStart="5dp"
+        android:visibility="gone"
         />
 
 </LinearLayout>

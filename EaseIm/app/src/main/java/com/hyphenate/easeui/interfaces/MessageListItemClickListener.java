@@ -68,4 +68,6 @@ public interface MessageListItemClickListener{
 	 * @param progress
 	 */
 	void onMessageInProgress(EMMessage message, int progress);
+
+	void onReadNumClick(EMMessage message);
 }

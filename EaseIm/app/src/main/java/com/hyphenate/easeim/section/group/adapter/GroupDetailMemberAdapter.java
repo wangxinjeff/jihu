@@ -46,7 +46,8 @@ public class GroupDetailMemberAdapter extends RecyclerView.Adapter<GroupDetailMe
                     memberClickListener.onAddClick();
                 }
             });
-            holder.memberAvatar.setImageDrawable(ContextCompat.getDrawable(holder.mContext, R.drawable.icon_group_edit));
+//            holder.memberAvatar.setImageDrawable(ContextCompat.getDrawable(holder.mContext, R.drawable.icon_group_edit));
+            Glide.with(holder.mContext).load(R.drawable.icon_group_edit).into(holder.memberAvatar);
             holder.memberNick.setText(user.getNickname());
         } else if(TextUtils.equals(user.getUsername(), "em_addUser") && position == 0){
             holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -56,9 +57,11 @@ public class GroupDetailMemberAdapter extends RecyclerView.Adapter<GroupDetailMe
                 }
             });
             if(EaseIMHelper.getInstance().isAdmin()){
-                holder.memberAvatar.setImageDrawable(ContextCompat.getDrawable(holder.mContext, R.drawable.icon_invite_admin));
+//                holder.memberAvatar.setImageDrawable(ContextCompat.getDrawable(holder.mContext, R.drawable.icon_invite_admin));
+                Glide.with(holder.mContext).load(R.drawable.icon_invite_admin).into(holder.memberAvatar);
             } else {
-                holder.memberAvatar.setImageDrawable(ContextCompat.getDrawable(holder.mContext, R.drawable.icon_group_invite));
+//                holder.memberAvatar.setImageDrawable(ContextCompat.getDrawable(holder.mContext, R.drawable.icon_group_invite));
+                Glide.with(holder.mContext).load(R.drawable.icon_group_invite).into(holder.memberAvatar);
             }
             holder.memberNick.setText(user.getNickname());
         } else if(TextUtils.equals(user.getUsername(), "em_removeUser") && position == 1){

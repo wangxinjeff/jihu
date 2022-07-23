@@ -65,7 +65,7 @@
     <string name="not_connect_to_server">尚未连接至服务器，请稍后重试</string>
 
     <string name="msg_recall_by_self">您撤回了一条消息</string>
-    <string name="msg_recall_by_user">%1$s 撤回了一条消息</string>
+    <string name="msg_recall_by_user">撤回了一条消息</string>
     <string name="msg_recall_by_another">%1$s 撤回了 %2$s 的一条消息</string>
 
     <string name="Video_footage">拍摄录像</string>
@@ -154,8 +154,8 @@
     <string name="action_recall">撤回</string>
     <string name="action_delete">删除</string>
     <string name="action_multi_select">多选</string>
-    <string name="delete_voice">删除语音</string>
-    <string name="delete_video">删除视频</string>
+    <string name="delete_voice">删除</string>
+    <string name="delete_video">删除</string>
 
     <string name="contact_send_message">%1$s个联系人发来%2$s条消息</string>
     <string name="unsupported_message_body">不支持的消息体</string>
@@ -860,4 +860,8 @@
     <string name="em_group_mute_member">被禁言人员</string>
     <string name="em_group_remove_mute">解禁</string>
     <string name="em_group_mute_failed">禁言失败</string>
+    <string name="em_group_remove_member_failed">禁言失败</string>
+    <string name="em_group_yourself_mute">你已被群主禁言</string>
+    <string name="em_group_yourself_un_mute">你的禁言已解除</string>
+    <string name="em_group_create_success">%s创建成功</string>
 </resources>

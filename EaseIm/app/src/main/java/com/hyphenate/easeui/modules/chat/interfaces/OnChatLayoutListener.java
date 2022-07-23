@@ -66,6 +66,8 @@ public interface OnChatLayoutListener {
      */
     void onChatError(int code, String errorMsg);
 
+    void onReadNumClick(EMMessage message);
+
     /**
      * 用于监听其他人正在数据事件
      * @param action 输入事件 TypingBegin为开始 TypingEnd为结束

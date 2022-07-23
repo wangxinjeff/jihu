@@ -445,6 +445,13 @@ public class EaseChatMessageListLayout extends RelativeLayout implements IChatMe
                     messageListItemClickListener.onMessageInProgress(message, progress);
                 }
             }
+
+            @Override
+            public void onReadNumClick(EMMessage message) {
+                if(messageListItemClickListener != null) {
+                    messageListItemClickListener.onReadNumClick(message);
+                }
+            }
         });
     }
 

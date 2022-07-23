@@ -235,7 +235,7 @@ public class EaseIMHelper {
                 .addMessageType(ChatUserCardAdapterDelegate.class)         //名片消息
                 .addMessageType(EaseCustomAdapterDelegate.class)           //自定义消息
                 .addMessageType(ChatNotificationAdapterDelegate.class)
-                .addMessageType(ConferenceStateAdapterDelegate.class)//入群等通知消息
+//                .addMessageType(ConferenceStateAdapterDelegate.class)//入群等通知消息
                 .setDefaultMessageType(EaseTextAdapterDelegate.class);       //文本
     }
 
@@ -410,8 +410,8 @@ public class EaseIMHelper {
         // To get instance of EaseUser, here we get it from the user list in memory
         // You'd better cache it if you get it from your server
         EaseUser user = null;
-//        if(username.equals(EMClient.getInstance().getCurrentUser()))
-//            return getUserProfileManager().getCurrentUserInfo();
+        if(username.equals(EMClient.getInstance().getCurrentUser()))
+            return getUserProfileManager().getCurrentUserInfo();
         user = getContactList().get(username);
         if(user == null){
             //找不到更新会话列表 继续查找

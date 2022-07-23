@@ -934,6 +934,36 @@ public class EMGroupManagerRepository extends BaseEMRepository{
     }
 
     /**
+     * 移出群
+     * @param groupId
+     * @param usernames
+     * @return
+     */
+    public LiveData<Resource<String>> removeUsersFromGroup(String groupId, List<String> usernames) {
+        return new NetworkOnlyResource<String>() {
+            @Override
+            protected void createCall(@NonNull ResultCallBack<LiveData<String>> callBack) {
+                getGroupManager().asyncRemoveUsersFromGroup(groupId, usernames, new EMCallBack() {
+                    @Override
+                    public void onSuccess() {
+                        callBack.onSuccess(createLiveData("remove success"));
+                    }
+
+                    @Override
+                    public void onError(int code, String error) {
+                        callBack.onError(code, error);
+                    }
+
+                    @Override
+                    public void onProgress(int progress, String status) {
+
+                    }
+                });
+            }
+        }.asLiveData();
+    }
+
+    /**
      * 添加到群黑名单
      * @param groupId
      * @param username

@@ -33,32 +33,32 @@
             android:layout_below="@+id/tv_userid"
             android:layout_marginTop="2dp"
             app:arrow_direction="left"
-            app:fill_color="?attr/msgBubbleBg"
-            app:stroke_color="?attr/msgBubbleBg"
-            app:conner_radius="8dp">
+            app:fill_color="?attr/rmsgBubbleBg"
+            app:stroke_color="?attr/rmsgBubbleBg"
+            app:conner_radius="8dp"
+            app:arrow_up_distance="10dp">
 
             <TextView
                 android:id="@+id/tv_length"
                 style="@style/chat_text_name_style"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
                 android:layout_centerVertical="true"
-                android:gravity="center"
                 android:maxLines="1"
                 android:paddingStart="5dp"
-                android:paddingEnd="6dp"
-                android:layout_marginEnd="5dp"
+                android:paddingEnd="5dp"
+                android:layout_marginEnd="@dimen/margin_small"
                 android:layout_toEndOf="@+id/iv_voice"
                 android:textColor="?attr/msgTextColor"
                 tools:text="3&apos;&apos;"
-                tools:ignore="HardcodedText" />
+                android:textSize="@dimen/em_size_normal" />
 
             <ImageView
                 android:id="@+id/iv_voice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/margin_start_normal"
                 android:src="@drawable/ease_chatfrom_voice_playing" />
 
         </com.hyphenate.easeim.common.widget.ChatView>

@@ -88,4 +88,7 @@ public interface EaseConstant {
     String CONFERENCE_STATE_CREATE = "createCall";
     String CONFERENCE_STATE_END = "endCall";
 
+    String CREATE_GROUP_PROMPT = "groupCreate";
+    String CREATE_GROUP_NAME = "groupName";
+
 }

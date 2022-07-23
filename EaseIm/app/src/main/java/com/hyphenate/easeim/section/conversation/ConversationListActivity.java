@@ -149,6 +149,7 @@ public class ConversationListActivity extends BaseInitActivity implements EaseTi
     protected void initData() {
         super.initData();
         initViewModel();
+        fetchSelfInfo();
         ChatPresenter.getInstance().init();
         // 获取华为 HMS 推送 token
         HMSPushHelper.getInstance().getHMSToken(this);
@@ -271,7 +272,7 @@ public class ConversationListActivity extends BaseInitActivity implements EaseTi
                 startActivity(new Intent(this, SearchGroupChatActivity.class));
                 break;
             case R.id.create_view:
-                GroupPickContactsActivity.actionStartForResult(mContext, "", true);
+                GroupPickContactsActivity.actionStart(mContext, "", true);
                 break;
             case R.id.apply_view:
                 startActivity(new Intent(ConversationListActivity.this, GroupApplyActivity.class));

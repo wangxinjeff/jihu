@@ -99,6 +99,11 @@ public class GroupMemberAuthorityViewModel extends AndroidViewModel {
         refreshObservable.setSource(repository.removeUserFromGroup(groupId, username));
     }
 
+    public void removeUsersFromGroup(String groupId, List<String> username) {
+        refreshObservable.setSource(repository.removeUsersFromGroup(groupId, username));
+    }
+
+
     public void blockUser(String groupId, String username) {
         refreshObservable.setSource(repository.blockUser(groupId, username));
     }

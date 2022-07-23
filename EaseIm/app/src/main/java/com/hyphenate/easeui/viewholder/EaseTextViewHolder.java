@@ -30,16 +30,16 @@ public class EaseTextViewHolder extends EaseChatRowViewHolder{
     @Override
     public void onBubbleClick(EMMessage message) {
         super.onBubbleClick(message);
-        if (!EaseDingMessageHelper.get().isDingMessage(message) ||
-                message.getChatType() != EMMessage.ChatType.GroupChat ||
-                message.direct() != EMMessage.Direct.SEND) {
-            return;
-        }
-
-        // If this msg is a ding-type msg, click to show a list who has already read this message.
-        Intent i = new Intent(getContext(), EaseDingAckUserListActivity.class);
-        i.putExtra("msg", message);
-        getContext().startActivity(i);
+//        if (!EaseDingMessageHelper.get().isDingMessage(message) ||
+//                message.getChatType() != EMMessage.ChatType.GroupChat ||
+//                message.direct() != EMMessage.Direct.SEND) {
+//            return;
+//        }
+//
+//        // If this msg is a ding-type msg, click to show a list who has already read this message.
+//        Intent i = new Intent(getContext(), EaseDingAckUserListActivity.class);
+//        i.putExtra("msg", message);
+//        getContext().startActivity(i);
     }
 
     @Override
@@ -59,6 +59,6 @@ public class EaseTextViewHolder extends EaseChatRowViewHolder{
         }
 
         // Send the group-ack cmd type msg if this msg is a ding-type msg.
-        EaseDingMessageHelper.get().sendAckMessage(message);
+//        EaseDingMessageHelper.get().sendAckMessage(message);
     }
 }

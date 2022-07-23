@@ -103,7 +103,7 @@ public class ChatActivity extends BaseInitActivity implements EaseTitleBar.OnBac
     @Override
     protected void initData() {
         super.initData();
-        if(EaseIMHelper.getInstance().isAdmin()){
+        if(EaseIMHelper.getInstance().isAdmin() && chatType == EaseConstant.CHATTYPE_GROUP){
             titleBarMessage.getConIdView().setText("群组ID：" + conversationId);
             titleBarMessage.getConIdView().setVisibility(View.VISIBLE);
         }

@@ -2,6 +2,7 @@ package com.hyphenate.easeui.widget.chatrow;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.media.Image;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.TypedValue;
@@ -18,6 +19,7 @@ import androidx.core.content.ContextCompat;
 
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
+import com.hyphenate.chat.EMGroup;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.chat.EMMessage.Direct;
 import com.hyphenate.easeim.EaseIMHelper;
@@ -26,6 +28,7 @@ import com.hyphenate.easeim.R;
 import com.hyphenate.easeui.adapter.EaseBaseAdapter;
 import com.hyphenate.easeui.domain.EaseAvatarOptions;
 import com.hyphenate.easeui.interfaces.MessageListItemClickListener;
+import com.hyphenate.easeui.manager.EaseDingMessageHelper;
 import com.hyphenate.easeui.modules.chat.model.EaseChatItemStyleHelper;
 import com.hyphenate.easeui.modules.chat.EaseChatMessageListLayout;
 import com.hyphenate.easeui.modules.chat.model.EaseChatSetStyle;
@@ -35,6 +38,7 @@ import com.hyphenate.easeui.widget.EaseImageView;
 import com.hyphenate.util.EMLog;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * base chat row view
@@ -86,6 +90,7 @@ public abstract class EaseChatRow extends LinearLayout {
      * if asked
      */
     protected TextView ackedView;
+    protected ImageView ackedBg;
     /**
      * if delivered
      */
@@ -156,6 +161,7 @@ public abstract class EaseChatRow extends LinearLayout {
         progressBar = (ProgressBar) findViewById(R.id.progress_bar);
         statusView = (ImageView) findViewById(R.id.msg_status);
         ackedView = (TextView) findViewById(R.id.tv_ack);
+        ackedBg = findViewById(R.id.tv_ack_bg);
         deliveredView = (TextView) findViewById(R.id.tv_delivered);
 
         setLayoutStyle();
@@ -173,6 +179,9 @@ public abstract class EaseChatRow extends LinearLayout {
         }
         if (null != ackedView) {
             ackedView.setVisibility(GONE);
+        }
+        if (null != ackedBg) {
+            ackedBg.setVisibility(GONE);
         }
         if (null != deliveredView) {
             deliveredView.setVisibility(GONE);
@@ -528,6 +537,17 @@ public abstract class EaseChatRow extends LinearLayout {
                 }
             });
         }
+
+        if(ackedBg != null){
+            ackedBg.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(itemClickListener != null){
+                        itemClickListener.onReadNumClick(message);
+                    }
+                }
+            });
+        };
     }
 
     /**
@@ -610,6 +630,56 @@ public abstract class EaseChatRow extends LinearLayout {
      */
     protected void onMessageSuccess() {
         EMLog.i(TAG, "onMessageSuccess");
+        // Show "1 Read" if this msg is a ding-type msg.
+        if (isSender() && EaseDingMessageHelper.get().isDingMessage(message) && ackedView != null && ackedBg != null) {
+            ackedView.setVisibility(VISIBLE);
+            ackedBg.setVisibility(VISIBLE);
+            int count = message.groupAckCount();
+            String groupId = message.getTo();
+            EMGroup group = EaseIMHelper.getInstance().getGroupManager().getGroup(groupId);
+            if(group != null){
+                if(group.getMemberCount() == count + 1){
+                    ackedView.setText("");
+                    ackedBg.setImageResource(R.drawable.em_icon_all_read);
+                    ackedBg.setEnabled(false);
+                } else {
+                    ackedView.setText(count == 0 ? "" : count+"");
+                    ackedBg.setImageResource(R.drawable.em_read_num_bg);
+                    ackedBg.setEnabled(true);
+                }
+            }
+
+        }
+
+        // Set ack-user list change listener.
+        // Only use the group ack count from message. - 2022.04.27
+        EaseDingMessageHelper.get().setUserUpdateListener(message, userUpdateListener);
+    }
+
+    private EaseDingMessageHelper.IAckUserUpdateListener userUpdateListener = list -> onAckUserUpdate(list);
+
+    public void onAckUserUpdate(List<String> userList) {
+        if(ackedView == null) {
+            return;
+        }
+        ackedView.post(()->{
+            if (isSender()) {
+                String groupId = message.getTo();
+                EMGroup group = EaseIMHelper.getInstance().getGroupManager().getGroup(groupId);
+                if(group != null){
+                    if(group.getMemberCount() == userList.size() + 1){
+                        ackedView.setText("");
+                        ackedBg.setImageResource(R.drawable.em_icon_all_read);
+                        ackedBg.setEnabled(false);
+                    } else {
+                        ackedView.setText(userList.size() == 0 ? "" : userList.size()+"");
+                        ackedBg.setImageResource(R.drawable.em_read_num_bg);
+                        ackedBg.setEnabled(true);
+                    }
+                }
+
+            }
+        });
     }
 
     /**

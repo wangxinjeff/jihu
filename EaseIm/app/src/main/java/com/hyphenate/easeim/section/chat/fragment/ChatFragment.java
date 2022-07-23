@@ -51,6 +51,7 @@ import com.hyphenate.easeui.modules.chat.interfaces.IChatExtendMenu;
 import com.hyphenate.easeui.modules.chat.interfaces.OnRecallMessageResultListener;
 import com.hyphenate.easeui.modules.menu.EasePopupWindowHelper;
 import com.hyphenate.easeui.modules.menu.MenuItemBean;
+import com.hyphenate.easeui.ui.EaseDingAckUserListActivity;
 import com.hyphenate.util.EMLog;
 
 import java.util.HashMap;
@@ -260,6 +261,12 @@ public class ChatFragment extends EaseChatFragment implements OnRecallMessageRes
         if(infoListener != null) {
             infoListener.onOtherTyping(action);
         }
+    }
+
+    @Override
+    public void onReadNumClick(EMMessage message) {
+        super.onReadNumClick(message);
+        EaseDingAckUserListActivity.startAction(getContext(), message);
     }
 
     @Override

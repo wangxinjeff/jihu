@@ -10,6 +10,9 @@ import android.widget.TextView;
 
 import com.hyphenate.chat.EMGroup;
 
+import com.hyphenate.chat.EMGroupOptions;
+import com.hyphenate.chat.EMMessage;
+import com.hyphenate.easeim.EaseIMHelper;
 import com.hyphenate.easeim.R;
 import com.hyphenate.easeim.common.constant.DemoConstant;
 import com.hyphenate.easeim.common.interfaceOrImplement.OnResourceParseCallback;
@@ -24,6 +27,7 @@ import com.hyphenate.easeim.section.contact.viewmodels.NewGroupViewModel;
 
 import com.hyphenate.easeim.section.group.adapter.GroupDetailMemberAdapter;
 import com.hyphenate.easeim.section.group.fragment.GroupEditFragment;
+import com.hyphenate.easeui.constants.EaseConstant;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.model.EaseEvent;
 import com.hyphenate.easeui.widget.EaseTitleBar;
@@ -37,6 +41,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static com.hyphenate.chat.EMGroupManager.EMGroupStyle.EMGroupStylePrivateOnlyOwnerInvite;
 
 public class NewGroupActivity extends BaseInitActivity implements EaseTitleBar.OnBackPressListener, View.OnClickListener{
     private static final int ADD_NEW_MEMBERS = 10;
@@ -114,7 +120,7 @@ public class NewGroupActivity extends BaseInitActivity implements EaseTitleBar.O
         memberAdapter.setOnAddClickListener(new GroupDetailMemberAdapter.GroupMemberAddClickListener() {
             @Override
             public void onAddClick() {
-                GroupPickContactsActivity.actionStartForResult(mContext, (ArrayList<EaseUser>) members);
+                GroupPickContactsActivity.actionStart(mContext, (ArrayList<EaseUser>) members);
             }
 
             @Override
@@ -153,10 +159,14 @@ public class NewGroupActivity extends BaseInitActivity implements EaseTitleBar.O
             parseResource(response, new OnResourceParseCallback<EMGroup>() {
                 @Override
                 public void onSuccess(EMGroup data) {
-                    showToast(R.string.em_group_new_success);
-                    LiveDataBus.get().with(DemoConstant.GROUP_CHANGE).postValue(EaseEvent.create(DemoConstant.GROUP_CHANGE, EaseEvent.TYPE.GROUP));
-                    //跳转到群组聊天页面
-                    ChatActivity.actionStart(mContext, data.getGroupId(), DemoConstant.CHATTYPE_GROUP);
+//                    LiveDataBus.get().with(DemoConstant.GROUP_CHANGE).postValue(EaseEvent.create(DemoConstant.GROUP_CHANGE, EaseEvent.TYPE.GROUP));
+//                    //跳转到群组聊天页面
+//                    ChatActivity.actionStart(mContext, data.getGroupId(), DemoConstant.CHATTYPE_GROUP);
+                    EMMessage message = EMMessage.createTextSendMessage("prompt", data.getGroupId());
+                    message.setChatType(EMMessage.ChatType.GroupChat);
+                    message.setAttribute(EaseConstant.CREATE_GROUP_PROMPT, true);
+                    message.setAttribute(EaseConstant.CREATE_GROUP_NAME, data.getGroupName());
+                    EaseIMHelper.getInstance().getChatManager().sendMessage(message);
                     finish();
                 }
 
@@ -206,7 +216,14 @@ public class NewGroupActivity extends BaseInitActivity implements EaseTitleBar.O
                 showIntroductionDialog();
                 break;
             case R.id.done:
-                onBackPressed();
+
+                EMGroupOptions option = new EMGroupOptions();
+                option.style = EMGroupStylePrivateOnlyOwnerInvite;
+                List<String> list = new ArrayList<>();
+                for(EaseUser user : members){
+                    list.add(user.getUsername());
+                }
+                viewModel.createGroup(groupName, groupIntroduction, list.toArray(new String[0]), "", option);
                 break;
         }
     }

@@ -35,7 +35,6 @@ import com.hyphenate.easeui.constants.EaseConstant;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.manager.EaseThreadManager;
 import com.hyphenate.easeui.model.EaseEvent;
-import com.hyphenate.easeui.utils.EaseCommonUtils;
 import com.hyphenate.easeui.widget.EaseImageView;
 import com.hyphenate.easeui.widget.EaseTitleBar;
 
@@ -146,12 +145,12 @@ public class GroupDetailActivity extends BaseInitActivity implements EaseTitleBa
         memberAdapter.setOnAddClickListener(new GroupDetailMemberAdapter.GroupMemberAddClickListener() {
             @Override
             public void onAddClick() {
-                GroupPickContactsActivity.actionStartForResult(mContext, groupId, false);
+                GroupPickContactsActivity.actionStart(mContext, groupId, false);
             }
 
             @Override
             public void onRemoveClick() {
-
+                GroupRemoveMemberActivity.startAction(mContext, groupId);
             }
         });
     }
@@ -327,14 +326,14 @@ public class GroupDetailActivity extends BaseInitActivity implements EaseTitleBa
 //                showAnnouncementDialog();
                 GroupEditActivity.startEditForResult(mContext, getString(R.string.em_chat_group_detail_announcement),
                         group.getAnnouncement(),
-                        getString(R.string.em_chat_group_detail_announcement_hint),
+                        EaseIMHelper.getInstance().isAdmin() ? getString(R.string.em_chat_group_detail_announcement_hint) : "",
                         GroupHelper.isOwner(group), REQUEST_CODE_GROUP_NOTICE);
                 break;
             case R.id.item_group_introduction ://群介绍
 //                showIntroductionDialog();
                 GroupEditActivity.startEditForResult(mContext, getString(R.string.em_chat_group_detail_introduction),
                         group.getDescription(),
-                        getString(R.string.em_chat_group_detail_introduction_hint),
+                        EaseIMHelper.getInstance().isAdmin() ? getString(R.string.em_chat_group_detail_introduction_hint) : "",
                         GroupHelper.isOwner(group), REQUEST_CODE_GROUP_NOTICE);
                 break;
             case R.id.item_group_mute:

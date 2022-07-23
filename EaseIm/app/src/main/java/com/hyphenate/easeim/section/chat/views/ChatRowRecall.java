@@ -7,11 +7,16 @@ import android.text.TextUtils;
 import android.widget.TextView;
 
 import com.hyphenate.chat.EMMessage;
+import com.hyphenate.easeim.EaseIMHelper;
 import com.hyphenate.easeim.R;
+import com.hyphenate.easeim.common.constant.DemoConstant;
+import com.hyphenate.easeui.constants.EaseConstant;
+import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.hyphenate.easeui.widget.chatrow.EaseChatRow;
 
 public class ChatRowRecall extends EaseChatRow {
-    private TextView contentView;
+    private TextView name;
+    private TextView content;
 
     public ChatRowRecall(Context context, boolean isSender) {
         super(context, isSender);
@@ -24,22 +29,45 @@ public class ChatRowRecall extends EaseChatRow {
 
     @Override
     protected void onFindViewById() {
-        contentView = (TextView) findViewById(R.id.text_content);
+        name = (TextView) findViewById(R.id.user);
+        content = findViewById(R.id.content);
     }
 
     @Override
     protected void onSetUpView() {
-        // 设置显示内容
-        String messageStr = null;
-        String recaller = message.getStringAttribute(MESSAGE_TYPE_RECALLER,"");
-        String from = message.getFrom();
-        if (message.direct() == EMMessage.Direct.SEND&&(TextUtils.isEmpty(recaller)||((!TextUtils.isEmpty(recaller))&&TextUtils.equals(recaller, from)))) {
-            messageStr = String.format(context.getString(R.string.msg_recall_by_self));
-        } else if( (!TextUtils.isEmpty(recaller))&&!TextUtils.equals(recaller, from)) {
-            messageStr = String.format(context.getString(R.string.msg_recall_by_another), recaller, from);
-        }else{
-            messageStr = String.format(context.getString(R.string.msg_recall_by_user), from);
+        if(message.getBooleanAttribute(DemoConstant.MESSAGE_TYPE_RECALL, false)){
+            String user = message.getFrom();
+            if(TextUtils.equals(user, EaseIMHelper.getInstance().getCurrentUser())){
+                name.setVisibility(GONE);
+                content.setText(R.string.msg_recall_by_self);
+            } else {
+                name.setVisibility(VISIBLE);
+                EaseUserUtils.setUserNick(user, name);
+                content.setText(R.string.msg_recall_by_user);
+            }
+        } else if(!message.getStringAttribute(EaseConstant.MESSAGE_ATTR_CALL_STATE, "").equals("")){
+            String createCall = message.getStringAttribute(EaseConstant.MESSAGE_ATTR_CALL_STATE, "");
+            String user = message.getStringAttribute(EaseConstant.MESSAGE_ATTR_CALL_USER, "");
+            if(TextUtils.equals(createCall, EaseConstant.CONFERENCE_STATE_CREATE)){
+                name.setVisibility(VISIBLE);
+//            name.setText(user);
+                content.setText(context.getString(R.string.em_initiated_call));
+//            EaseUserProfileProvider profileProvider = EaseIM.getInstance().getUserProvider();
+//            if(profileProvider != null){
+//                EaseUser easeUser = profileProvider.getUser(user);
+//                if(easeUser != null){
+//                    name.setText(easeUser.getNickname());
+//                }
+//            }
+                EaseUserUtils.setUserNick(user, name);
+            } else if(TextUtils.equals(createCall, EaseConstant.CONFERENCE_STATE_END)){
+                name.setVisibility(GONE);
+                content.setText(context.getString(R.string.em_call_over));
+            }
+        } else if(message.getBooleanAttribute(DemoConstant.CREATE_GROUP_PROMPT, false)){
+            name.setVisibility(GONE);
+            String groupName = message.getStringAttribute(EaseConstant.CREATE_GROUP_NAME, "");
+            content.setText(String.format(context.getString(R.string.em_group_create_success), groupName));
         }
-        contentView.setText(messageStr);
     }
 }

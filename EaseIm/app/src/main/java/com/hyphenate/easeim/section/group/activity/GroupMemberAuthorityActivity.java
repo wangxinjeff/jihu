@@ -172,7 +172,7 @@ public class GroupMemberAuthorityActivity extends BaseInitActivity implements Ea
                 invalidateOptionsMenu();
                 break;
             case R.id.action_group_add :
-                GroupPickContactsActivity.actionStartForResult(mContext,
+                GroupPickContactsActivity.actionStart(mContext,
                         groupId, false);
                 break;
         }

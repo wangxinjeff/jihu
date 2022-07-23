@@ -40,6 +40,7 @@ public class EaseChatRowLocation extends EaseChatRow {
     protected void onSetUpView() {
 		locBody = (EMLocationMessageBody) message.getBody();
 		locationView.setText(locBody.getAddress());
+        tvLocationName.setText(locBody.getAddress());
     }
 
     @Override

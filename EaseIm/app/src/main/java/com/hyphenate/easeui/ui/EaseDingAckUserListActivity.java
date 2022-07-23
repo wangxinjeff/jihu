@@ -1,20 +1,29 @@
 package com.hyphenate.easeui.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.text.TextUtils;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.ListView;
-import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.viewpager2.widget.ViewPager2;
+
+import com.google.android.material.tabs.TabLayout;
+import com.google.android.material.tabs.TabLayoutMediator;
 import com.hyphenate.chat.EMMessage;
+import com.hyphenate.easeim.EaseIMHelper;
 import com.hyphenate.easeim.R;
-import com.hyphenate.easeui.ui.base.EaseBaseActivity;
+import com.hyphenate.easeim.common.interfaceOrImplement.OnResourceParseCallback;
+import com.hyphenate.easeim.section.base.BaseInitActivity;
+import com.hyphenate.easeim.section.group.viewmodels.GroupDetailViewModel;
+import com.hyphenate.easeim.section.search.adapter.SectionPagerAdapter;
+import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.manager.EaseDingMessageHelper;
 import com.hyphenate.easeui.widget.EaseTitleBar;
-import com.hyphenate.util.EMLog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,126 +32,124 @@ import java.util.List;
  * Created by zhangsong on 18-1-23.
  */
 
-public class EaseDingAckUserListActivity extends EaseBaseActivity {
-    private static final String TAG = "EaseDingAckUserListActi";
-
-    private ListView ackUserListView;
+public class EaseDingAckUserListActivity extends BaseInitActivity {
     private EaseTitleBar titleBar;
-    private TextView tvNoData;
+    private TabLayout tabLayout;
+    private ViewPager2 viewPager;
+    private List<Fragment> fragmentList;
+    private EMMessage message;
+    private List<String> memberList = new ArrayList<>();
+    private List<String> readList = new ArrayList<>();
+    private List<String> unReadList = new ArrayList<>();
+    private GroupReadAckListFragment readFragment;
+    private GroupReadAckListFragment unReadFragment;
+    private GroupDetailViewModel viewModel;
 
-    private EMMessage msg;
-
-    private AckUserAdapter userAdapter;
-    private List<String> userList;
+    public static void startAction(Context context, EMMessage message){
+        Intent intent = new Intent(context, EaseDingAckUserListActivity.class);
+        intent.putExtra("message", message);
+        context.startActivity(intent);
+    }
 
     @Override
-    protected void onCreate(Bundle arg0) {
-        super.onCreate(arg0);
-        setContentView(R.layout.ease_activity_ding_ack_user_list);
-        setFitSystemForTheme(true);
-        ackUserListView = (ListView) findViewById(R.id.list_view);
-        titleBar = (EaseTitleBar) findViewById(R.id.title_bar);
-        tvNoData = findViewById(R.id.tv_no_data);
-        titleBar.setTitle(getString(R.string.title_ack_read_list));
+    protected int getLayoutId() {
+        return R.layout.ease_activity_ding_ack_user_list;
+    }
 
-        // Set the title bar left layout click listener to back to previous activity.
-        titleBar.setLeftLayoutClickListener(new View.OnClickListener() {
+    @Override
+    protected void initIntent(Intent intent) {
+        super.initIntent(intent);
+        message = intent.getParcelableExtra("message");
+    }
+
+    @Override
+    protected void initView(Bundle savedInstanceState) {
+        super.initView(savedInstanceState);
+        titleBar = findViewById(R.id.title_bar);
+        tabLayout = findViewById(R.id.tab_layout);
+        viewPager = findViewById(R.id.view_pager);
+        EaseDingMessageHelper.get().setUserUpdateListener(message, userUpdateListener);
+    }
+
+    @Override
+    protected void initData() {
+        super.initData();
+        viewModel =  new ViewModelProvider(this).get(GroupDetailViewModel.class);
+        EaseDingMessageHelper.get().fetchGroupReadAck(message);
+        showLoading();
+        viewModel.getGroupMember().observe(this, response -> {
+            parseResource(response, new OnResourceParseCallback<List<EaseUser>>() {
+                @Override
+                public void onSuccess(@Nullable List<EaseUser> data) {
+                    memberList.clear();
+                    unReadList.clear();
+                    for(EaseUser user : data){
+                        if(!TextUtils.equals(user.getUsername(), EaseIMHelper.getInstance().getCurrentUser())){
+                            memberList.add(user.getUsername());
+                        }
+                    }
+                    for(String s : memberList){
+                        if(!readList.contains(s)){
+                            unReadList.add(s);
+                        }
+                    }
+                    runOnUiThread(() -> refreshView());
+                }
+            });
+        });
+    }
+
+    private void refreshView(){
+        fragmentList = new ArrayList<>();
+        readFragment = new GroupReadAckListFragment(readList);
+        unReadFragment = new GroupReadAckListFragment(unReadList);
+        fragmentList.add(readFragment);
+        fragmentList.add(unReadFragment);
+
+        viewPager.setAdapter(new SectionPagerAdapter(this, fragmentList));
+
+        List<String> titleList = new ArrayList<>();
+        titleList.add(readList.size() + "人已读");
+        titleList.add(unReadList.size() + "人未读");
+        new TabLayoutMediator(tabLayout, viewPager, new TabLayoutMediator.TabConfigurationStrategy(){
             @Override
-            public void onClick(View v) {
-                back(v);
+            public void onConfigureTab(@NonNull TabLayout.Tab tab, int position) {
+                tab.setText(titleList.get(position));
+            }
+        }).attach();
+        dismissLoading();
+    }
+
+    @Override
+    protected void initListener() {
+        super.initListener();
+        titleBar.setOnBackPressListener(new EaseTitleBar.OnBackPressListener() {
+            @Override
+            public void onBackPress(View view) {
+                onBackPressed();
             }
         });
-
-        msg = getIntent().getParcelableExtra("msg");
-        EMLog.i(TAG, "Get msg from intent, msg: " + msg.toString());
-
-        userList = new ArrayList<>();
-        userAdapter = new AckUserAdapter(this, userList);
-
-        ackUserListView.setAdapter(userAdapter);
-
-        // fetch from server
-        String msgId = msg.getMsgId();
-        EaseDingMessageHelper.get().fetchGroupReadAck(msg);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-
-        // Set ack-user change listener.
-        EaseDingMessageHelper.get().setUserUpdateListener(msg, userUpdateListener);
+        EaseDingMessageHelper.get().setUserUpdateListener(message, userUpdateListener);
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-
-        // Remove ack-user change listener.
-        EaseDingMessageHelper.get().setUserUpdateListener(msg, null);
+        EaseDingMessageHelper.get().setUserUpdateListener(message, null);
     }
 
     private EaseDingMessageHelper.IAckUserUpdateListener userUpdateListener =
             new EaseDingMessageHelper.IAckUserUpdateListener() {
                 @Override
                 public void onUpdate(List<String> list) {
-                    EMLog.i(TAG, "onUpdate: " + list.size());
-                    if(list != null && list.size() > 0) {
-                        runOnUiThread(()-> tvNoData.setVisibility(View.GONE));
-                    }
-                    userList.clear();
-                    userList.addAll(list);
-
-                    runOnUiThread(() -> userAdapter.notifyDataSetChanged());
+                    readList = list;
+                    runOnUiThread(() -> viewModel.getGroupAllMember(message.getTo()));
                 }
             };
 
-    private static class AckUserAdapter extends BaseAdapter {
-        private Context context;
-        private List<String> userList;
-
-        public AckUserAdapter(Context context, List<String> userList) {
-            this.context = context;
-            this.userList = userList;
-        }
-
-        @Override
-        public int getCount() {
-            return userList.size();
-        }
-
-        @Override
-        public Object getItem(int position) {
-            return userList.get(position);
-        }
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        public View getView(int position, View convertView, ViewGroup parent) {
-            ViewHolder vh;
-            if (convertView == null) {
-                convertView = LayoutInflater.from(context).inflate(R.layout.ease_row_ding_ack_user, null);
-                vh = new ViewHolder(convertView);
-                convertView.setTag(vh);
-            } else {
-                vh = (ViewHolder) convertView.getTag();
-            }
-
-            vh.nameView.setText(userList.get(position));
-
-            return convertView;
-        }
-
-        private static class ViewHolder {
-            public TextView nameView;
-
-            public ViewHolder(View contentView) {
-                nameView = (TextView) contentView.findViewById(R.id.username);
-            }
-        }
-    }
 }

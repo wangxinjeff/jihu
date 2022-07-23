@@ -859,4 +859,8 @@
     <string name="em_group_mute_member">Mute member</string>
     <string name="em_group_remove_mute">Lifting the ban</string>
     <string name="em_group_mute_failed">Mute failed</string>
+    <string name="em_group_remove_member_failed">Remove member failed</string>
+    <string name="em_group_yourself_mute">You\'ve been silenced by the group leader</string>
+    <string name="em_group_yourself_un_mute">Your gag order has been lifted</string>
+    <string name="em_group_create_success">%s create success</string>
 </resources>

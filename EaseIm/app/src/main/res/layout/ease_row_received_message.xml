@@ -34,9 +34,10 @@
             android:padding="8dp"
             android:layout_marginTop="2dp"
             app:arrow_direction="left"
-            app:fill_color="?attr/msgBubbleBg"
-            app:stroke_color="?attr/msgBubbleBg"
-            app:conner_radius="8dp">
+            app:fill_color="?attr/rmsgBubbleBg"
+            app:stroke_color="?attr/rmsgBubbleBg"
+            app:conner_radius="8dp"
+            app:arrow_up_distance="10dp">
 
             <TextView
                 android:id="@+id/tv_chatcontent"

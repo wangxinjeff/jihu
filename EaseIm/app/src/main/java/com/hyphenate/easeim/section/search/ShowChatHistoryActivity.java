@@ -121,6 +121,11 @@ public class ShowChatHistoryActivity extends BaseInitActivity implements EaseCha
     }
 
     @Override
+    public void onReadNumClick(EMMessage message) {
+
+    }
+
+    @Override
     public void onTouchItemOutside(View v, int position) {
 
     }

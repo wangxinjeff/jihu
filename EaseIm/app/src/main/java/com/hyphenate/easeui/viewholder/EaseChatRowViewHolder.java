@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeui.adapter.EaseMessageAdapter;
 import com.hyphenate.easeui.interfaces.MessageListItemClickListener;
+import com.hyphenate.easeui.manager.EaseDingMessageHelper;
 import com.hyphenate.easeui.widget.chatrow.EaseChatRow;
 
 import java.util.List;
@@ -87,7 +88,8 @@ public class EaseChatRowViewHolder extends EaseMessageAdapter.ViewHolder<EMMessa
      * @param message
      */
     protected void handleReceiveMessage(EMMessage message) {
-
+        // Send the group-ack cmd type msg if this msg is a ding-type msg.
+        EaseDingMessageHelper.get().sendAckMessage(message);
     }
 
     public Context getContext() {
