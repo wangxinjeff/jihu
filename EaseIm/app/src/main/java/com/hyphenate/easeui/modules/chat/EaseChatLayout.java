@@ -817,15 +817,15 @@ public class EaseChatLayout extends RelativeLayout implements IChatLayout, IHand
     @Override
     public boolean onResendClick(EMMessage message) {
         EMLog.i(TAG, "onResendClick");
-        new EaseAlertDialog(getContext(), R.string.resend, R.string.confirm_resend, null, new EaseAlertDialog.AlertDialogUser() {
-            @Override
-            public void onResult(boolean confirmed, Bundle bundle) {
-                if (!confirmed) {
-                    return;
-                }
+//        new EaseAlertDialog(getContext(), R.string.resend, R.string.confirm_resend, null, new EaseAlertDialog.AlertDialogUser() {
+//            @Override
+//            public void onResult(boolean confirmed, Bundle bundle) {
+//                if (!confirmed) {
+//                    return;
+//                }
                 resendMessage(message);
-            }
-        }, true).show();
+//            }
+//        }, true).show();
         return true;
     }
 

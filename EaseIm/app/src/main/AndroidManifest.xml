@@ -516,7 +516,9 @@
             android:screenOrientation="portrait"/>
         <!--已读回执列表-->
         <activity android:name="com.hyphenate.easeui.ui.EaseDingAckUserListActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"
+            />
         <!--公开群详情页-->
         <activity android:name=".section.group.activity.GroupSimpleDetailActivity"
             android:screenOrientation="portrait"/>

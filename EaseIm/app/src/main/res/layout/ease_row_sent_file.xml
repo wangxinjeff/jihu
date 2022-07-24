@@ -26,7 +26,7 @@
 
         <com.hyphenate.easeim.common.widget.ChatView
             android:id="@+id/bubble"
-            android:layout_width="match_parent"
+            android:layout_width="230dp"
             android:layout_height="68dp"
             android:minHeight="@dimen/ease_chat_file_bubble_min_height"
             android:layout_marginRight="@dimen/margin_chat_activity"

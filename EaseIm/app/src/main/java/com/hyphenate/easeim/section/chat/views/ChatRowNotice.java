@@ -14,11 +14,11 @@ import com.hyphenate.easeui.constants.EaseConstant;
 import com.hyphenate.easeui.utils.EaseUserUtils;
 import com.hyphenate.easeui.widget.chatrow.EaseChatRow;
 
-public class ChatRowRecall extends EaseChatRow {
+public class ChatRowNotice extends EaseChatRow {
     private TextView name;
     private TextView content;
 
-    public ChatRowRecall(Context context, boolean isSender) {
+    public ChatRowNotice(Context context, boolean isSender) {
         super(context, isSender);
     }
 

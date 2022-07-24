@@ -11,6 +11,7 @@ import com.hyphenate.chat.EMClient;
 import com.hyphenate.chat.EMConversation;
 import com.hyphenate.chat.EMMessage;
 import com.hyphenate.easeim.R;
+import com.hyphenate.easeim.common.constant.DemoConstant;
 import com.hyphenate.easeim.common.widget.SearchBar;
 import com.hyphenate.easeim.section.base.BaseInitFragment;
 import com.hyphenate.easeim.section.search.ShowChatHistoryActivity;
@@ -18,6 +19,7 @@ import com.hyphenate.easeim.section.search.adapter.SearchAllAdapter;
 import com.hyphenate.easeui.constants.EaseConstant;
 import com.hyphenate.easeui.interfaces.OnItemClickListener;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SearchAllFragment extends BaseInitFragment {
@@ -77,9 +79,17 @@ public class SearchAllFragment extends BaseInitFragment {
     private void searchMessages(String key){
         if(conversation != null){
             List<EMMessage> mData = conversation.searchMsgFromDB(key, System.currentTimeMillis(), 100, null, EMConversation.EMSearchDirection.UP);
+            List<EMMessage> data = new ArrayList<>();
+            for(EMMessage message : mData){
+                if(!(message.getBooleanAttribute(DemoConstant.MESSAGE_TYPE_RECALL, false)
+                        || !message.getStringAttribute(EaseConstant.MESSAGE_ATTR_CALL_STATE, "").equals("")
+                        || message.getBooleanAttribute(DemoConstant.CREATE_GROUP_PROMPT, false))){
+                    data.add(message);
+                }
+            }
             if(mData.size() > 0){
                 allAdapter.setKeyword(key);
-                allAdapter.setData(mData);
+                allAdapter.setData(data);
             }
         }
     }

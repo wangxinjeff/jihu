@@ -41,7 +41,6 @@ import com.hyphenate.easecallkit.base.EaseUserAccount;
 import com.hyphenate.easecallkit.event.CallCancelEvent;
 import com.hyphenate.easeim.common.constant.DemoConstant;
 import com.hyphenate.easeim.common.db.DemoDbHelper;
-import com.hyphenate.easeim.common.livedatas.LiveDataBus;
 import com.hyphenate.easeim.common.manager.UserProfileManager;
 import com.hyphenate.easeim.common.model.DemoModel;
 import com.hyphenate.easeim.common.model.EmojiconExampleGroupData;
@@ -56,11 +55,10 @@ import com.hyphenate.easeim.section.chat.ChatPresenter;
 import com.hyphenate.easeim.section.chat.activity.ChatActivity;
 import com.hyphenate.easeim.section.chat.delegates.ChatConferenceInviteAdapterDelegate;
 import com.hyphenate.easeim.section.chat.delegates.ChatNotificationAdapterDelegate;
-import com.hyphenate.easeim.section.chat.delegates.ChatRecallAdapterDelegate;
+import com.hyphenate.easeim.section.chat.delegates.ChatNoticeAdapterDelegate;
 import com.hyphenate.easeim.section.chat.delegates.ChatUserCardAdapterDelegate;
 import com.hyphenate.easeim.section.chat.delegates.ChatVideoCallAdapterDelegate;
 import com.hyphenate.easeim.section.chat.delegates.ChatVoiceCallAdapterDelegate;
-import com.hyphenate.easeim.section.chat.delegates.ConferenceStateAdapterDelegate;
 import com.hyphenate.easeim.section.conference.ConferenceInviteActivity;
 import com.hyphenate.easeim.section.conversation.ConversationListActivity;
 import com.hyphenate.easeui.EaseIM;
@@ -78,7 +76,6 @@ import com.hyphenate.easeui.domain.EaseEmojicon;
 import com.hyphenate.easeui.domain.EaseEmojiconGroupEntity;
 import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.manager.EaseMessageTypeSetManager;
-import com.hyphenate.easeui.model.EaseEvent;
 import com.hyphenate.easeui.model.EaseNotifier;
 import com.hyphenate.easeui.provider.EaseEmojiconInfoProvider;
 import com.hyphenate.easeui.provider.EaseSettingsProvider;
@@ -222,20 +219,12 @@ public class EaseIMHelper {
      */
     private void registerConversationType() {
         EaseMessageTypeSetManager.getInstance()
-                .addMessageType(EaseExpressionAdapterDelegate.class)       //自定义表情
                 .addMessageType(EaseFileAdapterDelegate.class)             //文件
                 .addMessageType(EaseImageAdapterDelegate.class)            //图片
                 .addMessageType(EaseLocationAdapterDelegate.class)         //定位
                 .addMessageType(EaseVideoAdapterDelegate.class)            //视频
                 .addMessageType(EaseVoiceAdapterDelegate.class)            //声音
-                .addMessageType(ChatConferenceInviteAdapterDelegate.class) //语音邀请
-                .addMessageType(ChatRecallAdapterDelegate.class)           //消息撤回
-                .addMessageType(ChatVideoCallAdapterDelegate.class)        //视频通话
-                .addMessageType(ChatVoiceCallAdapterDelegate.class)        //语音通话
-                .addMessageType(ChatUserCardAdapterDelegate.class)         //名片消息
-                .addMessageType(EaseCustomAdapterDelegate.class)           //自定义消息
-                .addMessageType(ChatNotificationAdapterDelegate.class)
-//                .addMessageType(ConferenceStateAdapterDelegate.class)//入群等通知消息
+                .addMessageType(ChatNoticeAdapterDelegate.class)           //提示
                 .setDefaultMessageType(EaseTextAdapterDelegate.class);       //文本
     }
 
