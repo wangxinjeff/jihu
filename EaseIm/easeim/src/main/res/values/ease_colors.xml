@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="btn_gray_normal">#c0c0c0</color>
+    <color name="top_bar_normal_bg">#00acff</color>
+    <color name="error_item_color">#F6EBE6</color>
+    <color name="gray_normal">#666667</color>
+    <color name="emojicon_tab_selected">#D9D9D9</color>
+    <color name="emojicon_tab_nomal">#ffffff</color>
+
+    <color name="voip_interface_text_color">#bababa</color>
+
+    <color name="em_chat_bg">#fff2f2f2</color>
+    <color name="em_toolbar_color_title">@color/black</color>
+    <color name="em_toolbar_color_title_right">@color/black</color>
+
+    <color name="grid_state_pressed">#1Affffff</color>
+    <color name="grid_state_focused">#80000000</color>
+
+    <color name="ease_chat_voice_bg">#ffbbbbbb</color>
+    <color name="ease_chat_video_bg">#ff000000</color>
+
+    <color name="btn_gray_pressed_status">#b5b5b6</color>
+    <color name="btn_gray_pressed">#666667</color>
+    <color name="btn_blue_normal">#1e90ff</color>
+    <color name="btn_blue_pressed">#0066FF</color>
+
+    <color name="ease_color_map_right_normal">#ff48c890</color>
+    <color name="ease_color_map_right_press">#ffe9e9e9</color>
+
+    <color name="ease_base_color_divider">#fff2f2f2</color>
+
+    <color name="ease_color_common_text_black">#ff333333</color>
+
+    <color name="ease_conversation_color_item_name">@color/ease_color_common_text_black</color>
+    <color name="ease_conversation_color_item_mention">#ffff2b2b</color>
+    <color name="ease_conversation_color_item_message">#ff999999</color>
+    <color name="ease_conversation_color_item_time">#ff999999</color>
+
+    <color name="ease_contact_color_item_header">#ff333333</color>
+    <color name="ease_contact_color_item_header_bg">#fff2f2f2</color>
+    <color name="ease_contact_color_item_title">#ff333333</color>
+
+    <!-- AdminTheme -->
+    <color name="theme_bg">#f5f5f5</color>
+    <color name="theme_float_bg">#ffffff</color>
+    <color name="normal_text">#171717</color>
+    <color name="con_content_time">#7f7f7f</color>
+    <color name="con_group_id">#a5a5a5</color>
+    <color name="con_item">#ffffff</color>
+    <color name="search_bg">#ffffff</color>
+    <color name="search_hint">#7e7e7f</color>
+    <color name="search_close">#4798cb</color>
+    <color name="search_text">#7e7e7f</color>
+    <color name="group_detail_mid">#171717</color>
+    <color name="input_view_bg">#f5f5f5</color>
+    <color name="input_view_text">#ffffff</color>
+    <color name="input_text">#171717</color>
+    <color name="result_name">#171717</color>
+    <color name="check_name">#7f7f7f</color>
+    <color name="detail_divider">#f5f5f5</color>
+    <color name="send_bubble_bg">#e8f4ff</color>
+    <color name="send_text">#171717</color>
+    <color name="receive_bubble_bg">#f5f5f5</color>
+    <color name="voice_btn_normal">#ffffff</color>
+    <color name="voice_btn_press">#dedcdc</color>
+    <color name="read_num">#07cea6</color>
+
+    <color name="call_float_bg">#f5f5f5</color>
+    <color name="call_float_time_bg">#ffffff</color>
+
+
+    <color name="refused_bg">#edeff2</color>
+    <color name="agree_bg">#4697ca</color>
+    <color name="operated_bg">#f5f5f5</color>
+
+
+    <!-- CustomerTheme -->
+    <color name="theme_bg_color">#141414</color>
+    <color name="theme_float_bg_color">#171717</color>
+    <color name="normal_text_color">#b9b9b9</color>
+    <color name="con_content_time_color">#7f7f7f</color>
+    <color name="con_group_id_color">#a5a5a5</color>
+    <color name="con_item_color">#171717</color>
+    <color name="search_bg_color">#252525</color>
+    <color name="search_hint_color">#737374</color>
+    <color name="search_close_color">#4798cb</color>
+    <color name="login_btn_color">#4390c0</color>
+    <color name="search_text_color">#b9b9b9</color>
+    <color name="group_detail_mid_color">#7f7f7f</color>
+    <color name="input_view_text_color">#3d3d3d</color>
+    <color name="input_view_bg_color">#252525</color>
+    <color name="input_text_color">#f5f5f5</color>
+    <color name="result_name_color">#b9b9b9</color>
+    <color name="check_name_color">#7e7e7e</color>
+    <color name="detail_divider_color">#454545</color>
+
+    <color name="send_bubble_bg_color">#305b77</color>
+    <color name="send_text_color">#aab0b7</color>
+    <color name="receive_bubble_bg_color">#252525</color>
+    <color name="voice_btn_normal_color">#3c3c3c</color>
+    <color name="voice_btn_press_color">#ffc6c6c6</color>
+
+    <color name="detail_bg_color">#1c1c1c</color>
+
+    <color name="letter_color">#7e7e7f</color>
+    <color name="call_float_bg_color">#1c1c1c</color>
+    <color name="call_float_time_bg_color">#252525</color>
+    <color name="btn_un_clicked">#4798cb</color>
+    <color name="btn_clicked">#4798cb</color>
+
+    <color name="colorPrimary">#008577</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <color name="colorAccent">#D81B60</color>
+
+    <color name="red">#ffff0000</color>
+    <color name="white">#feffffff</color>
+    <color name="gray">#ffe9e9e9</color>
+    <color name="blue">#FF5A5DD0</color>
+    <color name="black">#ff000000</color>
+    <color name="transparent">@android:color/transparent</color>
+    <color name="color_transparent">#00000000</color>
+
+    <color name="common_bg">#fff9f9f9</color>
+    <color name="em_color_brand">#ff04aef0</color>
+    <color name="em_color_warning">#ffff2b2b</color>
+    <color name="em_color_common_text_black">#ff333333</color>
+    <color name="em_color_common_text_gray">#ff999999</color>
+
+    <color name="em_base_color_primary">#ffffff</color>
+    <color name="em_base_color_primary_dark">#ffffff</color>
+    <color name="em_base_color_accent">@color/blue</color>
+    <color name="em_base_color_window_bg">@color/white</color>
+    <color name="em_base_color_text_hint">#ffcccccc</color>
+    <color name="em_base_color_divider">#2e2e2e</color>
+
+    <color name="em_toast_color_bg">#99000000</color>
+    <color name="em_toast_color_text">@color/white</color>
+
+    <color name="em_login_color_bg">#4c000000</color>
+    <color name="em_login_color_btn_unable">#44000000</color>
+    <color name="em_login_color_btn_enable_left">#ff04aef0</color>
+    <color name="em_login_color_btn_enable_right">#ff5a5dd0</color>
+    <color name="em_login_color_btn_text_unable">#ffffffff</color>
+    <color name="em_login_color_btn_text_enable">#FFF4F4F4</color>
+    <color name="em_login_color_text">@color/white</color>
+    <color name="em_login_color_btn_right_unable">#44f2f2f2</color>
+    <color name="em_login_color_btn_right_enable">@color/white</color>
+
+    <color name="em_switch_color_checked">#ff48c890</color>
+    <color name="em_switch_color_unchecked">#ffe9e9e9</color>
+
+    <color name="em_server_set_color_title">@color/white</color>
+
+    <color name="em_main_color_tab_normal">@color/em_color_common_text_black</color>
+    <color name="em_main_color_tab_selected">#ff04aef0</color>
+
+    <color name="em_empty_layout_color_text">#ffcccccc</color>
+
+
+
+    <color name="em_friends_contact_detail_text_normal">@color/em_color_common_text_black</color>
+    <color name="em_friends_contact_detail_text_brand">@color/em_color_brand</color>
+
+    <color name="holo_black">#ff111111</color>
+    <color name="bg_tools_panel">#2F2F2F</color>
+    <color name="em_indicator_select">#9E9E9E</color>
+    <color name="em_indicator_normal">#1AFFFFFF</color>
+    <color name="black_deep">#FF000000</color>
+    <color name="recall_black_38">#ffA3A3A3</color>
+    <color name="recall_black">#61212121</color>
+    <color name="em_blue">#1E88E5</color>
+    <color name="em_blue_pressed">#0000aF</color>
+    <color name="btn_register_normal">#ffffff</color>
+    <color name="btn_register_pressed">#00acff</color>
+    <color name="btn_login_normal">#00acff</color>
+    <color name="btn_login_pressed">#46678d</color>
+    <color name="btn_pressed_green_solid">#B6DA53</color>
+    <color name="btn_logout_normal">#d33f3f</color>
+    <color name="btn_logout_pressed">#DA5A4D</color>
+</resources>

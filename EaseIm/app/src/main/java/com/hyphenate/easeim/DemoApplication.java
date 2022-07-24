@@ -44,12 +44,11 @@ public class DemoApplication extends Application implements Thread.UncaughtExcep
     }
 
     private void initHx() {
-        // 初始化PreferenceManager
-        PreferenceManager.init(this);
+        EaseIMHelper.getInstance().init(this);
         // init hx sdk
         if(EaseIMHelper.getInstance().getAutoLogin()) {
             EMLog.i("DemoApplication", "application initHx");
-            EaseIMHelper.getInstance().init(this, false);
+            EaseIMHelper.getInstance().initSDK(this, EaseIMHelper.getInstance().getModel().getAppMode());
         }
 
     }

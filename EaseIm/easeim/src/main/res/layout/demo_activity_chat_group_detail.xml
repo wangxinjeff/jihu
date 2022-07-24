@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="?attr/themeBgColor"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <com.hyphenate.easeui.widget.EaseTitleBar
+        android:id="@+id/title_bar"
+        android:layout_width="0dp"
+        android:layout_height="@dimen/em_common_title_bar_height"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:titleBarTitle="@string/em_chat_group_detail_title"
+        app:titleBarLeftImage="@drawable/icon_back"
+        app:titleBarTitleTextColor="?attr/normalTextColor"
+        />
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_bar"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="@dimen/em_margin_30">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_group_info"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:paddingBottom="@dimen/em_margin_15"
+                android:paddingTop="@dimen/em_margin_15"
+                android:background="?attr/themeFloatBgColor"
+                >
+
+                <com.hyphenate.easeui.widget.EaseImageView
+                    android:id="@+id/iv_group_avatar"
+                    android:layout_width="@dimen/adaptive_60dp"
+                    android:layout_height="@dimen/adaptive_60dp"
+                    android:src="@drawable/ease_group_icon"
+                    app:ease_shape_type="round"
+                    app:layout_constraintBottom_toBottomOf="@+id/cl_group_info"
+                    app:layout_constraintEnd_toStartOf="@+id/icon_next"
+                    app:layout_constraintTop_toTopOf="@+id/cl_group_info"
+                    android:layout_marginEnd="@dimen/em_margin_20"
+                    />
+
+                <ImageView
+                    android:id="@+id/icon_next"
+                    android:layout_width="20dp"
+                    android:layout_height="50dp"
+                    android:src="@drawable/em_arrow_right"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/iv_group_avatar"
+                    app:layout_constraintBottom_toBottomOf="@+id/iv_group_avatar"
+                    android:layout_marginEnd="@dimen/em_margin_20"
+                    android:visibility="gone"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="?attr/groupDetailMid"
+                    android:textSize="@dimen/em_size_big"
+                    app:layout_constraintBottom_toBottomOf="@+id/cl_group_info"
+                    app:layout_constraintStart_toStartOf="@+id/cl_group_info"
+                    app:layout_constraintTop_toTopOf="@+id/cl_group_info"
+                    android:text="@string/em_group_head"
+                    android:layout_marginStart="@dimen/em_margin_20"
+                     />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <View
+                android:id="@+id/view_group_divider"
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cl_group_info"
+                android:layout_marginLeft="@dimen/em_margin_15"
+                android:layout_marginRight="@dimen/em_margin_15"
+                android:layout_marginStart="@dimen/em_margin_15"
+                android:layout_marginEnd="@dimen/em_margin_15"
+                android:background="@drawable/demo_default_divider_list"/>
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_member"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:background="?attr/themeFloatBgColor"
+                app:layout_constraintTop_toBottomOf="@id/view_group_divider">
+
+                <TextView
+                    android:id="@+id/tv_group_member_title"
+                    android:minHeight="50dp"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    android:text="@string/em_chat_group_detail_group_member"
+                    style="@style/em_group_text_item_title"
+                    android:layout_width="0dp"
+                    android:gravity="center_vertical"
+                    android:foreground="@drawable/demo_ripple_click_gray"/>
+
+                <ImageView
+                    android:id="@+id/iv_group_member_right"
+                    android:layout_width="20dp"
+                    android:layout_height="50dp"
+                    app:layout_constraintRight_toRightOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/tv_group_member_title"
+                    app:layout_constraintBottom_toBottomOf="@id/tv_group_member_title"
+                    android:layout_marginEnd="@dimen/em_margin_20"
+                    android:src="@drawable/em_arrow_right"/>
+
+                <TextView
+                    android:id="@+id/tv_group_member_num"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    app:layout_constraintRight_toLeftOf="@id/iv_group_member_right"
+                    app:layout_constraintTop_toTopOf="@id/iv_group_member_right"
+                    app:layout_constraintBottom_toBottomOf="@id/iv_group_member_right"
+                    android:layout_marginRight="@dimen/em_margin_15"
+                    tools:text="16人"
+                    android:textSize="@dimen/em_size_small"
+                    android:gravity="center"
+                    android:textColor="@color/em_color_common_text_gray"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rl_member_list"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_group_member_title"
+                    android:paddingStart="@dimen/em_margin_20"
+                    android:paddingEnd="@dimen/em_margin_20"
+                    />
+
+                <LinearLayout
+                    android:id="@+id/show_more_member"
+                    android:layout_width="0dp"
+                    android:layout_height="@dimen/normal_height"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/rl_member_list"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <androidx.appcompat.widget.AppCompatTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/em_size_normal"
+                        android:textColor="?attr/groupDetailMid"
+                        android:text="@string/em_show_more_member"
+                        />
+
+                    <androidx.appcompat.widget.AppCompatImageView
+                        android:layout_width="@dimen/icon_normal_size"
+                        android:layout_height="@dimen/icon_normal_size"
+                        android:src="@drawable/em_arrow_right"
+                        />
+
+                </LinearLayout>
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <com.hyphenate.easeim.common.widget.ArrowItemView
+                android:layout_width="match_parent"
+                android:id="@+id/item_group_name"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cl_member"
+                android:layout_marginTop="@dimen/em_margin_20"
+                app:arrowItemTitle="@string/em_chat_group_detail_name"
+                app:arrowItemShowArrow="false"
+                android:background="?attr/themeFloatBgColor"
+                app:arrowItemTitleColor="?attr/groupDetailMid"
+                app:arrowItemContentColor="?attr/groupDetailMid"
+                style="@style/em_group_arrow_item" />
+
+            <com.hyphenate.easeim.common.widget.ArrowItemView
+                android:id="@+id/item_group_owner"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/item_group_name"
+                app:arrowItemTitle="@string/group_owner"
+                app:arrowItemShowArrow="false"
+                android:background="?attr/themeFloatBgColor"
+                app:arrowItemTitleColor="?attr/groupDetailMid"
+                app:arrowItemContentColor="?attr/groupDetailMid"
+                style="@style/em_group_arrow_item"/>
+
+            <com.hyphenate.easeim.common.widget.ArrowItemView
+                android:id="@+id/item_group_notice"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/item_group_owner"
+                app:arrowItemTitle="@string/em_chat_group_detail_announcement"
+                android:background="?attr/themeFloatBgColor"
+                app:arrowItemTitleColor="?attr/groupDetailMid"
+                app:arrowItemContentColor="?attr/groupDetailMid"
+                style="@style/em_group_arrow_item"/>
+
+            <com.hyphenate.easeim.common.widget.ArrowItemView
+                android:id="@+id/item_group_introduction"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/item_group_notice"
+                app:arrowItemTitle="@string/em_chat_group_detail_introduction"
+                app:arrowItemShowDivider="false"
+                android:background="?attr/themeFloatBgColor"
+                app:arrowItemTitleColor="?attr/groupDetailMid"
+                app:arrowItemContentColor="?attr/groupDetailMid"
+                style="@style/em_group_arrow_item"/>
+
+            <com.hyphenate.easeim.common.widget.ArrowItemView
+                android:id="@+id/item_group_mute"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/item_group_introduction"
+                app:arrowItemTitle="@string/em_group_mute"
+                app:arrowItemShowDivider="false"
+                android:background="?attr/themeFloatBgColor"
+                app:arrowItemTitleColor="?attr/groupDetailMid"
+                app:arrowItemContentColor="?attr/groupDetailMid"
+                android:visibility="gone"
+                style="@style/em_group_arrow_item"/>
+
+            <com.hyphenate.easeim.common.widget.ArrowItemView
+                android:id="@+id/item_group_note"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/item_group_mute"
+                app:arrowItemTitle="@string/em_group_note"
+                android:background="?attr/themeFloatBgColor"
+                app:arrowItemTitleColor="?attr/groupDetailMid"
+                app:arrowItemContentColor="?attr/groupDetailMid"
+                app:arrowItemShowDivider="false"
+                android:visibility="gone"
+                style="@style/em_group_arrow_item"/>
+
+            <com.hyphenate.easeim.common.widget.ArrowItemView
+                android:id="@+id/item_group_history"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/item_group_note"
+                android:layout_marginTop="@dimen/em_margin_20"
+                app:arrowItemTitle="@string/em_chat_group_detail_history"
+                android:background="?attr/themeFloatBgColor"
+                app:arrowItemTitleColor="?attr/groupDetailMid"
+                app:arrowItemContentColor="?attr/groupDetailMid"
+                style="@style/em_group_arrow_item"/>
+
+            <com.hyphenate.easeim.common.widget.SwitchItemView
+                android:id="@+id/item_group_not_disturb"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/item_group_history"
+                app:switchItemTitle="@string/em_chat_group_detail_not_disturb"
+                app:switchItemShowDivider="false"
+                android:background="?attr/themeFloatBgColor"
+                app:switchItemTitleColor="?attr/groupDetailMid"
+                style="@style/em_group_arrow_item"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

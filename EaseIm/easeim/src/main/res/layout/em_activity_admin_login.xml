@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/em_admin_login_bg"
+        android:scaleType="fitXY"
+        />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/login_icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="130dp"
+        android:src="@drawable/em_admin_login_icon"
+        />
+
+    <androidx.appcompat.widget.AppCompatImageView
+        android:id="@+id/login_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/login_icon"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/em_admin_login_title"
+        android:layout_marginTop="12dp"
+        />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/welcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_title"
+        android:layout_marginTop="68dp"
+        android:layout_marginStart="32dp"
+        android:textSize="24sp"
+        android:textColor="@color/white"
+        android:text="@string/em_welcome_to_login"
+        />
+
+    <LinearLayout
+        android:id="@+id/input_account"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/normal_height"
+        android:background="@drawable/white_corner_bg"
+        app:layout_constraintTop_toBottomOf="@+id/welcome"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginTop="24dp"
+        android:gravity="center_vertical"
+        >
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/em_icon_phone"
+            android:layout_marginStart="8dp"
+            />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/phone"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/em_size_big"
+            android:hint="@string/em_please_enter_phone"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:textColor="?attr/normalTextColor"
+            android:inputType="number"
+            android:background="@null"
+            android:lines="1"
+            />
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/empty_phone"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/icon_search_close"
+            android:layout_marginEnd="12dp"
+            android:layout_marginStart="8dp"
+            android:visibility="invisible"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/input_password"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/normal_height"
+        android:background="@drawable/white_corner_bg"
+        app:layout_constraintTop_toBottomOf="@+id/input_account"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginTop="24dp"
+        android:gravity="center_vertical"
+        >
+
+        <androidx.appcompat.widget.AppCompatImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@drawable/em_icon_clock"
+            android:layout_marginStart="8dp"
+            />
+
+        <androidx.appcompat.widget.AppCompatEditText
+            android:id="@+id/password"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/em_size_big"
+            android:hint="@string/em_please_enter_password"
+            android:layout_marginStart="8dp"
+            android:layout_weight="1"
+            android:textColor="?attr/normalTextColor"
+            android:inputType="textPassword"
+            android:background="@null"
+            android:lines="1"
+            />
+
+        <FrameLayout
+            android:id="@+id/visible_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:layout_marginStart="8dp"
+            >
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/visible"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/em_icon_visible"
+                />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/un_visible"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/em_icon_un_visible"
+                android:visibility="gone"
+                />
+
+        </FrameLayout>
+    </LinearLayout>
+
+    
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/login_btn"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/normal_height"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/input_password"
+        android:layout_marginStart="32dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginTop="56dp"
+        android:text="@string/em_login_btn"
+        android:textColor="@color/con_content_time"
+        android:gravity="center"
+        android:enabled="false"
+        android:background="@drawable/login_btn_unable_bg"
+        />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:textSize="@dimen/em_size_small"
+        android:text="©️ 2022 极狐ARCFOX 运管端"
+        android:textColor="@color/con_content_time"
+        android:layout_marginBottom="50dp"
+        />
+</androidx.constraintlayout.widget.ConstraintLayout>

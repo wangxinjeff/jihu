@@ -1,11 +1,9 @@
 package com.hyphenate.easeim;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import androidx.appcompat.widget.AppCompatEditText;
-import androidx.appcompat.widget.AppCompatImageView;
 import androidx.appcompat.widget.AppCompatTextView;
 
 import com.hyphenate.EMValueCallBack;
@@ -113,22 +111,14 @@ public class MainActivity extends BaseInitActivity implements View.OnClickListen
                     e.printStackTrace();
                 }
 
-                if(EaseIMHelper.getInstance().isAdmin()){
-                    EaseIMHelper.getInstance().startChat(MainActivity.this, EaseConstant.CON_TYPE_ADMIN);
-                } else {
-                    EaseIMHelper.getInstance().startChat(MainActivity.this, EaseConstant.CON_TYPE_EXCLUSIVE);
-                }
+                EaseIMHelper.getInstance().startChat(MainActivity.this, EaseConstant.CON_TYPE_EXCLUSIVE);
                 break;
             case R.id.user_chat:
                 if(chatId.getText().toString().isEmpty()){
                     return;
                 }
                 EMClient.getInstance().chatManager().getConversation(chatId.getText().toString(), EMConversation.EMConversationType.Chat, true);
-                if(EaseIMHelper.getInstance().isAdmin()){
-                    EaseIMHelper.getInstance().startChat(MainActivity.this, EaseConstant.CON_TYPE_ADMIN);
-                } else {
-                    EaseIMHelper.getInstance().startChat(MainActivity.this, EaseConstant.CON_TYPE_MY_CHAT);
-                }
+                EaseIMHelper.getInstance().startChat(MainActivity.this, EaseConstant.CON_TYPE_MY_CHAT);
                 break;
         }
     }

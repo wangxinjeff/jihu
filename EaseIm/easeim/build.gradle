@@ -1,31 +1,15 @@
-apply plugin: 'com.android.application'
-apply plugin: 'com.huawei.agconnect'
+apply plugin: 'com.android.library'
 
 android {
-    //加载资源
-    Properties properties = new Properties()
-    InputStream inputStream = project.rootProject.file('local.properties').newDataInputStream() ;
-    properties.load( inputStream )
-
-    signingConfigs {
-        debug {
-
-        }
-        release {
-
-        }
-    }
     compileSdkVersion 30
     buildToolsVersion "30.0.0"
+
     defaultConfig {
-        applicationId "com.hyphenate.easeim"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 96
-        versionName "3.9.4"
-        multiDexEnabled true
-        //为了兼容5.0以下使用vector图标
-        vectorDrawables.useSupportLibrary = true
+        versionCode 1
+        versionName "1.0"
+
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
         //指定room.schemaLocation生成的文件路径  处理Room 警告 Schema export Error
@@ -38,31 +22,17 @@ android {
             }
         }
 
-        manifestPlaceholders = [EASEMOB_APPKEY: properties.getProperty("EASEMOB_APPKEY", "******"),
-                                VIVO_PUSH_APPKEY: properties.getProperty("VIVO_PUSH_APPKEY", "******"),
-                                VIVO_PUSH_APPID: properties.getProperty("VIVO_PUSH_APPID", "******"),
-                                BAIDU_LOCATION_APPKEY: properties.getProperty("BAIDU_LOCATION_APPKEY", "******")
-        ]
         ndk {
             abiFilters  "arm64-v8a","armeabi-v7a","x86","x86_64"
         }
     }
+
     buildTypes {
         release {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-            signingConfig signingConfigs.release
-        }
-
-        debug {
-            //applicationIdSuffix ".debug"
-            signingConfig signingConfigs.debug
         }
     }
-
-    //use legacy for android 6.0，SDK3.6.8后移除
-    //useLibrary 'org.apache.http.legacy'
-    //自3.6.0开始需要java8的支持
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -73,7 +43,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
@@ -81,7 +51,6 @@ dependencies {
     //ViewModel and LiveData
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel:2.2.0'
-    implementation project(path: ':easeim')
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
@@ -89,13 +58,49 @@ dependencies {
     implementation 'com.ashokvarma.android:bottom-navigation-bar:2.1.0'
     // resolve 64k limit
     implementation 'com.android.support:multidex:1.0.3'
+    api files('libs/hyphenatechat_3.9.4.jar')
+    // hms push
+    api 'com.huawei.hms:push:4.0.2.300'
+    // meizu push
+    implementation 'com.meizu.flyme.internet:push-internal:4.0.4@aar'//配置集成sdk
+    //oppo push
+//    implementation (name:'oppo_push_3.0.0',ext:'aar')
+    //oppo push需添加以下依赖
+    implementation 'com.google.code.gson:gson:2.6.2'
+    implementation 'commons-codec:commons-codec:1.6'
+    implementation 'androidx.annotation:annotation:1.1.0'
+    // Google firebase cloud messaging
+    // Import the BoM for the Firebase platform
+    api platform('com.google.firebase:firebase-bom:28.2.1')
+
+    // Declare the dependencies for the Firebase Cloud Messaging and Analytics libraries
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    api 'com.google.firebase:firebase-messaging'
+    api 'com.google.firebase:firebase-analytics'
     // fresh and load more
-    api 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.5.1'
+    implementation 'com.scwang.smartrefresh:SmartRefreshLayout:1.0.5.1'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
+    // room
+    implementation "androidx.room:room-runtime:2.4.0-alpha04"
+    annotationProcessor "androidx.room:room-compiler:2.4.0-alpha04"
+    // parse
+    implementation 'com.parse:parse-android:1.13.1'
+    implementation 'io.agora.rtc:full-rtc-basic:3.6.2'
+    implementation 'com.github.bumptech.glide:glide:4.9.0'
+    implementation 'com.google.android:flexbox:2.0.1'
+
+    implementation ("com.zhihu.android:matisse:0.5.3-beta3")
+    // rxpermissions
+    implementation 'com.github.tbruyelle:rxpermissions:0.12'
+    // RxJava
+    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
+    implementation "io.reactivex.rxjava3:rxjava:3.0.4"
+    //如果需要启用前置摄像头录像镜像调整功能需要额外引用以下库
+    implementation'com.github.MasayukiSuda:Mp4Composer-android:v0.3.2'
 }
 
 // ADD THIS AT THE BOTTOM
-apply plugin: 'com.google.gms.google-services'
+//apply plugin: 'com.google.gms.google-services'
 repositories {
     mavenCentral()
     flatDir{
