@@ -166,27 +166,27 @@ public class ConversationListActivity extends BaseInitActivity implements EaseTi
             PushUtils.isRtcCall  = false;
         }
 
-        if(EaseIMHelper.getInstance().getModel().isUseFCM() && GoogleApiAvailabilityLight.getInstance().isGooglePlayServicesAvailable(this) == ConnectionResult.SUCCESS){
-            // 启用 FCM 自动初始化
-            if(!FirebaseMessaging.getInstance().isAutoInitEnabled()){
-                FirebaseMessaging.getInstance().setAutoInitEnabled(true);
-                FirebaseAnalytics.getInstance(this).setAnalyticsCollectionEnabled(true);
-            }
-            // 获取FCM 推送 token 并上传
-            FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
-                @Override
-                public void onComplete(@NonNull Task<String> task) {
-                    if (!task.isSuccessful()) {
-                        EMLog.d("FCM", "Fetching FCM registration token failed:"+task.getException());
-                        return;
-                    }
-                    // Get new FCM registration token
-                    String token = task.getResult();
-                    EMLog.d("FCM", token);
-                    EMClient.getInstance().sendFCMTokenToServer(token);
-                }
-            });
-        }
+//        if(EaseIMHelper.getInstance().getModel().isUseFCM() && GoogleApiAvailabilityLight.getInstance().isGooglePlayServicesAvailable(this) == ConnectionResult.SUCCESS){
+//            // 启用 FCM 自动初始化
+//            if(!FirebaseMessaging.getInstance().isAutoInitEnabled()){
+//                FirebaseMessaging.getInstance().setAutoInitEnabled(true);
+//                FirebaseAnalytics.getInstance(this).setAnalyticsCollectionEnabled(true);
+//            }
+//            // 获取FCM 推送 token 并上传
+//            FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
+//                @Override
+//                public void onComplete(@NonNull Task<String> task) {
+//                    if (!task.isSuccessful()) {
+//                        EMLog.d("FCM", "Fetching FCM registration token failed:"+task.getException());
+//                        return;
+//                    }
+//                    // Get new FCM registration token
+//                    String token = task.getResult();
+//                    EMLog.d("FCM", token);
+//                    EMClient.getInstance().sendFCMTokenToServer(token);
+//                }
+//            });
+//        }
     }
 
     private void initViewModel() {
@@ -216,9 +216,9 @@ public class ConversationListActivity extends BaseInitActivity implements EaseTi
                         if(userInfo != null && userInfo.getNickName() != null &&
                                 userInfo.getNickName().length() > 0){
                             EaseEvent event = EaseEvent.create(DemoConstant.NICK_NAME_CHANGE, EaseEvent.TYPE.CONTACT);
-                            event.message = userInfo.getNickName();
+                            event.message = userInfo.getNickname();
                             LiveDataBus.get().with(DemoConstant.NICK_NAME_CHANGE).postValue(event);
-                            PreferenceManager.getInstance().setCurrentUserNick(userInfo.getNickName());
+                            PreferenceManager.getInstance().setCurrentUserNick(userInfo.getNickname());
                         }
                         //头像
                         if(userInfo != null && userInfo.getAvatarUrl() != null && userInfo.getAvatarUrl().length() > 0){
@@ -258,25 +258,21 @@ public class ConversationListActivity extends BaseInitActivity implements EaseTi
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
-            case R.id.notify_view:
-                EaseIMHelper.getInstance().getModel().setConversationNotify(!isNotify);
-                showNotifyIcon();
-                if(isNotify){
-                    ToastUtils.showCenterToast("", getString(R.string.em_open_notify), 0, Toast.LENGTH_SHORT);
-                } else {
-                    ToastUtils.showCenterToast("", getString(R.string.em_close_notify), 0, Toast.LENGTH_SHORT);
-                }
-                break;
-            case R.id.search_view:
-                startActivity(new Intent(this, SearchGroupChatActivity.class));
-                break;
-            case R.id.create_view:
-                GroupPickContactsActivity.actionStart(mContext, "", true);
-                break;
-            case R.id.apply_view:
-                startActivity(new Intent(ConversationListActivity.this, GroupApplyActivity.class));
-                break;
+        int id = v.getId();
+        if (id == R.id.notify_view) {
+            EaseIMHelper.getInstance().getModel().setConversationNotify(!isNotify);
+            showNotifyIcon();
+            if (isNotify) {
+                ToastUtils.showCenterToast("", getString(R.string.em_open_notify), 0, Toast.LENGTH_SHORT);
+            } else {
+                ToastUtils.showCenterToast("", getString(R.string.em_close_notify), 0, Toast.LENGTH_SHORT);
+            }
+        } else if (id == R.id.search_view) {
+            startActivity(new Intent(this, SearchGroupChatActivity.class));
+        } else if (id == R.id.create_view) {
+            GroupPickContactsActivity.actionStart(mContext, "", true);
+        } else if (id == R.id.apply_view) {
+            startActivity(new Intent(ConversationListActivity.this, GroupApplyActivity.class));
         }
         popupWindow.dismiss();
     }

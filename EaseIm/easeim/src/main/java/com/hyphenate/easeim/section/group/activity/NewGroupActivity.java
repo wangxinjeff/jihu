@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
+import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMGroup;
 
 import com.hyphenate.chat.EMGroupOptions;
@@ -23,7 +24,7 @@ import com.hyphenate.easeim.section.base.BaseInitActivity;
 import com.hyphenate.easeim.section.chat.activity.ChatActivity;
 
 import com.hyphenate.easeim.section.dialog.SimpleDialogFragment;
-import com.hyphenate.easeim.section.contact.viewmodels.NewGroupViewModel;
+import com.hyphenate.easeim.section.group.viewmodels.NewGroupViewModel;
 
 import com.hyphenate.easeim.section.group.adapter.GroupDetailMemberAdapter;
 import com.hyphenate.easeim.section.group.fragment.GroupEditFragment;
@@ -166,8 +167,19 @@ public class NewGroupActivity extends BaseInitActivity implements EaseTitleBar.O
                     message.setChatType(EMMessage.ChatType.GroupChat);
                     message.setAttribute(EaseConstant.CREATE_GROUP_PROMPT, true);
                     message.setAttribute(EaseConstant.CREATE_GROUP_NAME, data.getGroupName());
+                    message.setMessageStatusCallback(new EMCallBack() {
+                        @Override
+                        public void onSuccess() {
+                            runOnUiThread(NewGroupActivity.this::finish);
+                        }
+
+                        @Override
+                        public void onError(int i, String s) {
+
+                        }
+                    });
                     EaseIMHelper.getInstance().getChatManager().sendMessage(message);
-                    finish();
+
                 }
 
                 @Override
@@ -208,23 +220,19 @@ public class NewGroupActivity extends BaseInitActivity implements EaseTitleBar.O
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.item_group_name ://群名称
-                showGroupNameDialog();
-                break;
-            case R.id.item_group_introduction ://群介绍
-                showIntroductionDialog();
-                break;
-            case R.id.done:
-
-                EMGroupOptions option = new EMGroupOptions();
-                option.style = EMGroupStylePrivateOnlyOwnerInvite;
-                List<String> list = new ArrayList<>();
-                for(EaseUser user : members){
-                    list.add(user.getUsername());
-                }
-                viewModel.createGroup(groupName, groupIntroduction, list.toArray(new String[0]), "", option);
-                break;
+        int id = v.getId();
+        if (id == R.id.item_group_name) {//群名称
+            showGroupNameDialog();
+        } else if (id == R.id.item_group_introduction) {//群介绍
+            showIntroductionDialog();
+        } else if (id == R.id.done) {
+            EMGroupOptions option = new EMGroupOptions();
+            option.style = EMGroupStylePrivateOnlyOwnerInvite;
+            List<String> list = new ArrayList<>();
+            for (EaseUser user : members) {
+                list.add(user.getUsername());
+            }
+            viewModel.createGroup(groupName, groupIntroduction, list.toArray(new String[0]), "", option);
         }
     }
 

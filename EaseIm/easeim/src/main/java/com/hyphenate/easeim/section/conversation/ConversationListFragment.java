@@ -66,8 +66,12 @@ public class ConversationListFragment extends EaseConversationListFragment{
             llRoot.addView(searchBar, 0);
         }
 
-        if(!EaseIMHelper.getInstance().isAdmin()){
+        if(conversationsType == EaseConstant.CON_TYPE_EXCLUSIVE){
             conversationListLayout.getListAdapter().setEmptyLayoutId(R.layout.ease_layout_no_exclusive_service);
+        } else if(conversationsType == EaseConstant.CON_TYPE_MY_CHAT){
+            conversationListLayout.getListAdapter().setEmptyLayoutId(R.layout.ease_layout_default_no_conversation_data);
+        } else if(conversationsType == EaseConstant.CON_TYPE_ADMIN){
+            conversationListLayout.getListAdapter().setEmptyLayoutId(R.layout.ease_layout_default_no_conversation_data);
         }
 
         initViewModel();
@@ -79,16 +83,16 @@ public class ConversationListFragment extends EaseConversationListFragment{
         Object object = info.getInfo();
 
         if(object instanceof EMConversation) {
-            switch (item.getItemId()) {
-                case R.id.action_con_make_top :
-                    conversationListLayout.makeConversationTop(position, info);
-                    return true;
-                case R.id.action_con_cancel_top :
-                    conversationListLayout.cancelConversationTop(position, info);
-                    return true;
-                case R.id.action_con_delete :
-                    showDeleteDialog(position, info);
-                    return true;
+            int itemId = item.getItemId();
+            if (itemId == R.id.action_con_make_top) {
+                conversationListLayout.makeConversationTop(position, info);
+                return true;
+            } else if (itemId == R.id.action_con_cancel_top) {
+                conversationListLayout.cancelConversationTop(position, info);
+                return true;
+            } else if (itemId == R.id.action_con_delete) {
+                showDeleteDialog(position, info);
+                return true;
             }
         }
         return super.onMenuItemClick(item, position);

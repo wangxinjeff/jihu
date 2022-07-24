@@ -2,12 +2,11 @@ package com.hyphenate.easeim;
 
 import static android.content.Intent.FLAG_ACTIVITY_NEW_TASK;
 
-import android.app.Activity;
+import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.AsyncTask;
-import android.os.Process;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Pair;
@@ -41,6 +40,7 @@ import com.hyphenate.easecallkit.base.EaseUserAccount;
 import com.hyphenate.easecallkit.event.CallCancelEvent;
 import com.hyphenate.easeim.common.constant.DemoConstant;
 import com.hyphenate.easeim.common.db.DemoDbHelper;
+import com.hyphenate.easeim.common.interfaceOrImplement.UserActivityLifecycleCallbacks;
 import com.hyphenate.easeim.common.manager.UserProfileManager;
 import com.hyphenate.easeim.common.model.DemoModel;
 import com.hyphenate.easeim.common.model.EmojiconExampleGroupData;
@@ -53,18 +53,11 @@ import com.hyphenate.easeim.section.av.MultipleVideoActivity;
 import com.hyphenate.easeim.section.av.VideoCallActivity;
 import com.hyphenate.easeim.section.chat.ChatPresenter;
 import com.hyphenate.easeim.section.chat.activity.ChatActivity;
-import com.hyphenate.easeim.section.chat.delegates.ChatConferenceInviteAdapterDelegate;
-import com.hyphenate.easeim.section.chat.delegates.ChatNotificationAdapterDelegate;
 import com.hyphenate.easeim.section.chat.delegates.ChatNoticeAdapterDelegate;
-import com.hyphenate.easeim.section.chat.delegates.ChatUserCardAdapterDelegate;
-import com.hyphenate.easeim.section.chat.delegates.ChatVideoCallAdapterDelegate;
-import com.hyphenate.easeim.section.chat.delegates.ChatVoiceCallAdapterDelegate;
 import com.hyphenate.easeim.section.conference.ConferenceInviteActivity;
 import com.hyphenate.easeim.section.conversation.ConversationListActivity;
 import com.hyphenate.easeui.EaseIM;
 import com.hyphenate.easeui.constants.EaseConstant;
-import com.hyphenate.easeui.delegate.EaseCustomAdapterDelegate;
-import com.hyphenate.easeui.delegate.EaseExpressionAdapterDelegate;
 import com.hyphenate.easeui.delegate.EaseFileAdapterDelegate;
 import com.hyphenate.easeui.delegate.EaseImageAdapterDelegate;
 import com.hyphenate.easeui.delegate.EaseLocationAdapterDelegate;
@@ -122,7 +115,9 @@ public class EaseIMHelper {
     private FetchUserInfoList fetchUserInfoList;
     private boolean isAdmin = false;
     private String chatPageConId = "";
-
+    private Application application;
+    private UserActivityLifecycleCallbacks mLifecycleCallbacks = new UserActivityLifecycleCallbacks();
+    private EMClientRepository clientRepository;
 
     private EaseIMHelper() {}
 
@@ -137,9 +132,28 @@ public class EaseIMHelper {
         return mInstance;
     }
 
-    public void init(Context context, boolean isAdmin) {
-        this.isAdmin = true;
+    public Application getApplication(){
+        return application;
+    }
+
+    private void registerActivityLifecycleCallbacks() {
+        application.registerActivityLifecycleCallbacks(mLifecycleCallbacks);
+    }
+
+    public UserActivityLifecycleCallbacks getLifecycleCallbacks() {
+        return mLifecycleCallbacks;
+    }
+
+    public void init(Application application){
+        this.application = application;
+        // 初始化PreferenceManager
+        PreferenceManager.init(application);
+    }
+
+    public void initSDK(Context context, boolean isAdmin) {
+        this.isAdmin = isAdmin;
         demoModel = new DemoModel(context);
+        clientRepository = new EMClientRepository();
         //初始化IM SDK
         if(initSDK(context)) {
             // debug mode, you'd better set it to false, if you want release your App officially.
@@ -163,6 +177,8 @@ public class EaseIMHelper {
             fetchUserRunnable = new FetchUserRunnable();
             fetchUserTread = new Thread(fetchUserRunnable);
             fetchUserTread.start();
+
+            registerActivityLifecycleCallbacks();
         }
 
     }
@@ -612,14 +628,14 @@ public class EaseIMHelper {
      * 关闭当前进程
      */
     public void killApp() {
-        List<Activity> activities = DemoApplication.getInstance().getLifecycleCallbacks().getActivityList();
-        if(activities != null && !activities.isEmpty()) {
-            for(Activity activity : activities) {
-                activity.finish();
-            }
-        }
-        Process.killProcess(Process.myPid());
-        System.exit(0);
+//        List<Activity> activities = DemoApplication.getInstance().getLifecycleCallbacks().getActivityList();
+//        if(activities != null && !activities.isEmpty()) {
+//            for(Activity activity : activities) {
+//                activity.finish();
+//            }
+//        }
+//        Process.killProcess(Process.myPid());
+//        System.exit(0);
     }
 
 
@@ -630,7 +646,7 @@ public class EaseIMHelper {
     public void logoutSuccess() {
         Log.d(TAG, "logout: onSuccess");
         setAutoLogin(false);
-        DemoDbHelper.getInstance(DemoApplication.getInstance()).closeDb();
+        DemoDbHelper.getInstance(application).closeDb();
         getUserProfileManager().reset();
         EMClient.getInstance().translationManager().logout();
     }
@@ -641,7 +657,7 @@ public class EaseIMHelper {
 
     public DemoModel getModel(){
         if(demoModel == null) {
-            demoModel = new DemoModel(DemoApplication.getInstance());
+            demoModel = new DemoModel(mainContext);
         }
         return demoModel;
     }
@@ -779,7 +795,7 @@ public class EaseIMHelper {
         if(TextUtils.isEmpty(username)) {
             return 0;
         }
-        DemoDbHelper helper = DemoDbHelper.getInstance(DemoApplication.getInstance());
+        DemoDbHelper helper = DemoDbHelper.getInstance(application);
         if(helper.getUserDao() == null) {
             return 0;
         }
@@ -1083,8 +1099,9 @@ public class EaseIMHelper {
             public void onSuccess() {
                 EaseIMHelper.getInstance().getModel().setCurrentUserName(username);
                 EaseIMHelper.getInstance().getModel().setCurrentUserPwd(password);
-                new EMClientRepository().loginSuccess();
-        //todo:登录成功之后获取专属群列表，开启线程获取，还是获取到之后再返回成功
+                clientRepository.loginSuccess();
+                setAutoLogin(true);
+                //todo:登录成功之后获取专属群列表，开启线程获取，还是获取到之后再返回成功
 
 
 
@@ -1145,6 +1162,7 @@ public class EaseIMHelper {
     }
 
     public void startChat(Context context, int conversationType){
+        clientRepository.loginSuccess();
         if(isAdmin()){
             ConversationListActivity.actionStart(context, EaseConstant.CON_TYPE_ADMIN);
         } else {
